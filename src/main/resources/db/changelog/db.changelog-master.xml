@@ -4,4 +4,88 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <changeSet id="1762543626104-1 create equipment table" author="Sven Pradela">
+        <createTable tableName="equipment">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="inventory_number" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventory_name" type="TEXT"/>
+            <column name="organizational_unit" type="TEXT"/>
+            <column name="organizational_group" type="TEXT"/>
+            <column name="subject" type="TEXT"/>
+            <column name="position" type="TEXT"/>
+            <column name="responsible_for" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762543878183-1 create user table" author="Sven Pradela">
+        <createTable tableName="users">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="TEXT">
+                <constraints unique="true"/>
+            </column>
+            <column name="firstname" type="TEXT"/>
+            <column name="lastname" type="TEXT"/>
+            <column name="e_mail" type="TEXT"/>
+            <column name="usertype" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762544046024-1 create organizational_unit table" author="Sven Pradela">
+        <createTable tableName="organizational_unit">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762544155602-1 create organizational_group table" author="Sven Pradela">
+        <createTable tableName="organizational_group">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762544197613-1 create subject table" author="Sven Pradela">
+        <createTable tableName="subject">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT"/>
+            <column name="abbreviation" type="varchar(8)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762544308489-1 create position table" author="Sven Pradela">
+        <createTable tableName="position">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="school" type="TEXT"/>
+            <column name="room" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1762544427448-1 create responsibility table" author="Sven Pradela">
+        <createTable tableName="responsibility">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="TEXT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="responsibility" 
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_responsibility_user" 
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>
