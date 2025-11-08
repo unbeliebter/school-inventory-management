@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entities.EquipmentEntity;
+import com.example.demo.entities.equipment.EquipmentEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

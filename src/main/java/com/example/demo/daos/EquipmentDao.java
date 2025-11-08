@@ -1,6 +1,6 @@
 package com.example.demo.daos;
 
-import com.example.demo.entities.EquipmentEntity;
+import com.example.demo.entities.equipment.EquipmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

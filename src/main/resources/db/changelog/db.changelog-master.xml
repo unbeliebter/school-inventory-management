@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1762543626104-2 create equipment table" author="Sven Pradela">
+    <changeSet id="1762543626104-3 create equipment table" author="Sven Pradela">
         <createTable tableName="equipment">
             <column name="id" type="TEXT">
                 <constraints primaryKey="true"/>
@@ -13,6 +13,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="inventory_name" type="TEXT"/>
+            <column name="state" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
             <column name="organizational_unit_id" type="TEXT"/>
             <column name="organizational_group_id" type="TEXT"/>
             <column name="subject_id" type="TEXT"/>
@@ -21,7 +24,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1762543878183-1 create user table" author="Sven Pradela">
+    <changeSet id="1762543878183-2 create user table" author="Sven Pradela">
         <createTable tableName="users">
             <column name="id" type="TEXT">
                 <constraints primaryKey="true"/>
@@ -33,6 +36,7 @@
             <column name="lastname" type="TEXT"/>
             <column name="e_mail" type="TEXT"/>
             <column name="usertype" type="TEXT"/>
+            <column name="password" type="TEXT"/>
         </createTable>
     </changeSet>
 
@@ -75,7 +79,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1762544427448-1 create responsibility table" author="Sven Pradela">
+    <changeSet id="1762544427448-2 create responsibility table" author="Sven Pradela">
         <createTable tableName="responsibility">
             <column name="id" type="TEXT">
                 <constraints primaryKey="true"/>
@@ -89,7 +93,7 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="1762546858879-1" author="Sven Pradela">
+    <changeSet id="1762546858879-2" author="Sven Pradela">
         <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="organizational_unit_id"
                                  constraintName="fk_equipment_organizational_unit"
                                  referencedTableName="organizational_unit"
