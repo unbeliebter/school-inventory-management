@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/equipment/")
+@RequestMapping("equipment/")
 public class EquipmentController {
 
     private EquipmentService equipmentService;
