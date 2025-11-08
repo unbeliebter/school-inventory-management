@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1762543626104-1 create equipment table" author="Sven Pradela">
+    <changeSet id="1762543626104-2 create equipment table" author="Sven Pradela">
         <createTable tableName="equipment">
             <column name="id" type="TEXT">
                 <constraints primaryKey="true"/>
@@ -13,11 +13,11 @@
                 <constraints nullable="false"/>
             </column>
             <column name="inventory_name" type="TEXT"/>
-            <column name="organizational_unit" type="TEXT"/>
-            <column name="organizational_group" type="TEXT"/>
-            <column name="subject" type="TEXT"/>
-            <column name="position" type="TEXT"/>
-            <column name="responsible_for" type="TEXT"/>
+            <column name="organizational_unit_id" type="TEXT"/>
+            <column name="organizational_group_id" type="TEXT"/>
+            <column name="subject_id" type="TEXT"/>
+            <column name="position_id" type="TEXT"/>
+            <column name="responsibility_id" type="TEXT"/>
         </createTable>
     </changeSet>
 
@@ -86,6 +86,29 @@
                                  baseColumnNames="user_id"
                                  constraintName="fk_responsibility_user" 
                                  referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1762546858879-1" author="Sven Pradela">
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="organizational_unit_id"
+                                 constraintName="fk_equipment_organizational_unit"
+                                 referencedTableName="organizational_unit"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="organizational_group_id"
+                                 constraintName="fk_equipment_organizational_group"
+                                 referencedTableName="organizational_group"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="subject_id"
+                                 constraintName="fk_equipment_subject"
+                                 referencedTableName="subject"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="position_id"
+                                 constraintName="fk_equipment_position"
+                                 referencedTableName="position"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="responsibility_id"
+                                 constraintName="fk_equipment_responsibility"
+                                 referencedTableName="responsibility"
                                  referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
