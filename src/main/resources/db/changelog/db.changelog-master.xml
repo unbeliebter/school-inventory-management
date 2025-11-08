@@ -115,4 +115,8 @@
                                  referencedTableName="responsibility"
                                  referencedColumnNames="id"/>
     </changeSet>
+
+    <changeSet id="1762630460677-1 rename column in equipment" author="Sven Pradela">
+        <renameColumn tableName="equipment" oldColumnName="inventory_name" newColumnName="equipment_name"/>
+    </changeSet>
 </databaseChangeLog>
