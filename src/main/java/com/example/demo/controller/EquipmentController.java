@@ -4,6 +4,7 @@ import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.service.equipment.EquipmentService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("equipment/")
 public class EquipmentController {
 
+    @Autowired
     private EquipmentService equipmentService;
 
     // api/equipment/getAll?state=DELIVERED&group=EDV

@@ -13,9 +13,11 @@ public class UserEntity {
     private String id;
     private String username;
     private String password;
+    @Column(name = "e_mail")
     private String email;
     private String firstname;
     private String lastname;
+    @Enumerated(EnumType.STRING)
     @Column(name = "usertype")
     private UserType userType;
 

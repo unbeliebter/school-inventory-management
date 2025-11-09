@@ -16,6 +16,7 @@ public class EquipmentEntity {
     private String inventoryNumber;
     @Column(name = "equipment_name")
     private String equipmentName;
+    @Enumerated(EnumType.STRING)
     @Column(name = "state")
     private EquipmentState equipmentState;
 
