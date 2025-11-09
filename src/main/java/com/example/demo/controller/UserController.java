@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.user.UserEntity;
-import com.example.demo.service.UserService;
+import com.example.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
