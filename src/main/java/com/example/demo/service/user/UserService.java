@@ -2,6 +2,7 @@ package com.example.demo.service.user;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ public class UserService {
         return dao.findAll();
     }
 
-    public UserEntity createOrUpdate(UserEntity entity) {
+    public UserEntity create(UserEntity entity) {
+        entity.setPassword(hashPassword(entity.getPassword()));
         return dao.save(entity);
     }
 
@@ -31,5 +33,33 @@ public class UserService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    public boolean authenticate(String username, String password) {
+        if (username == null) {
+            return false;
+        }
+
+        if (password == null) {
+            return false;
+        }
+
+        var user = dao.findByUsername(username);
+
+        if (user.isPresent()) {
+            if (username.equals(user.get().getUsername())) {
+                return checkPassword(password, user.get().getPassword());
+            }
+        }
+
+        return false;
+    }
+
+    public static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public static boolean checkPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +30,7 @@ public class EquipmentController {
                 Optional.ofNullable(unit),
                 Optional.ofNullable(group),
                 Optional.ofNullable(subject),
-                Optional.ofNullable(responsibility)
+                Optional.ofNullable(responsibility),
                 pageable
         );
     }
