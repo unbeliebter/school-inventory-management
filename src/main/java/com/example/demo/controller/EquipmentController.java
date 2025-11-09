@@ -1,10 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.equipment.EquipmentEntity;
-import com.example.demo.service.EquipmentService;
+import com.example.demo.entities.equipment.EquipmentState;
+import com.example.demo.service.equipment.EquipmentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("equipment/")
@@ -12,9 +16,24 @@ public class EquipmentController {
 
     private EquipmentService equipmentService;
 
+    // api/equipment/getAll?state=DELIVERED&group=EDV
     @GetMapping("getAll")
-    public List<EquipmentEntity> getAll(){
-        return equipmentService.getAll();
+    public Page<EquipmentEntity> getFilteredEquipment(
+            @RequestParam(required = false) EquipmentState state,
+            @RequestParam(required = false) String unit,
+            @RequestParam(required = false) String group,
+            @RequestParam(required = false) String subject,
+            @RequestParam(required = false) String responsibility,
+            Pageable pageable) {
+
+        return equipmentService.getFilteredEquipment(
+                Optional.ofNullable(state),
+                Optional.ofNullable(unit),
+                Optional.ofNullable(group),
+                Optional.ofNullable(subject),
+                Optional.ofNullable(responsibility)
+                pageable
+        );
     }
 
     @GetMapping("get/{id}")

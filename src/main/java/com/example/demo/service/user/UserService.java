@@ -1,27 +1,27 @@
-package com.example.demo.service;
+package com.example.demo.service.user;
 
-import com.example.demo.daos.EquipmentDao;
-import com.example.demo.entities.equipment.EquipmentEntity;
+import com.example.demo.daos.UserDao;
+import com.example.demo.entities.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EquipmentService {
+public class UserService {
 
     @Autowired
-    private EquipmentDao dao;
+    private UserDao dao;
 
-    public List<EquipmentEntity> getAll() {
+    public List<UserEntity> getAll() {
         return dao.findAll();
     }
 
-    public EquipmentEntity createOrUpdate(EquipmentEntity entity) {
+    public UserEntity createOrUpdate(UserEntity entity) {
         return dao.save(entity);
     }
 
-    public EquipmentEntity getById(String id) {
+    public UserEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
 
