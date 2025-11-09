@@ -35,7 +35,7 @@ public class EquipmentSpecification {
 
     public static Specification<EquipmentEntity> hasResponsibility(String userId) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
-                root.join("responsibility", JoinType.INNER).get("user_id"),
+                root.join("responsibleUser", JoinType.INNER).get("id"),
                 userId
         );
     }

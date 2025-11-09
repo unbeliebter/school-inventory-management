@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.OrganizationalUnitEntity;
-import com.example.demo.service.OrganizationalUnitService;
+import com.example.demo.service.organizationalUnit.OrganizationalUnitRequest;
+import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,8 @@ public class OrganizationalUnitController {
     }
 
     @PostMapping("save")
-    public OrganizationalUnitEntity save(@RequestBody OrganizationalUnitEntity entity){
-        return organizationalUnitService.createOrUpdate(entity);
+    public OrganizationalUnitEntity save(@RequestBody OrganizationalUnitRequest request){
+        return organizationalUnitService.create(request);
     }
 
     @DeleteMapping("delete/{id}")

@@ -119,4 +119,15 @@
     <changeSet id="1762630460677-1 rename column in equipment" author="Sven Pradela">
         <renameColumn tableName="equipment" oldColumnName="inventory_name" newColumnName="equipment_name"/>
     </changeSet>
+
+    <changeSet id="1762710819842-1 remove responsibility" author="Sven Pradela">
+        <dropForeignKeyConstraint baseTableName="equipment" constraintName="fk_equipment_responsibility"/>
+        <renameColumn tableName="equipment" oldColumnName="responsibility_id" newColumnName="responsible_user_id"/>
+        <addForeignKeyConstraint baseTableName="equipment" baseColumnNames="responsible_user_id"
+                                 constraintName="fk_equipment_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
+        <dropTable tableName="responsibility"/>
+    </changeSet>
 </databaseChangeLog>

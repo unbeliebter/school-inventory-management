@@ -1,6 +1,7 @@
 package com.example.demo.entities.equipment;
 
 import com.example.demo.entities.*;
+import com.example.demo.entities.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,21 +22,21 @@ public class EquipmentEntity {
     private EquipmentState equipmentState;
 
     @JoinColumn(name = "organizational_unit_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private OrganizationalUnitEntity organizationalUnit;
     @JoinColumn(name = "organizational_group_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private OrganizationalGroupEntity organizationalGroup;
 
     @JoinColumn(name = "subject_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private SubjectEntity subject;
     @JoinColumn(name = "position_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private PositionEntity position;
-    @JoinColumn(name = "responsibility_id")
-    @OneToOne(cascade = CascadeType.ALL)
-    private ResponsibilityEntity responsibility;
+    @JoinColumn(name = "responsible_user_id")
+    @OneToOne
+    private UserEntity responsibleUser;
 
 
 }

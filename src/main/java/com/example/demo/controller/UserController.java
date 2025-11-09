@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.UserRequest;
 import com.example.demo.service.user.UserService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("create")
-    public UserEntity save(@RequestBody UserEntity entity){
-        return userService.create(entity);
+    public UserEntity save(@RequestBody UserRequest request){
+        return userService.create(request);
     }
 
     @PostMapping("/login")

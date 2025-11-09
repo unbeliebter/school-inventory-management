@@ -3,6 +3,7 @@ package com.example.demo.service.equipment;
 import com.example.demo.daos.EquipmentDao;
 import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,13 +20,15 @@ public class EquipmentService {
 
     @Autowired
     private EquipmentDao dao;
+    @Autowired
+    private EquipmentMapper mapper;
 
     public Page<EquipmentEntity> getFilteredEquipment(
             Optional<EquipmentState> state,
             Optional<String> organizationalUnitName,
             Optional<String> organizationalGroupName,
             Optional<String> subject,
-            Optional<String> responsibility,
+            Optional<String> responsibleUser,
             Pageable pageable) {
 
         Stream<Specification<EquipmentEntity>> activeSpecs = Stream.of(
@@ -33,7 +36,7 @@ public class EquipmentService {
                         organizationalUnitName.map(EquipmentSpecification::hasOrganizationalUnitName),
                         organizationalGroupName.map(EquipmentSpecification::hasOrganizationalGroupName),
                         subject.map(EquipmentSpecification::hasSubjectName),
-                        responsibility.map(EquipmentSpecification::hasResponsibility)
+                        responsibleUser.map(EquipmentSpecification::hasResponsibility)
                 ).filter(Optional::isPresent)
                 .map(Optional::get);
 
@@ -42,7 +45,9 @@ public class EquipmentService {
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
     }
 
-    public EquipmentEntity createOrUpdate(EquipmentEntity entity) {
+    @Transactional
+    public EquipmentEntity create(EquipmentRequest request) {
+        var entity = mapper.mapToEntity(request, new EquipmentEntity());
         return dao.save(entity);
     }
 
@@ -50,6 +55,7 @@ public class EquipmentService {
         return dao.findById(id).orElse(null);
     }
 
+    @Transactional
     public void deleteById(String id) {
         var toDelete = dao.findById(id);
 
@@ -78,8 +84,8 @@ public class EquipmentService {
             sb.append(equipment.getPosition() != null ? equipment.getPosition().getSchool() + " - " +
                     equipment.getPosition().getRoom() : "")
                     .append(",");
-            sb.append(equipment.getResponsibility() != null ? equipment.getResponsibility().getUser().getFirstname() +
-                    equipment.getResponsibility().getUser().getLastname() : "");
+            sb.append(equipment.getResponsibleUser() != null ? equipment.getResponsibleUser().getFirstname() +
+                    equipment.getResponsibleUser().getLastname() : "");
 
             writer.println(sb);
         }

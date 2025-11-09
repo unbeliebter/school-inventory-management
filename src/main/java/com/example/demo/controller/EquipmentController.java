@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
+import com.example.demo.service.equipment.EquipmentRequest;
 import com.example.demo.service.equipment.EquipmentService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class EquipmentController {
             @RequestParam(required = false) String unit,
             @RequestParam(required = false) String group,
             @RequestParam(required = false) String subject,
-            @RequestParam(required = false) String responsibility,
+            @RequestParam(required = false) String responisbleUser,
             Pageable pageable) {
 
         return equipmentService.getFilteredEquipment(
@@ -35,7 +36,7 @@ public class EquipmentController {
                 Optional.ofNullable(unit),
                 Optional.ofNullable(group),
                 Optional.ofNullable(subject),
-                Optional.ofNullable(responsibility),
+                Optional.ofNullable(responisbleUser),
                 pageable
         );
     }
@@ -46,8 +47,8 @@ public class EquipmentController {
     }
 
     @PostMapping("save")
-    public EquipmentEntity save(@RequestBody EquipmentEntity entity){
-        return equipmentService.createOrUpdate(entity);
+    public EquipmentEntity save(@RequestBody EquipmentRequest request){
+        return equipmentService.create(request);
     }
 
     @DeleteMapping("delete/{id}")

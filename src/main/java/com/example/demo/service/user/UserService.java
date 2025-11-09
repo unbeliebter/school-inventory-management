@@ -2,7 +2,7 @@ package com.example.demo.service.user;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
-import org.mindrot.jbcrypt.BCrypt;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,16 @@ public class UserService {
 
     @Autowired
     private UserDao dao;
+    @Autowired
+    private UserMapper mapper;
 
     public List<UserEntity> getAll() {
         return dao.findAll();
     }
 
-    public UserEntity create(UserEntity entity) {
-        entity.setPassword(hashPassword(entity.getPassword()));
+    @Transactional
+    public UserEntity create(UserRequest request) {
+        var entity = mapper.mapToEntityCreate(request, new UserEntity());
         return dao.save(entity);
     }
 
@@ -27,6 +30,7 @@ public class UserService {
         return dao.findById(id).orElse(null);
     }
 
+    @Transactional
     public void deleteById(String id) {
         var toDelete = dao.findById(id);
 
@@ -48,18 +52,11 @@ public class UserService {
 
         if (user.isPresent()) {
             if (username.equals(user.get().getUsername())) {
-                return checkPassword(password, user.get().getPassword());
+                return UserMapper.checkPassword(password, user.get().getPassword());
             }
         }
 
         return false;
     }
 
-    public static String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    public static boolean checkPassword(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
-    }
 }

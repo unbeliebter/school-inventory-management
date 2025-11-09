@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.SubjectEntity;
+import com.example.demo.service.subject.SubjectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.service.SubjectService;
+import com.example.demo.service.subject.SubjectService;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class SubjectController {
     }
 
     @PostMapping("save")
-    public SubjectEntity save(@RequestBody SubjectEntity entity){
-        return subjectService.createOrUpdate(entity);
+    public SubjectEntity save(@RequestBody SubjectRequest request){
+        return subjectService.create(request);
     }
 
     @DeleteMapping("delete/{id}")

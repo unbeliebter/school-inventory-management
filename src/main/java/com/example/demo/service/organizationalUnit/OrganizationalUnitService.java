@@ -1,7 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.service.organizationalUnit;
 
 import com.example.demo.daos.OrganizationalUnitDao;
 import com.example.demo.entities.OrganizationalUnitEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,20 @@ public class OrganizationalUnitService {
 
     @Autowired
     private OrganizationalUnitDao dao;
+    @Autowired
+    private OrganizationalUnitMapper mapper;
 
     public List<OrganizationalUnitEntity> getAll() {
         return dao.findAll();
     }
 
-    public OrganizationalUnitEntity createOrUpdate(OrganizationalUnitEntity entity) {
+    @Transactional
+    public OrganizationalUnitEntity create(OrganizationalUnitRequest request) {
+        var entity = mapper.mapToEntity(request, new OrganizationalUnitEntity());
         return dao.save(entity);
     }
 
+    @Transactional
     public OrganizationalUnitEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
