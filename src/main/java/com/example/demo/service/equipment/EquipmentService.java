@@ -3,7 +3,9 @@ package com.example.demo.service.equipment;
 import com.example.demo.daos.EquipmentDao;
 import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
+import com.example.demo.service.equipment.exceptions.EquipmentCouldNotBeSavedException;
 import jakarta.transaction.Transactional;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +50,7 @@ public class EquipmentService {
     @Transactional
     public EquipmentEntity create(EquipmentRequest request) {
         var entity = mapper.mapToEntity(request, new EquipmentEntity());
+        checkOnSave(entity);
         return dao.save(entity);
     }
 
@@ -82,12 +85,22 @@ public class EquipmentService {
                     .append(",");
             sb.append(equipment.getSubject() != null ? equipment.getSubject().getName() : "").append(",");
             sb.append(equipment.getPosition() != null ? equipment.getPosition().getSchool() + " - " +
-                    equipment.getPosition().getRoom() : "")
+                            equipment.getPosition().getRoom() : "")
                     .append(",");
             sb.append(equipment.getResponsibleUser() != null ? equipment.getResponsibleUser().getFirstname() +
                     equipment.getResponsibleUser().getLastname() : "");
 
             writer.println(sb);
+        }
+    }
+
+    @SneakyThrows
+    public void checkOnSave(EquipmentEntity entity) {
+        if (entity.getEquipmentState().equals(EquipmentState.ON_LOAN)) {
+            if (entity.getResponsibleUser() == null) {
+                return;
+            }
+            throw new EquipmentCouldNotBeSavedException("Es darf keinen Verantwortlichen bei Equipmentstatus = Ausgeliehen geben.");
         }
     }
 }
