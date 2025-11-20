@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<header>
+    
+</header>
+<body>
+    <div>
+        <table class="">
+            <caption hidden="true">
+                Inventar
+            </caption>
+            <thead class="">
+            <tr>
+                <th scope="col">Gegenstand</th>
+                <th scope="col">Abteilung</th>
+                <th scope="col">Gruppe</th>
+                <th scope="col">Fach</th>
+                <th scope="col">Ort</th>
+                <th scope="col">Verantwortlicher</th>
+                <th scope="col">Zustand</th>
+                <th scope="col">BUTT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="" th:each="item : ${Equipment}" th:disabled=${formDisabled}>
+                <td><span th:text="${item.equipmentName}">Name</span></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>

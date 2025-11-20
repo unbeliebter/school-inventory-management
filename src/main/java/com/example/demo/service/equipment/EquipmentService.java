@@ -58,6 +58,10 @@ public class EquipmentService {
         return dao.findById(id).orElse(null);
     }
 
+    public List<EquipmentEntity> getAll() {
+        return dao.findAll();
+    }
+
     @Transactional
     public void deleteById(String id) {
         var toDelete = dao.findById(id);
