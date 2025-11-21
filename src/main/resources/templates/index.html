@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<header>
-    
-</header>
+<link th:href="@{/css/inventory.css}" type="text/css" rel="stylesheet">
+<nav class="top-nav">
+    <div class="left">
+        <button>Menu</button>
+    </div>
+
+    <h2 class="mid">Inventarübersicht</h2>
+    <div class="right">
+        <button>Profile</button>
+        <button>Logout</button>
+    </div>
+
+</nav>
 <body>
-    <div>
-        <table class="">
+    <div class="container-inventory-form">
+        <button>Filter</button>
+        <button>Add</button>
+        <div class="right">
+            <button>Exportieren</button>
+        </div> 
+    </div>
+    <div class="container-inventory-table">
+        <table>
             <caption hidden="true">
                 Inventar
             </caption>
             <thead class="">
-            <tr>
-                <th scope="col">Gegenstand</th>
-                <th scope="col">Abteilung</th>
-                <th scope="col">Gruppe</th>
-                <th scope="col">Fach</th>
-                <th scope="col">Ort</th>
-                <th scope="col">Verantwortlicher</th>
-                <th scope="col">Zustand</th>
-                <th scope="col">BUTT</th>
-            </tr>
+                <tr class="">
+                    <th scope="col">Gegenstand</th>
+                    <th scope="col">Abteilung</th>
+                    <th scope="col">Gruppe</th>
+                    <th scope="col">Fach</th>
+                    <th scope="col">Ort</th>
+                    <th scope="col">Verantwortlicher</th>
+                    <th scope="col">Zustand</th>
+                    <th scope="col">BUTT</th>
+                </tr>
             </thead>
             <tbody>
             <tr class="" th:each="item : ${Equipment}" th:disabled=${formDisabled}>
                 <td><span th:text="${item.equipmentName}">Name</span></td>
+            </tr>
+
+
+            <tr>
+                <td>Buch</td>
+                <td>Oder</td>
+                <td>So</td>
+                <td>Felder</td>
+            </tr>
+            <tr>
+                <td>Buch</td>
+                <td>Oder</td>
+                <td>So</td>
+                <td>Felder</td>
+            </tr>
+            <tr>
+                <td>Buch</td>
+                <td>Oder</td>
+                <td>So</td>
+                <td>Felder</td>
+            </tr>
+            <tr>
+                <td>Buch</td>
+                <td>Oder</td>
+                <td>So</td>
+                <td>Felder</td>
             </tr>
 
             </tbody>
