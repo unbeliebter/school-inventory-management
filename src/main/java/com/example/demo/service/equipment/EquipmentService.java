@@ -54,6 +54,12 @@ public class EquipmentService {
         return dao.save(entity);
     }
 
+    @Transactional
+    public EquipmentEntity save(EquipmentEntity entity) {
+        checkOnSave(entity);
+        return dao.save(entity);
+    }
+
     public EquipmentEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }

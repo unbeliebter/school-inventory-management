@@ -1,78 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <link th:href="@{/css/inventory.css}" type="text/css" rel="stylesheet">
+
+
+<dialog id="addEquipmentDialog">
+    <form method="post" th:action="@{/addEquipment}" th:object="${newEquipment}">
+        <div class="form-equipment-container">
+            <h3 class="add-equipment-form-header">Add Equipment</h3>
+            <div class="lbl-with-input-horizontal">
+                <label>Gegenstand:</label>
+                <input th:field="*{equipmentName}" id="1-input" class="dialog-input" type="text" min="1" minlength="1"
+                       required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Inventar Nr.:</label>
+                <input th:field="*{inventoryNumber}" id="2-input" class="dialog-input" type="text" min="1" minlength="1"
+                       maxlength="16" required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Abteilung:</label>
+                <select th:field="*{organizationalUnit}" class="dialog-input">
+                    <option th:each="unit : ${Units}" th:value="${unit.id}" th:text="${unit.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Gruppe:</label>
+                <select th:field="*{organizationalGroup}" class="dialog-input">
+                    <option th:each="group : ${Groups}" th:value="${group.id}" th:text="${group.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Fach:</label>
+                <select th:field="*{subject}" class="dialog-input">
+                    <option th:each="subject : ${Subjects}" th:value="${subject.id}" th:text="${subject.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Ort:</label>
+                <select th:field="*{position}" class="dialog-input">
+                    <option th:each="position : ${Positions}" th:value="${position.id}"
+                            th:text="${position.school} + ' ' + ${position.room}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Verantwortlicher:</label>
+                <select th:field="*{responsibleUser}" class="dialog-input">
+                    <option th:each="user : ${Users}" th:value="${user.id}"
+                            th:text="${user.firstname} + ' ' + ${user.lastname}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Zustand:</label>
+                <select th:field="*{equipmentState}" class="dialog-input">
+                    <option th:each="state : ${States}" th:value="${state}" th:text="${state.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="container-add-equipment-form-btn">
+                <button type="submit">Submit</button>
+                <button id="add-equipment-dialog-cancel-button" type="reset">Cancel</button>
+            </div>
+
+        </div>
+
+    </form>
+</dialog>
+
+
+<body>
+
 <nav class="top-nav">
     <div class="left">
-        <button>Menu</button>
+        <button class="img-btn"><img th:src="@{/icons/menu.svg}" title="Menu" alt="menu"></button>
     </div>
 
     <h2 class="mid">Inventarübersicht</h2>
     <div class="right">
-        <button>Profile</button>
-        <button>Logout</button>
+        <button class="img-btn"><img th:src="@{/icons/user.svg}" title="Profil" alt="profile"></button>
+        <button class="img-btn"><img th:src="@{/icons/log-out.svg}" title="Log out" alt="log-out"></button>
     </div>
 
 </nav>
-<body>
+
+<div class="container-content">
     <div class="container-inventory-form">
-        <button>Filter</button>
-        <button>Add</button>
+        <button class="img-btn"><img th:src="@{/icons/filter.svg}" title="Filter" alt="filter"></button>
+        <button class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
+                                                                    title="Hinzufügen" alt="add">
+        </button>
         <div class="right">
-            <button>Exportieren</button>
-        </div> 
+            <button alt="Export" title="Exportieren als CSV">Exportieren</button>
+        </div>
     </div>
     <div class="container-inventory-table">
         <table>
-            <caption hidden="true">
+            <caption class="table-inventory-caption">
                 Inventar
             </caption>
             <thead class="">
-                <tr class="">
-                    <th scope="col">Gegenstand</th>
-                    <th scope="col">Abteilung</th>
-                    <th scope="col">Gruppe</th>
-                    <th scope="col">Fach</th>
-                    <th scope="col">Ort</th>
-                    <th scope="col">Verantwortlicher</th>
-                    <th scope="col">Zustand</th>
-                    <th scope="col">BUTT</th>
-                </tr>
+            <tr class="">
+                <th scope="col">Gegenstand</th>
+                <th scope="col">Inventar Nr.</th>
+                <th scope="col">Abteilung</th>
+                <th scope="col">Gruppe</th>
+                <th scope="col">Fach</th>
+                <th scope="col">Ort</th>
+                <th scope="col">Verantwortlicher</th>
+                <th scope="col">Zustand</th>
+                <th scope="col">BUTT</th>
+            </tr>
             </thead>
             <tbody>
-            <tr class="" th:each="item : ${Equipment}" th:disabled=${formDisabled}>
+            <tr class="" th:each="item : ${Equipment}">
                 <td><span th:text="${item.equipmentName}">Name</span></td>
+                <td><span th:text="${item.inventoryNumber}">Nr</span></td>
+                <td><span th:text="${item.organizationalUnit.name}">Unit</span></td>
+                <td><span th:text="${item.organizationalGroup.name}">Group</span></td>
+                <td><span th:text="${item.subject.name}">Fach</span></td>
+                <td>
+                    <span th:text="${item.position.school}">Ort-Schule</span>
+                    <br>
+                    <span th:text="${item.position.room}">Ort-Raum</span>
+                    <br>
+                    <span th:text="${item.position.description}">Ort-Beschreibung</span>
+                </td>
+                <td><span
+                        th:text="${item.responsibleUser.lastname} + ' ' + ${item.responsibleUser.firstname}">Zuständig</span>
+                </td>
+                <td><span th:text="${item.equipmentState}">Status</span></td>
+                <td> Hier müssen buttons hin</td>
             </tr>
-
-
-            <tr>
-                <td>Buch</td>
-                <td>Oder</td>
-                <td>So</td>
-                <td>Felder</td>
-            </tr>
-            <tr>
-                <td>Buch</td>
-                <td>Oder</td>
-                <td>So</td>
-                <td>Felder</td>
-            </tr>
-            <tr>
-                <td>Buch</td>
-                <td>Oder</td>
-                <td>So</td>
-                <td>Felder</td>
-            </tr>
-            <tr>
-                <td>Buch</td>
-                <td>Oder</td>
-                <td>So</td>
-                <td>Felder</td>
-            </tr>
-
             </tbody>
         </table>
 
     </div>
 
+</div>
+
+
 </body>
+<script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 </html>
