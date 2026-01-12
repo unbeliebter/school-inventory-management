@@ -25,6 +25,10 @@ public class EquipmentService {
     @Autowired
     private EquipmentMapper mapper;
 
+    public List<EquipmentEntity> getAll() {
+        return dao.findAll();
+    }
+
     public Page<EquipmentEntity> getFilteredEquipment(
             Optional<EquipmentState> state,
             Optional<String> organizationalUnitName,

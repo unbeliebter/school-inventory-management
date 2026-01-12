@@ -21,8 +21,8 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    // api/equipment/getAll?state=DELIVERED&group=EDV
-    @GetMapping("getAll")
+    // api/equipment/getFiltered?state=DELIVERED&group=EDV
+    @GetMapping("getFiltered")
     public Page<EquipmentEntity> getFilteredEquipment(
             @RequestParam(required = false) EquipmentState state,
             @RequestParam(required = false) String unit,
@@ -39,6 +39,11 @@ public class EquipmentController {
                 Optional.ofNullable(responisbleUser),
                 pageable
         );
+    }
+
+    @GetMapping("getAll")
+    public List<EquipmentEntity> getAll() {
+        return equipmentService.getAll();
     }
 
     @GetMapping("get/{id}")
