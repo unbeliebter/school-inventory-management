@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -73,6 +74,12 @@ public class IndexController {
     @PostMapping("/addEquipment")
     public String submitForm(@ModelAttribute EquipmentEntity newEquipment, Model model) {
         equipmentService.save(newEquipment);
+        return showIndex(model);
+    }
+
+    @PostMapping("/removeEquipment")
+    public String removeEquipmentEntry(@RequestParam("equipmentEntryId") String equipmentEntryId, Model model) {
+        equipmentService.deleteById(equipmentEntryId);
         return showIndex(model);
     }
 }
