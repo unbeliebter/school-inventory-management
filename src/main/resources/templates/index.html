@@ -133,12 +133,18 @@
                         th:text="${item.responsibleUser.lastname} + ' ' + ${item.responsibleUser.firstname}">Zuständig</span>
                 </td>
                 <td><span th:text="${item.equipmentState}">Status</span></td>
-                <td>
-                    <button class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
-                    <form th:action="@{/removeEquipment}" method="post">
-                        <input type="hidden" th:name="equipmentEntryId" th:value="${item.id}"/>
-                        <button type="submit" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
-                    </form>
+                <td class="btn-cell">
+                    <div class="container-table-buttons">
+                        <form th:action="@{/editEquipment}" method="post">
+                            <button class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
+                        </form>
+
+                        <form th:action="@{/removeEquipment}" method="post">
+                            <input type="hidden" th:name="equipmentEntryId" th:value="${item.id}"/>
+                            <button type="submit" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
+                        </form>
+                    </div>
+
                 </td>
             </tr>
             </tbody>

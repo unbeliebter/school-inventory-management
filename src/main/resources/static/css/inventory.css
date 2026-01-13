@@ -150,3 +150,9 @@ dialog {
 .img-btn:hover img {
     filter: brightness(0.5);
 }
+
+td.btn-cell > .container-table-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    min-inline-size: 80px;
+}
