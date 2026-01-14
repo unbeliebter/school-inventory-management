@@ -7,14 +7,12 @@ import com.example.demo.entities.SubjectEntity;
 import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.entities.user.UserEntity;
-import com.example.demo.service.equipment.EquipmentRequest;
 import com.example.demo.service.equipment.EquipmentService;
 import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
 import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import com.example.demo.service.position.PositionService;
 import com.example.demo.service.subject.SubjectService;
 import com.example.demo.service.user.UserService;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,14 +62,17 @@ public class IndexController {
 
         EquipmentEntity newEquipment = new EquipmentEntity();
         model.addAttribute("newEquipment", newEquipment);
+        model.addAttribute("newEquipmentId", newEquipment.getId());
 
         return "index";
     }
 
     @PostMapping("/addEquipment")
-    public String submitForm(@ModelAttribute EquipmentEntity newEquipment, Model model) {
+    public String submitForm(@RequestParam("equipmentId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment, Model model) {
+        newEquipment.setId(equipmentId.equals("new") ? null : equipmentId);
         equipmentService.save(newEquipment);
-        return showIndex(model);
+        showIndex(model);
+        return "redirect:/";
     }
 
     @PostMapping("/removeEquipment")
@@ -79,6 +80,5 @@ public class IndexController {
         equipmentService.deleteById(equipmentEntryId);
         showIndex(model);
         return "redirect:/";
-//        return showIndex(model);   <
     }
 }

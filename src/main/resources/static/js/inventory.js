@@ -2,11 +2,11 @@ const openDialog = document.getElementById("openEquipmentDialogButton");
 const closeDialogButton = document.getElementById("add-equipment-dialog-cancel-button");
 const dialog = document.getElementById("addEquipmentDialog");
 
-
 console.log("WOW MUCH CONSOLE LOG")
 
 // Update button opens a modal dialog
 openDialog.addEventListener("click", () => {
+    document.getElementById("id-input").value = "new";
     dialog.showModal();
 });
 
@@ -15,9 +15,6 @@ closeDialogButton.addEventListener("click", () => {
 });
 
 function editEquipmentEntry(equipmentId) {
-    console.log(equipmentId);
-    console.log(equipment);
-
     let editedEquipment;
     for (let i = 0; i < equipment.length; i++) {
         if (equipmentId === equipment[i].id) {
@@ -25,16 +22,14 @@ function editEquipmentEntry(equipmentId) {
             break;
         }
     }
-    console.log("FOUND: " + editedEquipment.id);
 
     fillDialog(editedEquipment);
 
-    console.log(editedEquipment.organizationalUnit.name);
-
-    openDialog.click();
+    dialog.showModal();
 }
 
 function fillDialog(equipment) {
+    let equipmentId = document.getElementById("id-input");
     let equipmentNameField = document.getElementById("equipmentName-input");
     let inventoryNumberField = document.getElementById("inventoryNumber-input");
     let equipmentStateField = document.getElementById("equipmentState-input");
@@ -44,6 +39,7 @@ function fillDialog(equipment) {
     let positionField = document.getElementById("position-input");
     let responsibleUserField = document.getElementById("responsibleUser-input");
 
+    equipmentId.value = equipment.id;
     equipmentNameField.value  = equipment.equipmentName;
     inventoryNumberField.value = equipment.inventoryNumber;
     equipmentStateField.value = equipment.equipmentState;
@@ -52,11 +48,4 @@ function fillDialog(equipment) {
     subjectField.value = equipment.subject.id;
     positionField.value = equipment.position.id;
     responsibleUserField.value = equipment.responsibleUser.id;
-    //inventoryNumber
-    //equipmentState
-    //organizationalUnit.name
-    //organizationalGroup.name
-    //subject.Stuff
-    //position. ${position.school} + ' ' + ${position.room}"
-    //responsibleUser. ${user.firstname} + ' ' + ${user.lastname}"
 }
