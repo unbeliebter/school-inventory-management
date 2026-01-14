@@ -79,6 +79,6 @@ public class IndexController {
         equipmentService.deleteById(equipmentEntryId);
         showIndex(model);
         return "redirect:/";
-//        return showIndex(model);
+//        return showIndex(model);   <
     }
 }
