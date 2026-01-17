@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.equipment.EquipmentEntity;
-import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.service.equipment.EquipmentRequest;
 import com.example.demo.service.equipment.EquipmentService;
 import jakarta.servlet.http.HttpServletResponse;
