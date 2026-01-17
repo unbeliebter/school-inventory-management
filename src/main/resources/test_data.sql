@@ -4,8 +4,8 @@ INSERT INTO organizational_group(id, name)
 VALUES ('1', 'FIAE');
 INSERT INTO position(id, school, room, description)
 VALUES ('1', 'TG BBZ 1 Saarbrücken', 'A404', 'Im Schrank');
-INSERT INTO users(id, username, firstname, lastname, e_mail, usertype, password)
-VALUES ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'ADMIN', 'test');
+INSERT INTO users(id, username, firstname, lastname, e_mail, role_id, password)
+VALUES ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'admin', 'test');
 INSERT INTO subject(id, name, abbreviation)
 VALUES ('2', 'Lernfeld 1', 'LF1');
 INSERT INTO equipment(id, inventory_number, equipment_name, state, organizational_unit_id, organizational_group_id,
