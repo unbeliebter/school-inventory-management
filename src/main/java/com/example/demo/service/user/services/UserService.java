@@ -1,9 +1,12 @@
-package com.example.demo.service.user;
+package com.example.demo.service.user.services;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.mapper.UserMapper;
+import com.example.demo.service.user.UserRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,4 +62,8 @@ public class UserService {
         return false;
     }
 
+    public UserEntity findByUsername(String username) {
+        return dao.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username can't be found"));
+    }
 }

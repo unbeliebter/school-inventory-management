@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.entities.user.UserType;
 import com.example.demo.service.user.UserRequest;
-import com.example.demo.service.user.UserService;
+import com.example.demo.service.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class UserController {
     }
 
     @GetMapping("get/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public UserEntity getById(@PathVariable String id){
         return userService.getById(id);
     }
