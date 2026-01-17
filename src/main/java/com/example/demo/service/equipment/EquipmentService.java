@@ -30,7 +30,7 @@ public class EquipmentService {
     }
 
     public Page<EquipmentEntity> getFilteredEquipment(
-            Optional<EquipmentState> state,
+            Optional<String> state,
             Optional<String> organizationalUnitName,
             Optional<String> organizationalGroupName,
             Optional<String> subject,

@@ -24,11 +24,11 @@ public class EquipmentController {
     // api/equipment/getFiltered?state=DELIVERED&group=EDV
     @GetMapping("getFiltered")
     public Page<EquipmentEntity> getFilteredEquipment(
-            @RequestParam(required = false) EquipmentState state,
+            @RequestParam(required = false) String state,
             @RequestParam(required = false) String unit,
             @RequestParam(required = false) String group,
             @RequestParam(required = false) String subject,
-            @RequestParam(required = false) String responisbleUser,
+            @RequestParam(required = false) String responsibleUser,
             Pageable pageable) {
 
         return equipmentService.getFilteredEquipment(
@@ -36,7 +36,7 @@ public class EquipmentController {
                 Optional.ofNullable(unit),
                 Optional.ofNullable(group),
                 Optional.ofNullable(subject),
-                Optional.ofNullable(responisbleUser),
+                Optional.ofNullable(responsibleUser),
                 pageable
         );
     }
