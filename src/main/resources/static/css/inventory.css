@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --flex-bar-padding: 24px;
+    --bar-gap: 16px;
+}
+
+:root, body {
+    height: 100%;
+}
+
+.top-nav {
+    display: flex;
+    background-color: aqua;
+    padding: var(--flex-bar-padding);
+    position: sticky;
+}
+
+.top-nav .left {
+    margin: auto auto auto 0;
+}
+
+.top-nav .right {
+    margin: auto 0 auto auto;
+}
+
+.container-inventory-form {
+    display: flex;
+    gap: var(--bar-gap);
+    position: sticky;
+}
+
+.container-inventory-form .right {
+    margin: auto 0 auto auto;
+}
+
+.container-content {
+    display: flex;
+    flex-direction: column;
+    padding: 8px var(--flex-bar-padding) 0 var(--flex-bar-padding);
+    gap: 8px;
+}
+
+.container-inventory-table {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    min-height: 90%;
+    width: 100%;
+    border-radius: 8px;
+    border-width: 4px;
+    border-color: blue;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
+.table-inventory-caption {
+    background-color: dodgerblue;
+    font-weight: bolder;
+}
+
+th {
+    background-color: lightgrey;
+    border-width: 2px;
+
+}
+
+tr {
+    padding: 4px;
+
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    text-align: center;
+}
+
+tr:nth-of-type(even) {
+    background-color: lightgray;
+}
+tr:hover {
+    background-color: lightskyblue;
+}
+
+td {
+    margin: 0;
+
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+}
+
+
+dialog {
+    position: absolute;
+    margin-inline: auto;
+    left: 0;
+    right: 0;
+    top:100px;
+    background-color: lightgray;
+    border: None;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.form-equipment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.add-equipment-form-header {
+    align-self: center;
+}
+
+.lbl-with-input-horizontal {
+    display:flex;
+}
+
+.dialog-input {
+    margin-left: auto;
+    width: 160px;
+}
+
+.container-add-equipment-form-btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+.img-btn {
+    background: transparent;
+    border: none;
+
+    transform: scale(1.0);
+    filter: brightness(1);
+    transition: transform 0.5s ease-in;
+
+}
+.img-btn:hover {
+    transform: scale(1.5);
+    filter: brightness(0.5);
+}
+.img-btn:hover img {
+    filter: brightness(0.5);
+}
+
+td.btn-cell > .container-table-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    min-inline-size: 80px;
+}

@@ -7,9 +7,10 @@ import jakarta.persistence.criteria.JoinType;
 
 public class EquipmentSpecification {
 
-    public static Specification<EquipmentEntity> hasState(EquipmentState state) {
+    public static Specification<EquipmentEntity> hasState(String state) {
+        var equipmentState = state == null ? null : EquipmentState.valueOf(state);
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("equipmentState"), state);
+                criteriaBuilder.equal(root.get("equipmentState"), equipmentState);
     }
 
     public static Specification<EquipmentEntity> hasOrganizationalUnitName(String name) {

@@ -30,7 +30,7 @@ public class EquipmentService {
     }
 
     public Page<EquipmentEntity> getFilteredEquipment(
-            Optional<EquipmentState> state,
+            Optional<String> state,
             Optional<String> organizationalUnitName,
             Optional<String> organizationalGroupName,
             Optional<String> subject,
@@ -54,6 +54,12 @@ public class EquipmentService {
     @Transactional
     public EquipmentEntity create(EquipmentRequest request) {
         var entity = mapper.mapToEntity(request, new EquipmentEntity());
+        checkOnSave(entity);
+        return dao.save(entity);
+    }
+
+    @Transactional
+    public EquipmentEntity save(EquipmentEntity entity) {
         checkOnSave(entity);
         return dao.save(entity);
     }
