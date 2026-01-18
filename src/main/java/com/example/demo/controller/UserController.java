@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.user.UserEntity;
-import com.example.demo.entities.user.UserType;
 import com.example.demo.service.user.UserRequest;
 import com.example.demo.service.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
