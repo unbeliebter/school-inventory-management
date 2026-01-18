@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.view;
 
 import com.example.demo.entities.OrganizationalGroupEntity;
 import com.example.demo.entities.OrganizationalUnitEntity;

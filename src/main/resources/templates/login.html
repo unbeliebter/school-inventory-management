@@ -1,0 +1,35 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header>
+        <h1>Inventarübersicht</h1>
+    </header>
+
+    <main>
+        <div class="container-login-card">
+            <div class="login-card-top">
+                <label>Login</label>
+                <img class="logo" th:src="@{/icons/LogoTransparent.png}">
+            </div>
+            <div class="login-card-input">
+                <label>Benutzername</label>
+                <input maxlength="40" type="text">
+            </div>
+            <div class="login-card-input">
+                <label>Passwort</label>
+                <input maxlength="40" type="password">
+                <button class="login-password-reset">Passwort vergessen?</button>
+            </div>
+            <button class="login-submit">Anmelden</button>
+        </div>
+    </main>
+    
+</body>
+
+</html> 
