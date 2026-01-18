@@ -7,6 +7,7 @@ import com.example.demo.service.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,16 +20,19 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("getAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserEntity> getAll(){
         return userService.getAll();
     }
 
     @GetMapping("get/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public UserEntity getById(@PathVariable String id){
         return userService.getById(id);
     }
 
     @PostMapping("create")
+    @PreAuthorize("hasRole('ADMIN')")
     public UserEntity save(@RequestBody UserRequest request){
         return userService.create(request);
     }
@@ -50,6 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable String id){
         userService.deleteById(id);
     }
