@@ -17,7 +17,6 @@ body {
     display: flex;
     background-color: aqua;
     padding: var(--flex-bar-padding);
-    position: sticky;
 }
 
 .top-nav .left {
@@ -31,12 +30,12 @@ body {
 .section-content {
     flex: 1;
     display: flex;
+    overflow: auto;
 }
 
 .container-inventory-form {
     display: flex;
     gap: var(--bar-gap);
-    position: sticky;
 }
 
 .container-inventory-form .right {
@@ -54,53 +53,45 @@ body {
 
 .container-inventory-table {
     display: flex;
-    justify-content: center;
+    overflow: auto;
+    scrollbar-color: #1F88C5 #79BDE7;
+    border: solid;
+    margin-bottom: 16px;
 }
 
 table {
-    min-height: 90%;
     width: 100%;
-    border-radius: 8px;
-    border-width: 4px;
-    border-color: blue;
-    border-style: solid;
     border-collapse: collapse;
 }
 
 .table-inventory-caption {
     background-color: dodgerblue;
     font-weight: bolder;
+    padding: 12px;
+    font-size: 2rem;
 }
 
 th {
     background-color: lightgrey;
-    border-width: 2px;
-
+    padding: 12px;
+    font-size: 1.5rem;
 }
 
 tr {
     padding: 4px;
-
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-
     text-align: center;
 }
 
-tr:nth-of-type(even) {
-    background-color: lightgray;
-}
 tr:hover {
     background-color: lightskyblue;
 }
 
 td {
-    margin: 0;
-
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
+}
+td.btn-cell > .container-table-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    min-inline-size: 80px;
 }
 
 
@@ -159,8 +150,3 @@ dialog {
     opacity: 0.5;
 }
 
-td.btn-cell > .container-table-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    min-inline-size: 80px;
-}
