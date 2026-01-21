@@ -1,17 +1,17 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 :root {
     --flex-bar-padding: 24px;
     --bar-gap: 16px;
 }
 
 :root, body {
-    height: 100%;
+    height: 100vh;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .top-nav {
     display: flex;
@@ -28,6 +28,11 @@
     margin: auto 0 auto auto;
 }
 
+.section-content {
+    flex: 1;
+    display: flex;
+}
+
 .container-inventory-form {
     display: flex;
     gap: var(--bar-gap);
@@ -39,6 +44,8 @@
 }
 
 .container-content {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     padding: 8px var(--flex-bar-padding) 0 var(--flex-bar-padding);

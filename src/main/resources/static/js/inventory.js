@@ -49,3 +49,15 @@ function fillDialog(equipment) {
     positionField.value = equipment.position.id;
     responsibleUserField.value = equipment.responsibleUser.id;
 }
+
+function toggleMenu() {
+    console.log("CALLED");
+    let navSidebar = document.getElementById("nav-sidebar");
+    let isOpen = navSidebar.getAttribute("open");
+    console.log(isOpen);
+    if (isOpen === "true") {
+        navSidebar.setAttribute("open", "false");
+    } else if (isOpen) {
+        navSidebar.setAttribute("open", "true");
+    }
+}

@@ -1,0 +1,47 @@
+
+
+#nav-sidebar {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: dodgerblue;
+
+    z-index: 1;
+}
+
+#nav-sidebar[open="true"] {
+    width: 20%;
+
+    transition: width 1s;
+}
+
+#nav-sidebar[open="false"] {
+    width: 0%;
+
+    transition: width 1s;
+}
+
+.menu-title {
+    text-align: center;
+    box-shadow: black 0 2px 0 0;
+    padding: 16px;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+
+    gap: 24px;
+}
+
+.menu-logout {
+    box-shadow: black 0 -2px 0 0;
+    margin-top: auto;
+    padding: 16px;
+}
