@@ -15,7 +15,7 @@ body {
 
 .top-nav {
     display: flex;
-    background-color: aqua;
+    background-color: var(--secondary-color);
     padding: var(--flex-bar-padding);
 }
 
@@ -54,7 +54,7 @@ body {
 .container-inventory-table {
     display: flex;
     overflow: auto;
-    scrollbar-color: #1F88C5 #79BDE7;
+    scrollbar-color: var(--primary-color) var(--secondary-color);
     border: solid;
     margin-bottom: 16px;
 }
@@ -65,14 +65,14 @@ table {
 }
 
 .table-inventory-caption {
-    background-color: dodgerblue;
+    background-color: var(--primary-color);
     font-weight: bolder;
     padding: 12px;
     font-size: 2rem;
 }
 
 th {
-    background-color: lightgrey;
+    background-color: var(--secondary-color);
     padding: 12px;
     font-size: 1.5rem;
 }

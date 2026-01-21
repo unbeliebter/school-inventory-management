@@ -3,7 +3,7 @@
     flex-direction: column;
     overflow: hidden;
 
-    background-color: dodgerblue;
+    background-color: var(--primary-color);
 
     z-index: 1;
 }
