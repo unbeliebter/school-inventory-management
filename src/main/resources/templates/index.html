@@ -85,7 +85,7 @@
     <h2 class="mid">Inventarübersicht</h2>
     <div class="right">
         <button class="img-btn"><img th:src="@{/icons/user.svg}" title="Profil" alt="profile"></button>
-        <button class="img-btn"><img th:src="@{/icons/log-out.svg}" title="Log out" alt="log-out"></button>
+        <a th:href="@{/logout}"  ><img class="img-btn" th:src="@{/icons/log-out.svg}" title="Log out" alt="log-out"></a>
     </div>
 </nav>
 
@@ -111,7 +111,7 @@
             </div>
         </div>
         <div class="menu-logout">
-            <span>Ausloggen</span>
+            <button class="button-link"><a th:href="@{/logout}">Ausloggen</a></button>
         </div>
     </nav>
 

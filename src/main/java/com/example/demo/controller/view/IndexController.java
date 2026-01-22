@@ -81,4 +81,9 @@ public class IndexController {
         showIndex(model);
         return "redirect:/";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/login";
+    }
 }
