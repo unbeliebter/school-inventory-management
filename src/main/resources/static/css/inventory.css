@@ -57,6 +57,7 @@ body {
     scrollbar-color: var(--primary-color) var(--secondary-color);
     border: solid;
     margin-bottom: 16px;
+    box-shadow: inset 0 0 10px black;
 }
 
 table {
