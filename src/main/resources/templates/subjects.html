@@ -46,13 +46,15 @@
                 </caption>
                 <thead class="">
                     <tr class="">
-                        <th scope="col">Fach</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Abkürzung</th>
                         <th class="table-head-buttons" scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                 <tr class="" th:each="item : ${TableItems}">
                     <td><span th:text="${item.name}">Fach</span></td>
+                    <td><span th:text="${item.abbreviation}">Fach</span></td>
                     <td class="btn-cell">
                         <div class="container-table-buttons">
                             <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
