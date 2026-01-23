@@ -52,7 +52,7 @@ public class IndexController {
         List<UserEntity> users = userService.getAll();
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
 
-        model.addAttribute("Equipment", equipment);
+        model.addAttribute("TableItems", equipment);
         model.addAttribute("Subjects", subjects);
         model.addAttribute("Positions", positions);
         model.addAttribute("Units", units);
@@ -61,14 +61,14 @@ public class IndexController {
         model.addAttribute("States", states);
 
         EquipmentEntity newEquipment = new EquipmentEntity();
-        model.addAttribute("newEquipment", newEquipment);
-        model.addAttribute("newEquipmentId", newEquipment.getId());
+        model.addAttribute("newTableItem", newEquipment);
+        model.addAttribute("newTableItemId", newEquipment.getId());
 
         return "index";
     }
 
     @PostMapping("/addEquipment")
-    public String submitForm(@RequestParam("equipmentId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment, Model model) {
         newEquipment.setId(equipmentId.equals("new") ? null : equipmentId);
         equipmentService.save(newEquipment);
         showIndex(model);
@@ -76,7 +76,7 @@ public class IndexController {
     }
 
     @PostMapping("/removeEquipment")
-    public String removeEquipmentEntry(@RequestParam("equipmentEntryId") String equipmentEntryId, Model model) {
+    public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId, Model model) {
         equipmentService.deleteById(equipmentEntryId);
         showIndex(model);
         return "redirect:/";

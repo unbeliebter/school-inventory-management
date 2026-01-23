@@ -33,17 +33,17 @@ public class SubjectsController {
     public String showIndex(Model model) {
         List<SubjectEntity> subjects = subjectService.getAll();
 
-        model.addAttribute("Subjects", subjects);
+        model.addAttribute("TableItems", subjects);
 
         SubjectEntity newSubject = new SubjectEntity();
-        model.addAttribute("newSubject", newSubject);
-        model.addAttribute("newSubjectId", newSubject.getId());
+        model.addAttribute("newTableItem", newSubject);
+        model.addAttribute("newTableItemId", newSubject.getId());
 
         return "subjects";
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("subjectId") String subjectId, @ModelAttribute SubjectEntity newSubject, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String subjectId, @ModelAttribute SubjectEntity newSubject, Model model) {
         newSubject.setId(subjectId.equals("new") ? null : subjectId);
         subjectService.create(newSubject);
         showIndex(model);
@@ -51,7 +51,7 @@ public class SubjectsController {
     }
 
     @PostMapping("/remove")
-    public String removeEquipmentEntry(@RequestParam("subjectEntryId") String subjectEntryId, Model model) {
+    public String removeEquipmentEntry(@RequestParam("tableItemId") String subjectEntryId, Model model) {
         subjectService.deleteById(subjectEntryId);
         showIndex(model);
         return "redirect:/subjects";
