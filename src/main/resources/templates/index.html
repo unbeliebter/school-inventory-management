@@ -82,15 +82,8 @@
     <nav th:replace="fragments.html :: sideBar"></nav>
 
     <div class="container-content">
-        <div class="container-inventory-form">
-            <button class="img-btn"><img th:src="@{/icons/filter.svg}" title="Filter" alt="filter"></button>
-            <button class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
-                                                                        title="Hinzufügen" alt="add">
-            </button>
-            <div class="right">
-                <button alt="Export" title="Exportieren als CSV">Exportieren</button>
-            </div>
-        </div>
+        <div th:replace="fragments.html :: table-control-header"></div>
+
         <div class="container-inventory-table">
             <table>
                 <caption class="table-inventory-caption">
