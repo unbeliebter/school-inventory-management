@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<header th:fragment="header">
+    <nav class="top-nav">
+        <div class="left">
+            <button onclick="toggleMenu()" class="img-btn"><img th:src="@{/icons/menu.svg}" title="Menu" alt="menu"></button>
+        </div>
+
+        <h2 class="mid">Inventarübersicht</h2>
+        <div class="right">
+            <button class="img-btn"><img th:src="@{/icons/user.svg}" title="Profil" alt="profile"></button>
+            <a th:href="@{/logout}"  ><img class="img-btn" th:src="@{/icons/log-out.svg}" title="Log out" alt="log-out"></a>
+        </div>
+    </nav>
+</header>
+
+
+<nav th:fragment="sideBar" id="nav-sidebar" open="false">
+    <h2 class="menu-title">Menü</h2>
+
+    <div class="menu-items">
+        <div class="menu-item">
+            <button class="button-link"><a th:href="@{/}">Inventar</a></button>
+        </div>
+        <div class="menu-item">
+            <span>Abteilungen</span>
+        </div>
+        <div class="menu-item">
+            <span>Gruppen</span>
+        </div>
+        <div class="menu-item">
+            <button class="button-link"><a th:href="@{/subjects}">Fächer</a></button>
+        </div>
+        <div class="menu-item">
+            <span>Lehrer</span>
+        </div>
+    </div>
+    <div class="menu-logout">
+        <button class="button-link"><a th:href="@{/logout}">Ausloggen</a></button>
+    </div>
+</nav>
+
+
+</body>
+</html>

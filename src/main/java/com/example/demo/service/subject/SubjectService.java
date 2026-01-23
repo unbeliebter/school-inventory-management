@@ -26,6 +26,11 @@ public class SubjectService {
         return dao.save(entity);
     }
 
+    @Transactional
+    public SubjectEntity create(SubjectEntity entity) {
+        return dao.save(entity);
+    }
+
     public SubjectEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
