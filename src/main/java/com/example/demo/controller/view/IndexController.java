@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping({"/"})
 public class IndexController {
 
     EquipmentService equipmentService;
@@ -42,7 +43,7 @@ public class IndexController {
         this.userService = userService;
     }
 
-    @RequestMapping({"/"})
+    @RequestMapping({""})
     public String showIndex(Model model) {
         List<EquipmentEntity> equipment = equipmentService.getAll();
         List<SubjectEntity> subjects = subjectService.getAll();
@@ -51,6 +52,8 @@ public class IndexController {
         List<OrganizationalGroupEntity> groups = orgGroupService.getAll();
         List<UserEntity> users = userService.getAll();
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
+
+        model.addAttribute("Path", "");
 
         model.addAttribute("TableItems", equipment);
         model.addAttribute("Subjects", subjects);
@@ -67,7 +70,7 @@ public class IndexController {
         return "index";
     }
 
-    @PostMapping("/addEquipment")
+    @PostMapping("/add")
     public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment, Model model) {
         newEquipment.setId(equipmentId.equals("new") ? null : equipmentId);
         equipmentService.save(newEquipment);
@@ -75,7 +78,7 @@ public class IndexController {
         return "redirect:/";
     }
 
-    @PostMapping("/removeEquipment")
+    @PostMapping("/remove")
     public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId, Model model) {
         equipmentService.deleteById(equipmentEntryId);
         showIndex(model);

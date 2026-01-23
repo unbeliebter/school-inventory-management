@@ -33,6 +33,7 @@ public class SubjectsController {
     public String showIndex(Model model) {
         List<SubjectEntity> subjects = subjectService.getAll();
 
+        model.addAttribute("Path", "/subjects");
         model.addAttribute("TableItems", subjects);
 
         SubjectEntity newSubject = new SubjectEntity();
