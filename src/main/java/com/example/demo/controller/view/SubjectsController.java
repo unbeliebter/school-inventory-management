@@ -37,7 +37,7 @@ public class SubjectsController {
 
         SubjectEntity newSubject = new SubjectEntity();
         model.addAttribute("newSubject", newSubject);
-        model.addAttribute("newSubject", newSubject.getId());
+        model.addAttribute("newSubjectId", newSubject.getId());
 
         return "subjects";
     }
