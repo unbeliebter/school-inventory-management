@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link th:href="@{/css/common.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/inventory.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/sidebarNav.css}" type="text/css" rel="stylesheet">
+
+
+<dialog id="itemDialog">
+    <form method="post" th:action="${Path} + '/add'" th:object="${newTableItem}">
+        <input type="hidden" th:name="tableItemId" id="id-input" th:value="*{id}"/>
+        <div class="form-equipment-container">
+            <h3 class="add-equipment-form-header">Add User</h3>
+            <div class="lbl-with-input-horizontal">
+                <label>Username:</label>
+                <input th:field="*{username}" id="username-input" class="dialog-input" type="text" min="1" minlength="1"
+                       required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Vorname:</label>
+                <input th:field="*{firstname}" id="firstname-input" class="dialog-input" type="text" min="1" minlength="1"
+                       required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Nachname:</label>
+                <input th:field="*{lastname}" id="lastname-input" class="dialog-input" type="text" min="1" minlength="1"
+                       required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>E-Mail:</label>
+                <input th:field="*{email}" id="email-input" class="dialog-input" type="text" min="1" minlength="1"
+                       required>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Rolle:</label>
+                <select th:field="*{userType}" id="userType-input" class="dialog-input">
+                    <option th:each="type : ${UserTypes}" th:value="${type}" th:text="${type.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="container-add-equipment-form-btn">
+                <button type="submit">Submit</button>
+                <button id="item-dialog-cancel-button" type="reset">Cancel</button>
+            </div>
+
+        </div>
+
+    </form>
+</dialog>
+
+
+<body>
+<header th:replace="~{fragments.html :: header}"> </header>
+
+<section class="section-content">
+    <nav th:replace="~{fragments.html :: sideBar}"></nav>
+
+    <div class="container-content">
+        <div th:replace="~{fragments.html :: table-control-header}"></div>
+        <div class="container-inventory-table">
+            <table>
+                <caption class="table-inventory-caption">
+                    Nutzer
+                </caption>
+                <thead class="">
+                    <tr class="">
+                        <th scope="col">Nutzername</th>
+                        <th scope="col">Vorname</th>
+                        <th scope="col">Nachname</th>
+                        <th scope="col">E-Mail</th>
+                        <th scope="col">Rolle</th>
+                        <th class="table-head-buttons" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr class="" th:each="item : ${TableItems}">
+                    <td><span th:text="${item.username}"></span></td>
+                    <td><span th:text="${item.firstname}"></span></td>
+                    <td><span th:text="${item.lastname}"></span></td>
+                    <td><span th:text="${item.email}"></span></td>
+                    <td><span th:text="${item.userType}"></span></td>
+                    <td class="btn-cell">
+                        <div class="container-table-buttons">
+                            <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
+
+                            <form th:action="${Path} + '/remove'" method="post">
+                                <input type="hidden" th:name="tableItemId" th:value="${item.id}"/>
+                                <button type="submit" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+</body>
+<script type="text/javascript" th:src="@{/js/inventory.js}"></script>
+<script type="text/javascript" th:src="@{/js/Dialogs/userDialog.js}"></script>
+<script th:inline="javascript">
+    var tableItems = [[${TableItems}]];
+    const newTableItemId = [[${newTableItemId}]]
+</script>
+</html>

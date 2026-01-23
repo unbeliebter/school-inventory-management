@@ -26,6 +26,11 @@ public class UserService {
         return dao.save(entity);
     }
 
+    @Transactional
+    public UserEntity create(UserEntity entity) {
+        return dao.save(entity);
+    }
+
     public UserEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
