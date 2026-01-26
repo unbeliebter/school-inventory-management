@@ -24,12 +24,12 @@ public class UsersPageController {
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<UserEntity> subjects = mainService.getAll();
+        List<UserEntity> mainEntities = mainService.getAll();
 
         List<UserType> userTypes = Arrays.asList(UserType.values());
 
         model.addAttribute("Path", PATH);
-        model.addAttribute("TableItems", subjects);
+        model.addAttribute("TableItems", mainEntities);
 
         model.addAttribute("UserTypes", userTypes);
 
