@@ -1,7 +1,9 @@
 package com.example.demo.controller.view;
 
-import com.example.demo.entities.SubjectEntity;
-import com.example.demo.service.subject.SubjectService;
+import com.example.demo.entities.OrganizationalGroupEntity;
+import com.example.demo.entities.OrganizationalUnitEntity;
+import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
+import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,23 +11,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping({"/subjects"})
-public class SubjectsPageController {
-    SubjectService mainService;
-    final String PATH = "subjects";
+@RequestMapping({"/units"})
+public class OrganizationalUnitsPageController {
+    OrganizationalUnitService mainService;
+    final String PATH = "units";
 
-    public SubjectsPageController(SubjectService mainService) {
+    public OrganizationalUnitsPageController(OrganizationalUnitService mainService) {
         this.mainService = mainService;
     }
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<SubjectEntity> mainEntities = mainService.getAll();
+        List<OrganizationalUnitEntity> mainEntities = mainService.getAll();
 
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
-        SubjectEntity newTableItem = new SubjectEntity();
+        OrganizationalGroupEntity newTableItem = new OrganizationalGroupEntity();
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 
@@ -33,7 +35,7 @@ public class SubjectsPageController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute SubjectEntity newTableItem, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute OrganizationalUnitEntity newTableItem, Model model) {
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
         mainService.create(newTableItem);
         showIndex(model);

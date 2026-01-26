@@ -27,6 +27,11 @@ public class OrganizationalUnitService {
     }
 
     @Transactional
+    public OrganizationalUnitEntity create(OrganizationalUnitEntity entity) {
+        return dao.save(entity);
+    }
+
+    @Transactional
     public OrganizationalUnitEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }

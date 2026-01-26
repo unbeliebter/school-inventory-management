@@ -1,9 +1,7 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.OrganizationalGroupEntity;
-import com.example.demo.entities.SubjectEntity;
 import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
-import com.example.demo.service.subject.SubjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +10,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping({"/groups"})
-public class organizationalGroupsPageController {
+public class OrganizationalGroupsPageController {
     OrganizationalGroupService mainService;
     final String PATH = "groups";
 
-    public organizationalGroupsPageController(OrganizationalGroupService mainService) {
+    public OrganizationalGroupsPageController(OrganizationalGroupService mainService) {
         this.mainService = mainService;
     }
 
@@ -35,8 +33,8 @@ public class organizationalGroupsPageController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String subjectId, @ModelAttribute OrganizationalGroupEntity newTableItem, Model model) {
-        newTableItem.setId(subjectId.equals("new") ? null : subjectId);
+    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute OrganizationalGroupEntity newTableItem, Model model) {
+        newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
         mainService.create(newTableItem);
         showIndex(model);
         return "redirect:/" + PATH;
