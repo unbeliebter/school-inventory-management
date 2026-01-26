@@ -1,4 +1,4 @@
-function fillDialog(user) {
+function fillDialog(tableItem) {
     let itemId = document.getElementById("id-input");
     let userNameField = document.getElementById("username-input");
     let firstNameField = document.getElementById("firstname-input");
@@ -6,10 +6,10 @@ function fillDialog(user) {
     let eMailField = document.getElementById("email-input");
     let userTypeField = document.getElementById("userType-input");
 
-    itemId.value = user.id;
-    userNameField.value  = user.username;
-    firstNameField.value = user.firstname;
-    lastNameField.value  = user.lastname;
-    eMailField.value  = user.email;
-    userTypeField.value  = user.userType;
+    itemId.value = tableItem.id;
+    userNameField.value  = tableItem.username;
+    firstNameField.value = tableItem.firstname;
+    lastNameField.value  = tableItem.lastname;
+    eMailField.value  = tableItem.email;
+    userTypeField.value  = tableItem.userType;
 }

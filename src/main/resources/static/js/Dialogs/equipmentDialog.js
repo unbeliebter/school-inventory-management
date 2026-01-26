@@ -1,4 +1,4 @@
-function fillDialog(equipment) {
+function fillDialog(tableItem) {
     let equipmentId = document.getElementById("id-input");
     let equipmentNameField = document.getElementById("itemName-input");
     let inventoryNumberField = document.getElementById("inventoryNumber-input");
@@ -9,13 +9,13 @@ function fillDialog(equipment) {
     let positionField = document.getElementById("position-input");
     let responsibleUserField = document.getElementById("responsibleUser-input");
 
-    equipmentId.value = equipment.id;
-    equipmentNameField.value  = equipment.equipmentName;
-    inventoryNumberField.value = equipment.inventoryNumber;
-    equipmentStateField.value = equipment.equipmentState;
-    organizationalUnitField.value = equipment.organizationalUnit.id;
-    organizationalGroupField.value = equipment.organizationalGroup.id;
-    subjectField.value = equipment.subject.id;
-    positionField.value = equipment.position.id;
-    responsibleUserField.value = equipment.responsibleUser.id;
+    equipmentId.value = tableItem.id;
+    equipmentNameField.value  = tableItem.equipmentName;
+    inventoryNumberField.value = tableItem.inventoryNumber;
+    equipmentStateField.value = tableItem.equipmentState;
+    organizationalUnitField.value = tableItem.organizationalUnit.id;
+    organizationalGroupField.value = tableItem.organizationalGroup.id;
+    subjectField.value = tableItem.subject.id;
+    positionField.value = tableItem.position.id;
+    responsibleUserField.value = tableItem.responsibleUser.id;
 }
