@@ -93,6 +93,7 @@ tr:hover {
 }
 
 td {
+    padding: 4px 0 4px 0;
 }
 td.btn-cell > .container-table-buttons {
     display: flex;
@@ -147,7 +148,7 @@ dialog {
 
 }
 .img-btn:hover {
-    transform: scale(1.5);
+    transform: scale(1.25);
     opacity: 0.5;
 }
 
