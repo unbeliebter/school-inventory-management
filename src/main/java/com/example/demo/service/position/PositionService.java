@@ -26,6 +26,11 @@ public class PositionService {
         return dao.save(entity);
     }
 
+    @Transactional
+    public PositionEntity create(PositionEntity entity) {
+        return dao.save(entity);
+    }
+
     public PositionEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
