@@ -1,6 +1,8 @@
 package com.example.demo.controller.view;
 
+import com.example.demo.entities.OrganizationalGroupEntity;
 import com.example.demo.entities.SubjectEntity;
+import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
 import com.example.demo.service.subject.SubjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,23 +11,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping({"/subjects"})
-public class SubjectsPageController {
-    SubjectService mainService;
-    final String PATH = "subjects";
+@RequestMapping({"/groups"})
+public class organizationalGroupsPageController {
+    OrganizationalGroupService mainService;
+    final String PATH = "groups";
 
-    public SubjectsPageController(SubjectService mainService) {
+    public organizationalGroupsPageController(OrganizationalGroupService mainService) {
         this.mainService = mainService;
     }
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<SubjectEntity> mainEntities = mainService.getAll();
+        List<OrganizationalGroupEntity> mainEntities = mainService.getAll();
 
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
-        SubjectEntity newTableItem = new SubjectEntity();
+        OrganizationalGroupEntity newTableItem = new OrganizationalGroupEntity();
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 
@@ -33,7 +35,7 @@ public class SubjectsPageController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String subjectId, @ModelAttribute SubjectEntity newTableItem, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String subjectId, @ModelAttribute OrganizationalGroupEntity newTableItem, Model model) {
         newTableItem.setId(subjectId.equals("new") ? null : subjectId);
         mainService.create(newTableItem);
         showIndex(model);

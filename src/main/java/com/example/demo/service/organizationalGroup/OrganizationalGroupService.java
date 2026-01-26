@@ -26,6 +26,11 @@ public class OrganizationalGroupService {
         return dao.save(entity);
     }
 
+    @Transactional
+    public OrganizationalGroupEntity create(OrganizationalGroupEntity entity) {
+        return dao.save(entity);
+    }
+
     public OrganizationalGroupEntity getById(String id) {
         return dao.findById(id).orElse(null);
     }
