@@ -15,16 +15,16 @@ import java.util.List;
 @Controller
 @RequestMapping({"/users"})
 public class UsersPageController {
-    UserService userService;
-    String PATH = "/users";
+    UserService mainService;
+    final String PATH = "users";
 
-    public UsersPageController(UserService userService) {
-        this.userService = userService;
+    public UsersPageController(UserService mainService) {
+        this.mainService = mainService;
     }
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<UserEntity> subjects = userService.getAll();
+        List<UserEntity> subjects = mainService.getAll();
 
         List<UserType> userTypes = Arrays.asList(UserType.values());
 
@@ -39,22 +39,22 @@ public class UsersPageController {
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 
-        return "users";
+        return PATH;
     }
 
     @PostMapping("/add")
     public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute UserEntity newTableItem, Model model) {
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
-        userService.create(newTableItem);
+        mainService.create(newTableItem);
         showIndex(model);
-        return "redirect:" + PATH;
+        return "redirect:/" + PATH;
     }
 
     @PostMapping("/remove")
     public String removeEquipmentEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
-        userService.deleteById(tableItemId);
+        mainService.deleteById(tableItemId);
         showIndex(model);
-        return "redirect:" + PATH;
+        return "redirect:/" + PATH;
     }
 
     @GetMapping("/logout")

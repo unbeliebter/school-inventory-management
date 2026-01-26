@@ -1,8 +1,7 @@
 package com.example.demo.controller.view;
 
-import com.example.demo.entities.PositionEntity;
-import com.example.demo.entities.user.UserEntity;
-import com.example.demo.service.position.PositionService;
+import com.example.demo.entities.SubjectEntity;
+import com.example.demo.service.subject.SubjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,23 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping({"/positions"})
-public class PositionsPageController {
-    PositionService mainService;
-    final String PATH = "positions";
+@RequestMapping({"/subjects"})
+public class SubjectsPageController {
+    SubjectService mainService;
+    final String PATH = "subjects";
 
-    public PositionsPageController(PositionService mainService) {
+    public SubjectsPageController(SubjectService mainService) {
         this.mainService = mainService;
     }
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<PositionEntity> mainEntities = mainService.getAll();
+        List<SubjectEntity> mainEntities = mainService.getAll();
 
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
-        PositionEntity newTableItem = new PositionEntity();
+        SubjectEntity newTableItem = new SubjectEntity();
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 
@@ -34,16 +33,16 @@ public class PositionsPageController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute PositionEntity newTableItem, Model model) {
-        newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
+    public String submitForm(@RequestParam("tableItemId") String subjectId, @ModelAttribute SubjectEntity newTableItem, Model model) {
+        newTableItem.setId(subjectId.equals("new") ? null : subjectId);
         mainService.create(newTableItem);
         showIndex(model);
         return "redirect:/" + PATH;
     }
 
     @PostMapping("/remove")
-    public String removeEquipmentEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
-        mainService.deleteById(tableItemId);
+    public String removeEquipmentEntry(@RequestParam("tableItemId") String subjectEntryId, Model model) {
+        mainService.deleteById(subjectEntryId);
         showIndex(model);
         return "redirect:/" + PATH;
     }
