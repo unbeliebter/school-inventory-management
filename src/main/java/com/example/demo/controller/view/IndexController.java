@@ -13,16 +13,21 @@ import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import com.example.demo.service.position.PositionService;
 import com.example.demo.service.subject.SubjectService;
 import com.example.demo.service.user.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequestMapping({"/"})
 public class IndexController {
+    final String PATH = "";
+    List<EquipmentEntity> currentTableList;
 
     EquipmentService equipmentService;
     SubjectService subjectService;
@@ -30,6 +35,7 @@ public class IndexController {
     OrganizationalUnitService orgUnitService;
     OrganizationalGroupService orgGroupService;
     UserService userService;
+
 
 
     public IndexController(EquipmentService equipmentService, SubjectService subjectService,
@@ -45,7 +51,11 @@ public class IndexController {
 
     @RequestMapping({""})
     public String showIndex(Model model) {
+        model.addAttribute("Path", PATH);
+
         List<EquipmentEntity> equipment = equipmentService.getAll();
+        this.currentTableList = equipment;
+
         List<SubjectEntity> subjects = subjectService.getAll();
         List<PositionEntity> positions = positionService.getAll();
         List<OrganizationalUnitEntity> units = orgUnitService.getAll();
@@ -71,18 +81,24 @@ public class IndexController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment) {
         newEquipment.setId(equipmentId.equals("new") ? null : equipmentId);
         equipmentService.save(newEquipment);
-        showIndex(model);
         return "redirect:/";
     }
 
     @PostMapping("/remove")
-    public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId, Model model) {
+    public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId) {
         equipmentService.deleteById(equipmentEntryId);
-        showIndex(model);
         return "redirect:/";
+    }
+
+    @GetMapping("/export")
+    public void exportEquipmentToCsv(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=table.csv");
+
+        equipmentService.writeEquipmentToCsv(this.currentTableList, response.getWriter());
     }
 
     @GetMapping("/logout")
