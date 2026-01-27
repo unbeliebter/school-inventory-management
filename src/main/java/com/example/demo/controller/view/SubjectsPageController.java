@@ -46,9 +46,4 @@ public class SubjectsPageController {
         showIndex(model);
         return "redirect:/" + PATH;
     }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/login";
-    }
 }

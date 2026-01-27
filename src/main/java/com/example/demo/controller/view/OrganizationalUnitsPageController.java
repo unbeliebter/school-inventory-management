@@ -48,9 +48,4 @@ public class OrganizationalUnitsPageController {
         showIndex(model);
         return "redirect:/" + PATH;
     }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/login";
-    }
 }

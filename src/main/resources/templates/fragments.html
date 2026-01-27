@@ -55,9 +55,7 @@
                                                                 title="Hinzufügen" alt="add">
     </button>
     <div class="right">
-        <form th:action="${Path} + '/export'" method="GET">
-            <button type="submit" alt="Export" title="Exportieren als CSV" class="button-link">Exportieren</button>
-        </form>
+        <button alt="Export" title="Exportieren als CSV" class="button-link"><a th:href="${Path} + '/export'">Exportieren</a></button>
     </div>
 </div>
 
