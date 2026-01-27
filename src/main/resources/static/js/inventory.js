@@ -2,6 +2,9 @@ const openDialog = document.getElementById("openEquipmentDialogButton");
 const closeDialogButton = document.getElementById("item-dialog-cancel-button");
 const dialog = document.getElementById("itemDialog");
 
+let tableMap = new Map();
+tableItems.forEach((i) => tableMap.set(i.id, i));
+
 console.log("WOW MUCH CONSOLE LOG")
 
 // Update button opens a modal dialog
@@ -15,16 +18,8 @@ closeDialogButton.addEventListener("click", () => {
 });
 
 function editTableItem(itemId) {
-    let itemToEdit;
-    for (let i = 0; i < tableItems.length; i++) {
-        if (itemId === tableItems[i].id) {
-            itemToEdit = tableItems[i];
-            break;
-        }
-    }
-
+    let itemToEdit = tableMap.get(itemId);
     fillDialog(itemToEdit);
-
     dialog.showModal();
 }
 

@@ -26,7 +26,7 @@
 
     <div class="menu-items">
         <div class="menu-item">
-            <button class="button-link"><a th:href="@{/}">Inventar</a></button>
+            <button class="button-link"><a th:href="@{/inventory}">Inventar</a></button>
         </div>
         <div class="menu-item">
             <button class="button-link"><a th:href="@{/units}">Abteilungen</a></button>
@@ -58,6 +58,11 @@
         <button alt="Export" title="Exportieren als CSV" class="button-link"><a th:href="${Path} + '/export'">Exportieren</a></button>
     </div>
 </div>
+
+<script th:fragment="table-script" th:inline="javascript">
+    var tableItems = [[${TableItems}]];
+    const newTableItemId = [[${newTableItemId}]]
+</script>
 
 
 </body>

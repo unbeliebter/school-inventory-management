@@ -96,10 +96,7 @@
 </section>
 
 </body>
+<script th:replace="~{fragments.html :: table-script}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/userDialog.js}"></script>
-<script th:inline="javascript">
-    var tableItems = [[${TableItems}]];
-    const newTableItemId = [[${newTableItemId}]]
-</script>
 </html>
