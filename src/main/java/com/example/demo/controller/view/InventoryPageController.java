@@ -27,8 +27,8 @@ import java.util.List;
 public class InventoryPageController {
     final String PATH = "inventory";
     List<EquipmentEntity> currentTableList;
-
     EquipmentService mainService;
+
     SubjectService subjectService;
     PositionService positionService;
     OrganizationalUnitService orgUnitService;
@@ -50,9 +50,9 @@ public class InventoryPageController {
 
     @RequestMapping({""})
     public String showIndex(Model model) {
-        List<EquipmentEntity> equipment = mainService.getAll();
+        List<EquipmentEntity> mainEntities = mainService.getAll();
         model.addAttribute("Path", PATH);
-        this.currentTableList = equipment;
+        this.currentTableList = mainEntities;
 
         List<SubjectEntity> subjects = subjectService.getAll();
         List<PositionEntity> positions = positionService.getAll();
@@ -61,7 +61,7 @@ public class InventoryPageController {
         List<UserEntity> users = userService.getAll();
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
 
-        model.addAttribute("TableItems", equipment);
+        model.addAttribute("TableItems", mainEntities);
         model.addAttribute("Subjects", subjects);
         model.addAttribute("Positions", positions);
         model.addAttribute("Units", units);
@@ -90,7 +90,7 @@ public class InventoryPageController {
     }
 
     @GetMapping("/export")
-    public void exportEquipmentToCsv(HttpServletResponse response) throws IOException {
+    public void exportTableToCsv(HttpServletResponse response) throws IOException {
         String fileName = PATH + "-table.csv";
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
