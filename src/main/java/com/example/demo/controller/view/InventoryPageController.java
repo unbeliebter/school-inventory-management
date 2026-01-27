@@ -14,6 +14,8 @@ import com.example.demo.service.position.PositionService;
 import com.example.demo.service.subject.SubjectService;
 import com.example.demo.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping({"/inventory"})
@@ -49,29 +52,39 @@ public class InventoryPageController {
     }
 
     @RequestMapping({""})
-    public String showIndex(Model model) {
+    public String showInventory(Model model) {
         List<EquipmentEntity> mainEntities = mainService.getAll();
+        model.addAttribute("TableItems", mainEntities);
         model.addAttribute("Path", PATH);
         this.currentTableList = mainEntities;
 
-        List<SubjectEntity> subjects = subjectService.getAll();
-        List<PositionEntity> positions = positionService.getAll();
-        List<OrganizationalUnitEntity> units = orgUnitService.getAll();
-        List<OrganizationalGroupEntity> groups = orgGroupService.getAll();
-        List<UserEntity> users = userService.getAll();
-        List<EquipmentState> states = Arrays.asList(EquipmentState.values());
+        addAdditionalServicesToModel(model);
 
+        return "inventory";
+    }
+
+    @GetMapping("/filtered")
+    public String showInventoryFiltered(
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String unit,
+            @RequestParam(required = false) String group,
+            @RequestParam(required = false) String subject,
+            @RequestParam(required = false) String responsibleUser,
+            Pageable pageable, Model model) {
+
+        List<EquipmentEntity> mainEntities = mainService
+                .getFilteredEquipmentAsList(
+                        Optional.ofNullable(state),
+                        Optional.ofNullable(unit),
+                        Optional.ofNullable(group),
+                        Optional.ofNullable(subject),
+                        Optional.ofNullable(responsibleUser),
+                        pageable);
         model.addAttribute("TableItems", mainEntities);
-        model.addAttribute("Subjects", subjects);
-        model.addAttribute("Positions", positions);
-        model.addAttribute("Units", units);
-        model.addAttribute("Groups", groups);
-        model.addAttribute("Users", users);
-        model.addAttribute("States", states);
+        model.addAttribute("Path", PATH);
+        this.currentTableList = mainEntities;
 
-        EquipmentEntity newEquipment = new EquipmentEntity();
-        model.addAttribute("newTableItem", newEquipment);
-        model.addAttribute("newTableItemId", newEquipment.getId());
+        addAdditionalServicesToModel(model);
 
         return "inventory";
     }
@@ -96,5 +109,26 @@ public class InventoryPageController {
         response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
 
         mainService.writeEquipmentToCsv(this.currentTableList, response.getWriter());
+    }
+
+
+    private void addAdditionalServicesToModel(Model model) {
+        List<SubjectEntity> subjects = subjectService.getAll();
+        List<PositionEntity> positions = positionService.getAll();
+        List<OrganizationalUnitEntity> units = orgUnitService.getAll();
+        List<OrganizationalGroupEntity> groups = orgGroupService.getAll();
+        List<UserEntity> users = userService.getAll();
+        List<EquipmentState> states = Arrays.asList(EquipmentState.values());
+
+        model.addAttribute("Subjects", subjects);
+        model.addAttribute("Positions", positions);
+        model.addAttribute("Units", units);
+        model.addAttribute("Groups", groups);
+        model.addAttribute("Users", users);
+        model.addAttribute("States", states);
+
+        EquipmentEntity newEquipment = new EquipmentEntity();
+        model.addAttribute("newTableItem", newEquipment);
+        model.addAttribute("newTableItemId", newEquipment.getId());
     }
 }

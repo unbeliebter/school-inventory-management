@@ -51,6 +51,15 @@ public class EquipmentService {
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
     }
 
+    public List<EquipmentEntity> getFilteredEquipmentAsList(Optional<String> state,
+                                                            Optional<String> organizationalUnitName,
+                                                            Optional<String> organizationalGroupName,
+                                                            Optional<String> subject,
+                                                            Optional<String> responsibleUser,
+                                                            Pageable pageable) {
+        return getFilteredEquipment(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser, pageable).toList();
+    }
+
     @Transactional
     public EquipmentEntity create(EquipmentRequest request) {
         var entity = mapper.mapToEntity(request, new EquipmentEntity());
