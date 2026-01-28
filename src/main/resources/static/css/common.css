@@ -1,8 +1,33 @@
+:root {
+    --primary-color: #1F88C5;
+    --secondary-color: #79BDE7;
+    --text-header-color: #000000;
+    --text-body-color: #333333;
+    --background-color-main: #FFFFFF;
+    --background-color-secondary: #F8F8F8;
+
+    font-size: clamp(0.8rem, 1vw, 1.5rem);
+}
+
+@media screen and (max-width: 980px) {
+    caption {
+        font-size: 1.5rem!important;
+    }
+    th {
+        font-size: 1.2rem!important;
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-size: clamp(0.8rem, 1vw, 1.5rem);
+}
+
+h2 {
+    font-size: 1.5rem;
 }
 
 .button-link {
@@ -15,28 +40,6 @@
     transform: scale(1.25);
     opacity: 0.5;
 }
-/*
-a:hover {
-    transform: scale(1.5);
-    filter: brightness(0.5);
-    opacity: 0.5;
-}
-*/
 
 
-:root {
-    --primary-color: #1F88C5;
-    --secondary-color: #79BDE7;
-    --text-header-color: #000000;
-    --text-body-color: #333333;
-    --background-color-main: #FFFFFF;
-    --background-color-secondary: #F8F8F8;
 
-    font-size: 1.5vh;
-}
-
-@media screen and (max-width: 300px) {
-    :root {
-        font-size: 5px!important;
-    }
-}

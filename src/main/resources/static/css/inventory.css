@@ -17,6 +17,7 @@ body {
     display: flex;
     background-color: var(--secondary-color);
     padding: var(--flex-bar-padding);
+    font-size: 1.5rem;
 }
 
 .top-nav .left {
@@ -93,6 +94,7 @@ tr:hover {
 }
 
 td {
+    font-size: 1rem;
     padding: 4px 0 4px 0;
 }
 td.btn-cell > .container-table-buttons {
