@@ -55,9 +55,9 @@ public class InventoryPageController {
     @RequestMapping({""})
     public String showInventory(Model model) {
         if (!filtered) {
-            this.currentTableList = mainService.getAll();;
-            this.filtered = false;
+            this.currentTableList = mainService.getAll();
         }
+        this.filtered = false;
         model.addAttribute("TableItems", this.currentTableList);
         model.addAttribute("Path", PATH);
 
