@@ -10,7 +10,6 @@ const closeFilterDialogButton = document.getElementById("filter-dialog-cancel-bu
 let tableMap = new Map();
 tableItems.forEach((i) => tableMap.set(i.id, i));
 
-
 openDialogButton.addEventListener("click", () => {
     document.getElementById("id-input").value = "new";
     dialog.showModal();
@@ -20,8 +19,11 @@ closeDialogButton.addEventListener("click", () => {
 });
 
 
-openFilterDialogButton.addEventListener("click", () => filterDialog.showModal());
-closeFilterDialogButton.addEventListener("click", () => filterDialog.close());
+if (filterDialog !== null) {
+    openFilterDialogButton.addEventListener("click", () => filterDialog.showModal());
+    closeFilterDialogButton.addEventListener("click", () => filterDialog.close());
+}
+
 
 function editTableItem(itemId) {
     let itemToEdit = tableMap.get(itemId);
