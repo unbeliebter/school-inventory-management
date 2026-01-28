@@ -29,6 +29,7 @@ import java.util.Optional;
 @RequestMapping({"/inventory"})
 public class InventoryPageController {
     final String PATH = "inventory";
+    boolean filtered = false;
     List<EquipmentEntity> currentTableList;
     EquipmentService mainService;
 
@@ -53,41 +54,43 @@ public class InventoryPageController {
 
     @RequestMapping({""})
     public String showInventory(Model model) {
-        List<EquipmentEntity> mainEntities = mainService.getAll();
-        model.addAttribute("TableItems", mainEntities);
+        if (!filtered) {
+            this.currentTableList = mainService.getAll();;
+            this.filtered = false;
+        }
+        model.addAttribute("TableItems", this.currentTableList);
         model.addAttribute("Path", PATH);
-        this.currentTableList = mainEntities;
 
         addAdditionalServicesToModel(model);
 
-        return "inventory";
+        return PATH;
     }
 
-    @GetMapping("/filtered")
-    public String showInventoryFiltered(
+    @PostMapping("/filtered")
+    public String filter(
             @RequestParam(required = false) String state,
             @RequestParam(required = false) String unit,
             @RequestParam(required = false) String group,
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) String responsibleUser,
             Pageable pageable, Model model) {
+        state = state.isEmpty() ? null : state;
+        unit = unit.isEmpty() ? null : unit;
+        group = group.isEmpty() ? null : group;
+        subject = subject.isEmpty() ? null : subject;
+        responsibleUser = responsibleUser.isEmpty() ? null : responsibleUser;
 
-        List<EquipmentEntity> mainEntities = mainService
-                .getFilteredEquipmentAsList(
+        this.currentTableList = mainService.getFilteredEquipmentAsList(
                         Optional.ofNullable(state),
                         Optional.ofNullable(unit),
                         Optional.ofNullable(group),
                         Optional.ofNullable(subject),
                         Optional.ofNullable(responsibleUser),
-                        pageable);
-        model.addAttribute("TableItems", mainEntities);
-        model.addAttribute("Path", PATH);
-        this.currentTableList = mainEntities;
+                        pageable);;
+        this.filtered = true;
 
-        addAdditionalServicesToModel(model);
-
-        return "inventory";
-    }
+        return "redirect:/" + PATH;
+}
 
     @PostMapping("/add")
     public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment) {

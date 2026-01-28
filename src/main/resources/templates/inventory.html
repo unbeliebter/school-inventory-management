@@ -68,6 +68,58 @@
                 <button type="submit">Submit</button>
                 <button id="item-dialog-cancel-button" type="reset">Cancel</button>
             </div>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="filterDialog" closedBy="any">
+    <form method="POST" th:action="${Path} + '/filtered'" th:object="${newTableItem}">
+        <div class="form-equipment-container">
+            <h3 class="add-equipment-form-header">Add Filter Option</h3>
+            <div class="lbl-with-input-horizontal">
+                <label>Abteilung:</label>
+                <select th:name="unit" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="unit : ${Units}" th:value="${unit.name}" th:text="${unit.name}"></option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Gruppe:</label>
+                <select th:name="group" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="group : ${Groups}" th:value="${group.name}" th:text="${group.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Fach:</label>
+                <select th:name="subject" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="subject : ${Subjects}" th:value="${subject.name}" th:text="${subject.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Verantwortlicher:</label>
+                <select th:name="responsibleUser" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="user : ${Users}" th:value="${user.id}"
+                            th:text="${user.firstname} + ' ' + ${user.lastname}">
+                    </option>
+                </select>
+            </div>
+            <div class="lbl-with-input-horizontal">
+                <label>Zustand:</label>
+                <select th:name="state" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="state : ${States}" th:value="${state}" th:text="${state.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="container-add-equipment-form-btn">
+                <button type="submit">Submit</button>
+                <button id="filter-dialog-cancel-button" type="reset">Cancel</button>
+            </div>
 
         </div>
 
