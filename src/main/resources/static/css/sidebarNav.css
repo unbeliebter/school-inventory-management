@@ -9,7 +9,7 @@
 }
 
 #nav-sidebar[open="true"] {
-    min-width: 80px;
+    min-width: 96px;
     max-width: 12%; /*needs both for animation*/
     transition: max-width 1s, min-width 1s;
 }
@@ -18,7 +18,7 @@
     min-width: 0;
     max-width: 0;
 
-    transition: max-width 1s, min-width 1s;
+    transition: max-width 0s, min-width 1s;
 }
 
 .menu-title {

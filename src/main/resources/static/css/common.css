@@ -26,8 +26,23 @@
     font-size: clamp(0.8rem, 1vw, 1.5rem);
 }
 
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    align-self: center;
+    margin: 0 auto 0 auto;
+}
+
 h2 {
     font-size: 1.5rem;
+
+}
+h3 {
+    font-size: 1.2rem;
+}
+
+.label-with-input-horizontal {
+    display:flex;
+    gap: 8px;
 }
 
 .button-link {

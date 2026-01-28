@@ -1,0 +1,67 @@
+dialog {
+    position: absolute;
+    margin-inline: auto;
+    left: 0;
+    right: 0;
+    top: 100px;
+    background-color: var(--primary-color);
+    border: None;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: rgb(0, 0, 64) 8px 16px 16px 0;
+}
+
+dialog h3 {
+    box-shadow: 0 2px 0 0 black;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+dialog button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    color: white;
+    box-shadow: 2px 4px 4px 0 black;
+}
+dialog button:hover {
+    filter: brightness(75%);
+    transform: scale(0.98);
+    box-shadow: 1px 2px 2px 0 black;
+}
+
+dialog button.submit {
+    background-color: var(--secondary-color);
+}
+dialog button.cancel {
+    background-color: orangered;
+}
+
+dialog input, select {
+    padding: 4px;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+
+    box-shadow: 1px 2px 2px 0 black;
+}
+dialog input:hover, select:hover {
+    background-color: var(--secondary-color);
+}
+
+.dialog-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dialog-input {
+    margin-left: auto;
+    width: 160px;
+}
+
+.dialog-button-row {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-around;
+}

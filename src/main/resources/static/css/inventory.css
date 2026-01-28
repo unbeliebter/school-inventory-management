@@ -104,42 +104,6 @@ td.btn-cell > .container-table-buttons {
 }
 
 
-dialog {
-    position: absolute;
-    margin-inline: auto;
-    left: 0;
-    right: 0;
-    top:100px;
-    background-color: lightgray;
-    border: None;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.form-equipment-container {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.add-equipment-form-header {
-    align-self: center;
-}
-
-.lbl-with-input-horizontal {
-    display:flex;
-}
-
-.dialog-input {
-    margin-left: auto;
-    width: 160px;
-}
-
-.container-add-equipment-form-btn {
-    display: flex;
-    justify-content: space-around;
-}
 
 .img-btn {
     background: transparent;

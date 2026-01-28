@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<link th:href="@{/css/common.css}" type="text/css" rel="stylesheet">
-<link th:href="@{/css/inventory.css}" type="text/css" rel="stylesheet">
-<link th:href="@{/css/sidebarNav.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/main.css}" type="text/css" rel="stylesheet">
 
 
 <dialog id="itemDialog" closedBy="any">
     <form method="post" th:action="${Path} + '/add'" th:object="${newTableItem}">
         <input type="hidden" th:name="tableItemId" id="id-input" th:value="*{id}"/>
-        <div class="form-equipment-container">
-            <h3 class="add-equipment-form-header">Add Subject</h3>
-            <div class="lbl-with-input-horizontal">
+        <div class="dialog-main-container">
+            <div>
+                <h3>Add Subject</h3>
+            </div>
+            <div class="label-with-input-horizontal">
                 <label>Name:</label>
                 <input th:field="*{name}" id="itemName-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
-            <div class="lbl-with-input-horizontal">
+            <div class="label-with-input-horizontal">
                 <label>Abkürzung:</label>
                 <input th:field="*{abbreviation}" id="subject-abbreviation-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
-            <div class="container-add-equipment-form-btn">
-                <button type="submit">Submit</button>
-                <button id="item-dialog-cancel-button" type="reset">Cancel</button>
+            <div class="dialog-button-row">
+                <button class="submit" type="submit">Submit</button>
+                <button class="cancel" id="item-dialog-cancel-button" type="reset">Cancel</button>
             </div>
 
         </div>
