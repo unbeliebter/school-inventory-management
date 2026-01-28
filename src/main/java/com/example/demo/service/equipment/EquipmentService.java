@@ -37,6 +37,24 @@ public class EquipmentService {
             Optional<String> responsibleUser,
             Pageable pageable) {
 
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser);
+
+        return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
+    }
+
+    public List<EquipmentEntity> getFilteredEquipmentAsList(
+            Optional<String> state,
+            Optional<String> organizationalUnitName,
+            Optional<String> organizationalGroupName,
+            Optional<String> subject,
+            Optional<String> responsibleUser) {
+
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser);
+
+        return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification)).orElseGet(() -> dao.findAll());
+    }
+
+    private Optional<Specification<EquipmentEntity>> calculateActiveSpec(Optional<String> state, Optional<String> organizationalUnitName, Optional<String> organizationalGroupName, Optional<String> subject, Optional<String> responsibleUser) {
         Stream<Specification<EquipmentEntity>> activeSpecs = Stream.of(
                         state.map(EquipmentSpecification::hasState),
                         organizationalUnitName.map(EquipmentSpecification::hasOrganizationalUnitName),
@@ -46,18 +64,7 @@ public class EquipmentService {
                 ).filter(Optional::isPresent)
                 .map(Optional::get);
 
-        Optional<Specification<EquipmentEntity>> finalSpec = activeSpecs.reduce(Specification::and);
-
-        return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
-    }
-
-    public List<EquipmentEntity> getFilteredEquipmentAsList(Optional<String> state,
-                                                            Optional<String> organizationalUnitName,
-                                                            Optional<String> organizationalGroupName,
-                                                            Optional<String> subject,
-                                                            Optional<String> responsibleUser,
-                                                            Pageable pageable) {
-        return getFilteredEquipment(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser, pageable).toList();
+        return activeSpecs.reduce(Specification::and);
     }
 
     @Transactional
