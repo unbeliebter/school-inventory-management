@@ -40,7 +40,7 @@ dialog button.cancel {
 dialog input, select {
     padding: 4px;
     border: none;
-    border-radius: 8px;
+    border-radius: 2px;
     text-align: center;
 
     box-shadow: 1px 2px 2px 0 black;
