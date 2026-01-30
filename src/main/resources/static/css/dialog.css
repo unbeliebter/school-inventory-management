@@ -43,7 +43,7 @@ dialog input, select {
     border-radius: 2px;
     text-align: center;
 
-    box-shadow: 1px 2px 2px 0 black;
+    box-shadow: inset 1px 2px 2px 0 black;
 }
 dialog input:hover, select:hover {
     background-color: var(--secondary-color);
