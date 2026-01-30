@@ -22,12 +22,14 @@ dialog button {
     border-radius: 8px;
     padding: 8px;
     color: white;
-    box-shadow: 2px 4px 4px 0 black;
+    box-shadow: 1px 2px 2px 0 black, inset 1px 2px 2px 0 white;
+
+    transition: filter 0.5s, transform 0.5s, box-shadow 0.5s;
 }
 dialog button:hover {
-    filter: brightness(75%);
-    transform: scale(0.98);
-    box-shadow: 1px 2px 2px 0 black;
+    filter: brightness(85%);
+    transform: scale(0.99);
+    box-shadow: inset 1px 2px 2px 0 black, 1px 2px 2px 0 white;
 }
 
 dialog button.submit {
