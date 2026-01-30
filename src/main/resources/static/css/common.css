@@ -44,6 +44,19 @@ h3 {
     font-size: 1.2rem;
 }
 
+label.error {
+    color: red;
+    background-color: var(--secondary-color);
+    text-align: center;
+    font-weight: bold;
+}
+label.error[shown="true"] {
+    display: inline-block;
+}
+label.error[shown="false"] {
+    display: none;
+}
+
 .label-with-input-horizontal {
     display:flex;
     gap: 8px;

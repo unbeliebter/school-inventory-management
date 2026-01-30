@@ -12,6 +12,11 @@ tableItems.forEach((i) => tableMap.set(i.id, i));
 
 openDialogButton.addEventListener("click", () => {
     document.getElementById("id-input").value = "new";
+    let errorLabel = document.getElementById("add-Item-Error");
+    if (errorLabel !== null) {
+        errorLabel.setAttribute("shown", "false");
+    }
+
     dialog.showModal();
 });
 closeDialogButton.addEventListener("click", () => {
@@ -39,4 +44,30 @@ function toggleMenu() {
     } else if (isOpen) {
         navSidebar.setAttribute("open", "true");
     }
+}
+
+function validateOnAdd() {
+    let form = document.getElementById("newItemForm");
+    let errorLabel = document.getElementById("add-Item-Error");
+    if (!form.reportValidity()) {
+        return;
+    }
+
+    let equipmentStateField = document.getElementById("equipmentState-input");
+    let responsibleUserField = document.getElementById("responsibleUser-input");
+    if (equipmentStateField === null || responsibleUserField === null) {
+        return;
+    }
+
+    if (equipmentStateField.value === 'ON_LOAN' && responsibleUserField.value !== "") {
+        errorLabel.textContent = "Ausgeliehene Objekte dürfen keinen Verantwortlichen haben!"
+        errorLabel.setAttribute("shown", "true");
+        return;
+    } else if (equipmentStateField.value !== 'ON_LOAN' && responsibleUserField.value === "") {
+        errorLabel.textContent = "Bitte einen Verantwortlichen wählen"
+        errorLabel.setAttribute("shown", "true");
+        return;
+    }
+
+    form.submit();
 }

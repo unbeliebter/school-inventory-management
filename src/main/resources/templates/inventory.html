@@ -3,7 +3,7 @@
 <link th:href="@{/css/main.css}" type="text/css" rel="stylesheet">
 
 <dialog id="itemDialog" closedBy="any">
-    <form method="post" th:action="${Path} + '/add'" th:object="${newTableItem}">
+    <form id="newItemForm" method="post" th:action="${Path} + '/add'" th:object="${newTableItem}">
         <input type="hidden" th:name="tableItemId" id="id-input" th:value="*{id}"/>
         <div class="dialog-main-container">
             <div>
@@ -48,9 +48,11 @@
                     </option>
                 </select>
             </div>
+            <label id="add-Item-Error" class="error" shown="false"></label>
             <div class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
                 <select th:field="*{responsibleUser}" id="responsibleUser-input" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
                     <option th:each="user : ${Users}" th:value="${user.id}"
                             th:text="${user.firstname} + ' ' + ${user.lastname}">
                     </option>
@@ -64,7 +66,7 @@
                 </select>
             </div>
             <div class="dialog-button-row">
-                <button class="submit" type="submit">Submit</button>
+                <button class="submit" type="button" onclick="validateOnAdd()">Submit</button>
                 <button class="cancel" id="item-dialog-cancel-button" type="reset">Cancel</button>
             </div>
         </div>
@@ -169,9 +171,10 @@
                         <br>
                         <span th:text="${item.position.description}">Ort-Beschreibung</span>
                     </td>
-                    <td><span
+                    <td th:if="${item.responsibleUser}"><span
                             th:text="${item.responsibleUser.firstname} + ' ' + ${item.responsibleUser.lastname}">Zuständig</span>
                     </td>
+                    <td th:unless="${item.responsibleUser}"></td>
                     <td><span th:text="${item.equipmentState}">Status</span></td>
                     <td class="btn-cell">
                         <div class="container-table-buttons">
