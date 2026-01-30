@@ -5,6 +5,7 @@
 
     background-color: var(--primary-color);
 
+    box-shadow: 4px 0 4px 0 black;
     z-index: 1;
 }
 
