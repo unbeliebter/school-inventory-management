@@ -32,7 +32,7 @@
             </div>
             <div class="label-with-input-horizontal">
                 <label>Rolle:</label>
-                <select th:field="*{userType}" id="userType-input" class="dialog-input">
+                <select th:field="*{role}" id="userType-input" class="dialog-input">
                     <option th:each="type : ${UserTypes}" th:value="${type}" th:text="${type.name}">
                     </option>
                 </select>
@@ -77,7 +77,7 @@
                     <td><span th:text="${item.firstname}"></span></td>
                     <td><span th:text="${item.lastname}"></span></td>
                     <td><span th:text="${item.email}"></span></td>
-                    <td><span th:text="${item.userType}"></span></td>
+                    <td><span th:text="${item.role.name}"></span></td>
                     <td class="btn-cell">
                         <div class="container-table-buttons">
                             <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
