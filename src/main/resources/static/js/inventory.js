@@ -54,17 +54,17 @@ function validateOnAdd() {
     }
 
     let equipmentStateField = document.getElementById("equipmentState-input");
-    let responsibleUserField = document.getElementById("responsibleUser-input");
-    if (equipmentStateField === null || responsibleUserField === null) {
+    let positionField = document.getElementById("position-input");
+    if (equipmentStateField === null || positionField === null) {
         return;
     }
 
-    if (equipmentStateField.value === 'ON_LOAN' && responsibleUserField.value !== "") {
-        errorLabel.textContent = "Ausgeliehene Objekte dürfen keinen Verantwortlichen haben!"
+    if (equipmentStateField.value === 'ON_LOAN' && positionField.value !== "") {
+        errorLabel.textContent = "Ausgeliehene Objekte dürfen keinen Ort angegeben haben!"
         errorLabel.setAttribute("shown", "true");
         return;
-    } else if (equipmentStateField.value !== 'ON_LOAN' && responsibleUserField.value === "") {
-        errorLabel.textContent = "Bitte einen Verantwortlichen wählen"
+    } else if (equipmentStateField.value !== 'ON_LOAN' && positionField.value === "") {
+        errorLabel.textContent = "Bitte einen Lagerort wählen"
         errorLabel.setAttribute("shown", "true");
         return;
     }

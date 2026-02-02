@@ -40,19 +40,19 @@
                     </option>
                 </select>
             </div>
+            <label id="add-Item-Error" class="error" shown="false"></label>
             <div class="label-with-input-horizontal">
                 <label>Ort:</label>
                 <select th:field="*{position}" id="position-input" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
                     <option th:each="position : ${Positions}" th:value="${position.id}"
                             th:text="${position.school} + ' ' + ${position.room}">
                     </option>
                 </select>
             </div>
-            <label id="add-Item-Error" class="error" shown="false"></label>
             <div class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
                 <select th:field="*{responsibleUser}" id="responsibleUser-input" class="dialog-input">
-                    <option selected="selected" th:value="null" th:text="null"></option>
                     <option th:each="user : ${Users}" th:value="${user.id}"
                             th:text="${user.firstname} + ' ' + ${user.lastname}">
                     </option>
@@ -164,13 +164,14 @@
                     <td><span th:text="${item.organizationalUnit.name}">Unit</span></td>
                     <td><span th:text="${item.organizationalGroup.name}">Group</span></td>
                     <td><span th:text="${item.subject.name}">Fach</span></td>
-                    <td>
+                    <td th:if="${item.position}">
                         <span th:text="${item.position.school}">Ort-Schule</span>
                         <br>
                         <span th:text="${item.position.room}">Ort-Raum</span>
                         <br>
                         <span th:text="${item.position.description}">Ort-Beschreibung</span>
                     </td>
+                    <td th:unless="${item.position}"></td>
                     <td th:if="${item.responsibleUser}"><span
                             th:text="${item.responsibleUser.firstname} + ' ' + ${item.responsibleUser.lastname}">Zuständig</span>
                     </td>

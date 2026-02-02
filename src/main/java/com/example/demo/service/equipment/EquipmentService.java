@@ -123,10 +123,10 @@ public class EquipmentService {
     @SneakyThrows
     public void checkOnSave(EquipmentEntity entity) {
         if (entity.getEquipmentState().equals(EquipmentState.ON_LOAN)) {
-            if (entity.getResponsibleUser() == null) {
+            if (entity.getPosition() == null) {
                 return;
             }
-            throw new EquipmentCouldNotBeSavedException("Es darf keinen Verantwortlichen bei Equipmentstatus = Ausgeliehen geben.");
+            throw new EquipmentCouldNotBeSavedException("Es darf keinen Ort bei Equipmentstatus = Ausgeliehen geben.");
         }
     }
 }
