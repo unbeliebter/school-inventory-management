@@ -8,13 +8,15 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +48,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-//AbstractAuthenticationFilterConfigurer::permitAll  <- was in formLogin
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -63,6 +65,11 @@ public class SecurityConfig {
         passwordEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
 
         return passwordEncoder;
+    }
+
+    @Bean
+    public SpringSecurityDialect springSecurityDialect() {
+        return new SpringSecurityDialect();
     }
 
 }

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -31,19 +34,19 @@
         <div class="menu-item">
             <button class="button-link"><a th:href="@{/inventory}">Inventar</a></button>
         </div>
-        <div class="menu-item">
+        <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/units}">Abteilungen</a></button>
         </div>
-        <div class="menu-item">
+        <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/groups}">Gruppen</a></button>
         </div>
-        <div class="menu-item">
+        <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/subjects}">Fächer</a></button>
         </div>
-        <div class="menu-item">
+        <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/users}">Lehrer</a></button>
         </div>
-        <div class="menu-item">
+        <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/positions}">Orte</a></button>
         </div>
     </div>
@@ -54,7 +57,7 @@
 
 <div th:fragment="table-control-header" class="container-inventory-form">
     <button class="img-btn" id="openFilterDialogButton"><img th:src="@{/icons/filter.svg}" title="Filter" alt="filter"></button>
-    <button class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
+    <button sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
                                                                 title="Hinzufügen" alt="add">
     </button>
     <div class="right">

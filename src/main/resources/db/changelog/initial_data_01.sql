@@ -17,3 +17,9 @@ VALUES ('1', '1', 'Notebook', 'IN_USE', '1', '1', '2', '1', '1');
 --Password- is Password
 insert into users(id, username, firstname, lastname, e_mail, role_id, password)
 values ('2', 'admin2', 'Admin2', 'Account', 'tgbbz1@test.de', 'admin', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK');
+
+insert into users(id, username, firstname, lastname, e_mail, role_id, password)
+values ('3', 'responsible', 'Responsible', 'Account', 'tgbbz1@test.de', 'responsible', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK');
+
+insert into users(id, username, firstname, lastname, e_mail, role_id, password)
+values ('4', 'teacher', 'Teacher', 'Account', 'tgbbz1@test.de', 'teacher', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK');
