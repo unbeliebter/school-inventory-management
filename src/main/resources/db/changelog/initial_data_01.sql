@@ -11,3 +11,9 @@ VALUES ('2', 'Lernfeld 1', 'LF1');
 INSERT INTO equipment(id, inventory_number, equipment_name, state, organizational_unit_id, organizational_group_id,
                       subject_id, position_id, responsible_user_id)
 VALUES ('1', '1', 'Notebook', 'IN_USE', '1', '1', '2', '1', '1');
+
+
+
+--Password- is Password
+insert into users(id, username, firstname, lastname, e_mail, role_id, password)
+values ('2', 'admin2', 'Admin2', 'Account', 'tgbbz1@test.de', 'admin', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK');

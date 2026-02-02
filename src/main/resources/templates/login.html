@@ -13,22 +13,28 @@
     </header>
 
     <main>
-        <div class="container-login-card">
-            <div class="login-card-top">
-                <label class="login-header">Login</label>
-                <img class="logo" th:src="@{/icons/LogoTransparent.png}">
+        <form th:action="@{/login}" method="post">
+            <div class="container-login-card">
+                <div class="login-card-top">
+                    <label class="login-header">Login</label>
+                    <img class="logo" th:src="@{/icons/LogoTransparent.png}">
+                </div>
+                <div th:if="${param.error}">
+                    Falsche eingabe!</div>
+                <div th:if="${param.logout}">
+                    Sie wurden ausgeloggt!</div>
+                <div class="login-card-input">
+                    <label>Benutzername</label>
+                    <input name="username" maxlength="40" type="text">
+                </div>
+                <div class="login-card-input">
+                    <label>Passwort</label>
+                    <input name="password" maxlength="40" type="password">
+                    <button class="login-password-reset">Passwort vergessen?</button>
+                </div>
+                <button type="submit" value="Log in" class="login-submit">Anmelden</button>
             </div>
-            <div class="login-card-input">
-                <label>Benutzername</label>
-                <input maxlength="40" type="text">
-            </div>
-            <div class="login-card-input">
-                <label>Passwort</label>
-                <input maxlength="40" type="password">
-                <button class="login-password-reset">Passwort vergessen?</button>
-            </div>
-            <button class="login-submit">Anmelden</button>
-        </div>
+        </form>
     </main>
     
 </body>
