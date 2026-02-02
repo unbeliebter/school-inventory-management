@@ -18,11 +18,17 @@
     }
 }
 
+@font-face {
+    font-family: atkinson-hyperlegible
+    src: url(font/atkinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-family: atkinson-hyperlegible;
     font-size: clamp(0.8rem, 1vw, 1.5rem);
 }
 

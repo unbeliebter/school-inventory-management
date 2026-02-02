@@ -12,11 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring6.SpringTemplateEngine;
-import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +33,11 @@ public class SecurityConfig {
                             response.getWriter().write("{\"error\": \"Unauthorized - Please log in.\"}");
                         })
                 )
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/login.css", "/css/common.css", "/icons/LogoTransparent.png").permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/login.css",
+                        "/css/common.css",
+                        "/icons/LogoTransparent.png",
+                        "/font/atkinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf")
+                        .permitAll())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
