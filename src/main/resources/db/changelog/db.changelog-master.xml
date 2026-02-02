@@ -130,4 +130,44 @@
 
         <dropTable tableName="responsibility"/>
     </changeSet>
+    
+    <changeSet id="1768691323887-1 add role table" author="Sven Pradela">
+        <createTable tableName="roles">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1768691483419-1 add roles to table" author="Sven Pradela">
+        <sqlFile path="roles_01.sql"
+                 relativeToChangelogFile="true"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="1768691813479-1 changes for user roles" author="Sven Pradela">
+        <sql>
+            UPDATE users
+            SET usertype = LOWER(usertype)
+            WHERE usertype IS NOT NULL;
+        </sql>
+
+        <renameColumn tableName="users" oldColumnName="usertype" newColumnName="role_id"/>
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_users_roles"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <!--
+    Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
+
+    <changeSet id="init data for user tests" author="Sven Pradela" runOnChange="true">
+        <sqlFile path="initial_data_01.sql"
+                  relativeToChangelogFile="true"
+                  encoding="UTF-8"/>
+    </changeSet>
+    -->
 </databaseChangeLog>

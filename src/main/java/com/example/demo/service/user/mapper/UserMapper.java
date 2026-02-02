@@ -1,7 +1,8 @@
-package com.example.demo.service.user;
+package com.example.demo.service.user.mapper;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.UserRequest;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,8 @@ public class UserMapper {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private RoleMapper roleMapper;
 
     public UserEntity mapToEntityCreate(UserRequest request, UserEntity entity) {
         entity.setFirstname(request.getFirstName());
@@ -18,7 +21,7 @@ public class UserMapper {
         entity.setEmail(request.getEmail());
         entity.setPassword(hashPassword(request.getPassword()));
         entity.setUsername(generateUsername(request.getFirstName(), request.getLastName()));
-        entity.setUserType(request.getUserType());
+        entity.setRole(roleMapper.mapToEntity(request.getRole()));
 
         return entity;
     }
@@ -28,7 +31,7 @@ public class UserMapper {
         entity.setLastname(request.getLastName());
         entity.setEmail(request.getEmail());
         entity.setUsername(request.getUsername());
-        entity.setUserType(request.getUserType());
+        entity.setRole(roleMapper.mapToEntity(request.getRole()));
 
         return entity;
     }

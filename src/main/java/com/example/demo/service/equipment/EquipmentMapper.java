@@ -5,7 +5,7 @@ import com.example.demo.service.organizationalGroup.OrganizationalGroupMapper;
 import com.example.demo.service.organizationalUnit.OrganizationalUnitMapper;
 import com.example.demo.service.position.PositionMapper;
 import com.example.demo.service.subject.SubjectMapper;
-import com.example.demo.service.user.UserMapper;
+import com.example.demo.service.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

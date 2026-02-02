@@ -1,6 +1,5 @@
 package com.example.demo.service.user;
 
-import com.example.demo.entities.user.UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +13,5 @@ public class UserRequest {
     private String email;
     private String firstName;
     private String lastName;
-    private UserType userType;
+    private RoleRequest role;
 }

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class EquipmentController {
 
     // api/equipment/getFiltered?state=DELIVERED&group=EDV
     @GetMapping("getFiltered")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public Page<EquipmentEntity> getFilteredEquipment(
             @RequestParam(required = false) String state,
             @RequestParam(required = false) String unit,
@@ -41,26 +43,31 @@ public class EquipmentController {
     }
 
     @GetMapping("getAll")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public List<EquipmentEntity> getAll() {
         return equipmentService.getAll();
     }
 
     @GetMapping("get/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public EquipmentEntity getById(@PathVariable String id){
         return equipmentService.getById(id);
     }
 
     @PostMapping("save")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE')")
     public EquipmentEntity save(@RequestBody EquipmentRequest request){
         return equipmentService.create(request);
     }
 
     @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE')")
     public void delete(@PathVariable String id){
         equipmentService.deleteById(id);
     }
 
     @GetMapping("export")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public void exportEquipmentToCsv(List<EquipmentEntity> toExport, HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=equipment.csv");

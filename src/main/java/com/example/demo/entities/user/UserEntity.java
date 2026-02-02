@@ -17,8 +17,8 @@ public class UserEntity {
     private String email;
     private String firstname;
     private String lastname;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "usertype")
-    private UserType userType;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
 }
