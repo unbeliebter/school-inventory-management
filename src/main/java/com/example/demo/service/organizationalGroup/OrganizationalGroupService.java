@@ -2,14 +2,16 @@ package com.example.demo.service.organizationalGroup;
 
 import com.example.demo.daos.OrganizationalGroupDao;
 import com.example.demo.entities.OrganizationalGroupEntity;
+import com.example.demo.service.IPageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class OrganizationalGroupService {
+public class OrganizationalGroupService implements IPageService<OrganizationalGroupEntity> {
 
     @Autowired
     private OrganizationalGroupDao dao;
@@ -42,5 +44,10 @@ public class OrganizationalGroupService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    @Override
+    public void writeToCsv(List<OrganizationalGroupEntity> entities, PrintWriter writer) {
+        // TODO;
     }
 }
