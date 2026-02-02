@@ -1,3 +1,7 @@
+a {
+    color: white;
+}
+
 #nav-sidebar {
     display: flex;
     flex-direction: column;

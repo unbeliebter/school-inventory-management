@@ -17,10 +17,9 @@
         font-size: 1.2rem!important;
     }
 }
-
 @font-face {
-    font-family: atkinson-hyperlegible
-    src: url(font/atkinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf);
+    font-family: atkinson-hyperlegible;
+    src: url(../font/atkinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf);
 }
 
 * {

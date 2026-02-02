@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/css/login.css",
                         "/css/common.css",
                         "/icons/LogoTransparent.png",
-                        "/font/atkinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf")
+                        "/font/**")
                         .permitAll())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
