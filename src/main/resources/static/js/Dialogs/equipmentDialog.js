@@ -17,5 +17,5 @@ function fillDialog(tableItem) {
     organizationalGroupField.value = tableItem.organizationalGroup.id;
     subjectField.value = tableItem.subject.id;
     positionField.value = tableItem.position.id;
-    responsibleUserField.value = tableItem.responsibleUser.id;
+    responsibleUserField.value = tableItem.responsibleUser == null ?  "" : tableItem.responsibleUser.id;
 }
