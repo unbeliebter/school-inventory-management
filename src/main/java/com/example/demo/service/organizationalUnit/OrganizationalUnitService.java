@@ -2,14 +2,16 @@ package com.example.demo.service.organizationalUnit;
 
 import com.example.demo.daos.OrganizationalUnitDao;
 import com.example.demo.entities.OrganizationalUnitEntity;
+import com.example.demo.service.IPageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class OrganizationalUnitService {
+public class OrganizationalUnitService implements IPageService<OrganizationalUnitEntity> {
 
     @Autowired
     private OrganizationalUnitDao dao;
@@ -42,5 +44,10 @@ public class OrganizationalUnitService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    @Override
+    public void writeToCsv(List<OrganizationalUnitEntity> entities, PrintWriter writer) {
+        // TODO;
     }
 }
