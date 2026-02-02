@@ -2,14 +2,16 @@ package com.example.demo.service.subject;
 
 import com.example.demo.daos.SubjectDao;
 import com.example.demo.entities.SubjectEntity;
+import com.example.demo.service.IPageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class SubjectService {
+public class SubjectService implements IPageService<SubjectEntity> {
 
     @Autowired
     private SubjectDao dao;
@@ -42,5 +44,10 @@ public class SubjectService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    @Override
+    public void writeToCsv(List<SubjectEntity> entities, PrintWriter writer) {
+        // TODO
     }
 }

@@ -107,7 +107,7 @@ public class InventoryPageController {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
 
-        mainService.writeEquipmentToCsv(this.currentTableList, response.getWriter());
+        mainService.writeToCsv(this.currentTableList, response.getWriter());
     }
 
 

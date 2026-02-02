@@ -72,6 +72,6 @@ public class EquipmentController {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=equipment.csv");
 
-        equipmentService.writeEquipmentToCsv(toExport, response.getWriter());
+        equipmentService.writeToCsv(toExport, response.getWriter());
     }
 }

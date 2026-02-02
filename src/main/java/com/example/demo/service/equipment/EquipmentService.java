@@ -93,7 +93,7 @@ public class EquipmentService {
         }
     }
 
-    public void writeEquipmentToCsv(List<EquipmentEntity> entites, PrintWriter writer) {
+    public void writeToCsv(List<EquipmentEntity> entites, PrintWriter writer) {
         writer.println("ID,Inventarnummer,Name,Zustand,Abteilung,Gruppe,Fach,Ort,Verantwortlicher");
 
         for (EquipmentEntity equipment : entites) {
