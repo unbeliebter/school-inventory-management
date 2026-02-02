@@ -1,10 +1,8 @@
 package com.example.demo.controller.view;
 
-import com.example.demo.entities.SubjectEntity;
-import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.entities.user.UserType;
-import com.example.demo.service.user.UserService;
+import com.example.demo.service.user.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
