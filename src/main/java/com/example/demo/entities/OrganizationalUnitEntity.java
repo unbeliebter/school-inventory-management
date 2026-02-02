@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 @Table(name = "organizational_unit")
 @Data
-public class OrganizationalUnitEntity {
+public class OrganizationalUnitEntity implements IHasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

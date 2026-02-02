@@ -1,12 +1,13 @@
 package com.example.demo.entities.user;
 
+import com.example.demo.entities.IHasId;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Table(name = "users")
 @Data
-public class UserEntity {
+public class UserEntity implements IHasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,7 +1,6 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.IHasId;
-import com.example.demo.entities.SubjectEntity;
 import com.example.demo.service.IPageService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -20,13 +19,12 @@ public abstract class APageController <T extends IHasId> {
 
 
     @RequestMapping({""})
-    public String showTable(Model model) {
+    public String showTable(Model model, T newTableItem) {
         List<T> mainEntities = mainService.getAll();
 
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
-        SubjectEntity newTableItem = new SubjectEntity();
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 

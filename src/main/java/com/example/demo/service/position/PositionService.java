@@ -2,14 +2,16 @@ package com.example.demo.service.position;
 
 import com.example.demo.daos.PositionDao;
 import com.example.demo.entities.PositionEntity;
+import com.example.demo.service.IPageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class PositionService {
+public class PositionService implements IPageService<PositionEntity> {
 
     @Autowired
     private PositionDao dao;
@@ -42,5 +44,10 @@ public class PositionService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    @Override
+    public void writeToCsv(List<PositionEntity> entities, PrintWriter writer) {
+        // TODO;
     }
 }
