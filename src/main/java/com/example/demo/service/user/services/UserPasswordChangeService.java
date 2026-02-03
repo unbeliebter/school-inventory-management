@@ -4,9 +4,6 @@ import com.example.demo.daos.UserDao;
 import com.example.demo.daos.UserPasswordChangeDao;
 import com.example.demo.entities.UserPasswordChangeEntity;
 import com.example.demo.service.IPageService;
-import com.example.demo.service.user.UserPasswordChangeRequest;
-import com.example.demo.service.user.mapper.UserPasswordChangeMapper;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +16,6 @@ public class UserPasswordChangeService implements IPageService<UserPasswordChang
     @Autowired
     private UserPasswordChangeDao changeDao;
     @Autowired
-    private UserPasswordChangeMapper mapper;
-    @Autowired
     private UserDao userDao;
 
     public List<UserPasswordChangeEntity> getAll() {
@@ -29,13 +24,8 @@ public class UserPasswordChangeService implements IPageService<UserPasswordChang
 
     @Override
     public UserPasswordChangeEntity create(UserPasswordChangeEntity entity) {
-        return changeDao.save(entity);
-    }
-
-    @Transactional
-    public UserPasswordChangeEntity create(UserPasswordChangeRequest request) {
-        var entity = mapper.mapToEntity(new UserPasswordChangeEntity(), request);
-        return changeDao.save(entity);
+        // Kein Save, da Trigger
+        return null;
     }
 
     public List<UserPasswordChangeEntity> getByUserId(String userId) {
