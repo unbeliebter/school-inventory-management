@@ -9,4 +9,5 @@ public class RoleRequest {
 
     private String id;
     private String name;
+    private String frontendName;
 }

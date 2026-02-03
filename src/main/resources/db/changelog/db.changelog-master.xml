@@ -185,6 +185,19 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="1770145375814-1" author="Sven Pradela">
+        <addColumn tableName="roles">
+            <column name="fe_name" type="TEXT"/>
+        </addColumn>
+
+        <sql>
+            UPDATE roles SET fe_name = 'Administrator' WHERE id = 'admin';
+            UPDATE roles SET fe_name = 'Verantwortlicher' WHERE id = 'responsible';
+            UPDATE roles SET fe_name = 'Lehrkraft' WHERE id = 'teacher';
+            UPDATE roles SET fe_name = 'Benutzer' WHERE id = 'user';
+        </sql>
+    </changeSet>
+
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
 

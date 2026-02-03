@@ -1,7 +1,6 @@
 package com.example.demo.service.user.mapper;
 
 import com.example.demo.entities.user.RoleEntity;
-import com.example.demo.entities.user.UserType;
 import com.example.demo.service.user.RoleRequest;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,8 @@ public class RoleMapper {
         var entity = new RoleEntity();
 
         entity.setId(request.getId());
-        entity.setName(UserType.fromLabel(request.getName()));
+        entity.setName(request.getName());
+        entity.setFrontendName(request.getFrontendName());
 
         return entity;
     }
