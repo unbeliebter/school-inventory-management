@@ -154,7 +154,7 @@
                     <th scope="col">Ort</th>
                     <th scope="col">Verantwortlicher</th>
                     <th scope="col">Zustand</th>
-                    <th class="table-head-buttons" scope="col"></th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="table-head-buttons" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -177,7 +177,7 @@
                     </td>
                     <td th:unless="${item.responsibleUser}"></td>
                     <td><span th:text="${item.equipmentState}">Status</span></td>
-                    <td class="btn-cell">
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="btn-cell">
                         <div class="container-table-buttons">
                             <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
 
