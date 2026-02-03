@@ -10,15 +10,18 @@ const closeFilterDialogButton = document.getElementById("filter-dialog-cancel-bu
 let tableMap = new Map();
 tableItems.forEach((i) => tableMap.set(i.id, i));
 
-openDialogButton.addEventListener("click", () => {
-    document.getElementById("id-input").value = "new";
-    let errorLabel = document.getElementById("add-Item-Error");
-    if (errorLabel !== null) {
-        errorLabel.setAttribute("shown", "false");
-    }
+if (openDialogButton !== null) {
+    openDialogButton.addEventListener("click", () => {
+        document.getElementById("id-input").value = "new";
+        let errorLabel = document.getElementById("add-Item-Error");
+        if (errorLabel !== null) {
+            errorLabel.setAttribute("shown", "false");
+        }
 
-    dialog.showModal();
-});
+        dialog.showModal();
+    });
+}
+
 closeDialogButton.addEventListener("click", () => {
     dialog.close();
 });

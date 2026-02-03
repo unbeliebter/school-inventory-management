@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
-    
+
     public UsersPageController(UserService mainService) {
         this.mainService = mainService;
         PATH = "users";
