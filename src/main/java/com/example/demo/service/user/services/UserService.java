@@ -2,6 +2,7 @@ package com.example.demo.service.user.services;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.IPageService;
 import com.example.demo.service.user.mapper.UserMapper;
 import com.example.demo.service.user.UserRequest;
 import jakarta.transaction.Transactional;
@@ -9,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements IPageService<UserEntity> {
 
     @Autowired
     private UserDao dao;
@@ -45,6 +47,11 @@ public class UserService {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    @Override
+    public void writeToCsv(List<UserEntity> entities, PrintWriter writer) {
+        // TODO;
     }
 
     public boolean authenticate(String username, String password) {

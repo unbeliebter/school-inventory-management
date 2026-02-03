@@ -25,6 +25,8 @@ public abstract class APageController <T extends IHasId> {
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
+        addAdditionalServicesOrEntitiesToModel(model);
+
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
 
@@ -51,6 +53,14 @@ public abstract class APageController <T extends IHasId> {
         response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
 
         mainService.writeToCsv(this.currentTableList, response.getWriter());
+    }
+
+    /**
+     * Convenient method to insert more stuff
+     * @param model
+     */
+    protected void addAdditionalServicesOrEntitiesToModel(Model model) {
+        return;
     }
 
 }
