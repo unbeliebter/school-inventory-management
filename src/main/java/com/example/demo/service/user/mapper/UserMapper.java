@@ -22,7 +22,6 @@ public class UserMapper {
         entity.setPassword(hashPassword(request.getPassword()));
         entity.setUsername(generateUsername(request.getFirstName(), request.getLastName()));
         entity.setRole(roleMapper.mapToEntity(request.getRole()));
-        entity.setChangedPassword(false);
 
         return entity;
     }
