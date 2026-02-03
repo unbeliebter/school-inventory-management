@@ -50,7 +50,7 @@ public class UsersPageController extends APageController<UserEntity> {
 
         RoleEntity role = new RoleEntity();
         role.setId(roleId);
-        role.setName(roleId.toUpperCase());
+        role.setName(UserType.valueOf(roleId.toUpperCase()));
         newTableItem.setRole(role);
 
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);

@@ -163,7 +163,7 @@
     
     <changeSet id="1770104720357-1 add column changed_password to users" author="Sven Pradela">
         <addColumn tableName="users">
-            <column name="changed_password" type="boolean"/>
+            <column name="changed_password" type="boolean" defaultValue="false"/>
         </addColumn>
     </changeSet>
     
@@ -178,11 +178,11 @@
             <column name="changed_at" type="timestamptz"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="id"
+        <addForeignKeyConstraint baseTableName="user_password_changes"
+                                 baseColumnNames="user_id"
                                  constraintName="fk_users_password_changes"
-                                 referencedTableName="user_password_changes"
-                                 referencedColumnNames="user_id"/>
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
     </changeSet>
 
     <!--
