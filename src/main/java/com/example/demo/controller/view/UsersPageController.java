@@ -1,9 +1,10 @@
 package com.example.demo.controller.view;
 
+import com.example.demo.daos.RoleDao;
 import com.example.demo.entities.user.RoleEntity;
 import com.example.demo.entities.user.UserEntity;
-import com.example.demo.entities.user.UserType;
 import com.example.demo.service.user.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,9 @@ import java.util.List;
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
 
+    @Autowired
+    private RoleDao roleDao;
+
     public UsersPageController(UserService mainService) {
         this.mainService = mainService;
         PATH = "users";
@@ -25,8 +29,8 @@ public class UsersPageController extends APageController<UserEntity> {
 
     @Override
     protected void addAdditionalServicesOrEntitiesToModel(Model model) {
-        List<UserType> userTypes = Arrays.asList(UserType.values());
-        model.addAttribute("UserTypes", userTypes);
+        var roles = roleDao.findAll();
+        model.addAttribute("Roles", roles);
     }
 
 
@@ -50,7 +54,7 @@ public class UsersPageController extends APageController<UserEntity> {
 
         RoleEntity role = new RoleEntity();
         role.setId(roleId);
-        role.setName(UserType.valueOf(roleId.toUpperCase()));
+        role.setName(roleId.toUpperCase());
         newTableItem.setRole(role);
 
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
