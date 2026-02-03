@@ -11,6 +11,7 @@ public class RoleMapper {
 
         entity.setId(request.getId());
         entity.setName(request.getName());
+        entity.setFrontendName(request.getFrontendName());
 
         return entity;
     }

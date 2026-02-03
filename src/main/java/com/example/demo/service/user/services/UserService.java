@@ -54,26 +54,6 @@ public class UserService implements IPageService<UserEntity> {
         // TODO;
     }
 
-    public boolean authenticate(String username, String password) {
-        if (username == null) {
-            return false;
-        }
-
-        if (password == null) {
-            return false;
-        }
-
-        var user = dao.findByUsername(username);
-
-        if (user.isPresent()) {
-            if (username.equals(user.get().getUsername())) {
-                return UserMapper.checkPassword(password, user.get().getPassword());
-            }
-        }
-
-        return false;
-    }
-
     public UserEntity findByUsername(String username) {
         return dao.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("username can't be found"));

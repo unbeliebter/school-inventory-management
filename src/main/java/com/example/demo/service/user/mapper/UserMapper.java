@@ -32,6 +32,7 @@ public class UserMapper {
         entity.setEmail(request.getEmail());
         entity.setUsername(request.getUsername());
         entity.setRole(roleMapper.mapToEntity(request.getRole()));
+        entity.setChangedPassword(request.isChangedPassword());
 
         return entity;
     }
@@ -45,10 +46,6 @@ public class UserMapper {
 
     public static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    public static boolean checkPassword(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
     }
 
     public String generateUsername(String firstName, String lastName) {
