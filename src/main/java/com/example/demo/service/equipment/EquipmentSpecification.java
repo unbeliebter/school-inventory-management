@@ -40,4 +40,11 @@ public class EquipmentSpecification {
                 userId
         );
     }
+
+    public static Specification<EquipmentEntity> hasPosition(String positionId) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
+                root.join("position", JoinType.INNER).get("id"),
+                positionId
+        );
+    }
 }

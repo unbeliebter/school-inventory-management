@@ -35,9 +35,11 @@ public class EquipmentService {
             Optional<String> organizationalGroupName,
             Optional<String> subject,
             Optional<String> responsibleUser,
+            Optional<String> position,
             Pageable pageable) {
 
-        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser);
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName,
+                organizationalGroupName, subject, responsibleUser, position);
 
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
     }
@@ -47,20 +49,28 @@ public class EquipmentService {
             Optional<String> organizationalUnitName,
             Optional<String> organizationalGroupName,
             Optional<String> subject,
-            Optional<String> responsibleUser) {
+            Optional<String> responsibleUser,
+            Optional<String> position) {
 
-        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName, organizationalGroupName, subject, responsibleUser);
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(state, organizationalUnitName,
+                organizationalGroupName, subject, responsibleUser, position);
 
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification)).orElseGet(() -> dao.findAll());
     }
 
-    private Optional<Specification<EquipmentEntity>> calculateActiveSpec(Optional<String> state, Optional<String> organizationalUnitName, Optional<String> organizationalGroupName, Optional<String> subject, Optional<String> responsibleUser) {
+    private Optional<Specification<EquipmentEntity>> calculateActiveSpec(Optional<String> state,
+                                                                         Optional<String> organizationalUnitName,
+                                                                         Optional<String> organizationalGroupName,
+                                                                         Optional<String> subject,
+                                                                         Optional<String> responsibleUser,
+                                                                         Optional<String> position) {
         Stream<Specification<EquipmentEntity>> activeSpecs = Stream.of(
                         state.map(EquipmentSpecification::hasState),
                         organizationalUnitName.map(EquipmentSpecification::hasOrganizationalUnitName),
                         organizationalGroupName.map(EquipmentSpecification::hasOrganizationalGroupName),
                         subject.map(EquipmentSpecification::hasSubjectName),
-                        responsibleUser.map(EquipmentSpecification::hasResponsibility)
+                        responsibleUser.map(EquipmentSpecification::hasResponsibility),
+                        position.map(EquipmentSpecification::hasPosition)
                 ).filter(Optional::isPresent)
                 .map(Optional::get);
 

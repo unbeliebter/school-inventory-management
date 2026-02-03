@@ -30,6 +30,7 @@ public class EquipmentController {
             @RequestParam(required = false) String group,
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) String responsibleUser,
+            @RequestParam(required = false) String position,
             Pageable pageable) {
 
         return equipmentService.getFilteredEquipment(
@@ -38,6 +39,7 @@ public class EquipmentController {
                 Optional.ofNullable(group),
                 Optional.ofNullable(subject),
                 Optional.ofNullable(responsibleUser),
+                Optional.ofNullable(position),
                 pageable
         );
     }

@@ -38,7 +38,6 @@ public class InventoryPageController {
     UserService userService;
 
 
-
     public InventoryPageController(EquipmentService equipmentService, SubjectService subjectService,
                                    PositionService positionService, OrganizationalUnitService orgUnitService,
                                    OrganizationalGroupService orgGroupService, UserService userService) {
@@ -70,23 +69,26 @@ public class InventoryPageController {
             @RequestParam(required = false) String unit,
             @RequestParam(required = false) String group,
             @RequestParam(required = false) String subject,
-            @RequestParam(required = false) String responsibleUser) {
+            @RequestParam(required = false) String responsibleUser,
+            @RequestParam(required = false) String position) {
         state = state.isEmpty() ? null : state;
         unit = unit.isEmpty() ? null : unit;
         group = group.isEmpty() ? null : group;
         subject = subject.isEmpty() ? null : subject;
         responsibleUser = responsibleUser.isEmpty() ? null : responsibleUser;
+        position = position.isEmpty() ? null : position;
 
         this.currentTableList = mainService.getFilteredEquipmentAsList(
-                        Optional.ofNullable(state),
-                        Optional.ofNullable(unit),
-                        Optional.ofNullable(group),
-                        Optional.ofNullable(subject),
-                        Optional.ofNullable(responsibleUser));
+                Optional.ofNullable(state),
+                Optional.ofNullable(unit),
+                Optional.ofNullable(group),
+                Optional.ofNullable(subject),
+                Optional.ofNullable(responsibleUser),
+                Optional.ofNullable(position));
         this.filtered = true;
 
         return "redirect:/" + PATH;
-}
+    }
 
     @PostMapping("/add")
     public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment) {
