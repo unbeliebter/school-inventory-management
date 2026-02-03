@@ -52,9 +52,7 @@ public class UsersPageController extends APageController<UserEntity> {
                              @ModelAttribute UserEntity newTableItem,
                              Model model) {
 
-        RoleEntity role = new RoleEntity();
-        role.setId(roleId);
-        role.setName(roleId.toUpperCase());
+        var role = roleDao.findByFrontendName(roleId).orElseThrow();
         newTableItem.setRole(role);
 
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
