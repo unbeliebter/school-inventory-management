@@ -102,7 +102,7 @@ public class EquipmentService {
             sb.append(equipment.getId()).append(",");
             sb.append(equipment.getInventoryNumber()).append(",");
             sb.append(equipment.getEquipmentName()).append(",");
-            sb.append(equipment.getEquipmentState().name()).append(","); // Enum-Name
+            sb.append(equipment.getEquipmentState().toString()).append(",");
 
 
             sb.append(equipment.getOrganizationalUnit() != null ? equipment.getOrganizationalUnit().getName() : "")

@@ -12,5 +12,5 @@ import lombok.Data;
 public class RoleEntity implements IHasId {
     @Id
     private String id;
-    private String name;
+    private UserType name;
 }

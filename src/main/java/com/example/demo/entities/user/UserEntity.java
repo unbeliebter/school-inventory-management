@@ -21,5 +21,7 @@ public class UserEntity implements IHasId {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
+    @Column(name = "changed_password")
+    private boolean changedPassword;
 
 }
