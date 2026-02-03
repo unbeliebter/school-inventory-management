@@ -160,6 +160,30 @@
                                  referencedTableName="roles"
                                  referencedColumnNames="id"/>
     </changeSet>
+    
+    <changeSet id="1770104720357-1 add column changed_password to users" author="Sven Pradela">
+        <addColumn tableName="users">
+            <column name="changed_password" type="boolean"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="1770104778035-1 create user_password_changes" author="Sven Pradela">
+        <createTable tableName="user_password_changes">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="TEXT"/>
+            <column name="password_before" type="TEXT"/>
+            <column name="password_after" type="TEXT"/>
+            <column name="changed_at" type="timestamptz"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="id"
+                                 constraintName="fk_users_password_changes"
+                                 referencedTableName="user_password_changes"
+                                 referencedColumnNames="user_id"/>
+    </changeSet>
 
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
