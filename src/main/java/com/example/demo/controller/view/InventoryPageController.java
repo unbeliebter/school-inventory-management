@@ -71,6 +71,7 @@ public class InventoryPageController {
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) String responsibleUser,
             @RequestParam(required = false) String position) {
+
         state = state.isEmpty() ? null : state;
         unit = unit.isEmpty() ? null : unit;
         group = group.isEmpty() ? null : group;
@@ -86,6 +87,8 @@ public class InventoryPageController {
                 Optional.ofNullable(responsibleUser),
                 Optional.ofNullable(position));
         this.filtered = true;
+
+
 
         return "redirect:/" + PATH;
     }

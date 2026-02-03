@@ -25,6 +25,10 @@ public enum EquipmentState {
         return name;
     }
 
+    public String getDisplayName() {
+        return name;
+    }
+
     static {
         for (EquipmentState status : values()) {
             BY_NAME.put(status.name(), status);

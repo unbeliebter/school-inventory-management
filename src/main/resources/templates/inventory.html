@@ -61,7 +61,7 @@
             <div class="label-with-input-horizontal">
                 <label>Zustand:</label>
                 <select th:field="*{equipmentState}" id="equipmentState-input" class="dialog-input">
-                    <option th:each="state : ${States}" th:value="${state}" th:text="${state.name}">
+                    <option th:each="state : ${States}" th:value="${state.name}" th:text="${state.displayName}">
                     </option>
                 </select>
             </div>
@@ -103,6 +103,15 @@
                 </select>
             </div>
             <div class="label-with-input-horizontal">
+                <label>Ort:</label>
+                <select th:field="*{position}" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="position : ${Positions}" th:value="${position.id}"
+                            th:text="${position.school} + ' ' + ${position.room}">
+                    </option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
                 <select th:name="responsibleUser" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
@@ -115,7 +124,7 @@
                 <label>Zustand:</label>
                 <select th:name="state" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="state : ${States}" th:value="${state}" th:text="${state.name}">
+                    <option th:each="state : ${States}" th:value="${state.name}" th:text="${state.displayName}">
                     </option>
                 </select>
             </div>

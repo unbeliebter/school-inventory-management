@@ -3,6 +3,7 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.IHasId;
 import com.example.demo.service.IPageService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public abstract class APageController <T extends IHasId> {
 
 
     @RequestMapping({""})
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String showTable(Model model, T newTableItem) {
         List<T> mainEntities = mainService.getAll();
 
