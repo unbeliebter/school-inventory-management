@@ -17,9 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
-//    UserService mainService;
-//    final String
-
+    
     public UsersPageController(UserService mainService) {
         this.mainService = mainService;
         PATH = "users";
@@ -30,26 +28,6 @@ public class UsersPageController extends APageController<UserEntity> {
         List<UserType> userTypes = Arrays.asList(UserType.values());
         model.addAttribute("UserTypes", userTypes);
     }
-    //    @RequestMapping({""})
-//    public String showIndex(Model model) {
-//        List<UserEntity> mainEntities = mainService.getAll();
-//
-//        List<UserType> userTypes = Arrays.asList(UserType.values());
-//
-//        model.addAttribute("Path", PATH);
-//        model.addAttribute("TableItems", mainEntities);
-//
-//        model.addAttribute("UserTypes", userTypes);
-//
-//
-//
-//        UserEntity newTableItem = new UserEntity();
-//        model.addAttribute("newTableItem", newTableItem);
-//        model.addAttribute("newTableItemId", newTableItem.getId());
-//
-//        return PATH;
-//    }
-//
 
 
     /**
@@ -79,11 +57,4 @@ public class UsersPageController extends APageController<UserEntity> {
         mainService.create(newTableItem);
         return "redirect:/" + PATH;
     }
-//
-//    @PostMapping("/remove")
-//    public String removeEquipmentEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
-//        mainService.deleteById(tableItemId);
-//        showIndex(model);
-//        return "redirect:/" + PATH;
-//    }
 }
