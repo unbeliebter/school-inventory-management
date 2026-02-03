@@ -11,5 +11,5 @@ function fillDialog(tableItem) {
     firstNameField.value = tableItem.firstname;
     lastNameField.value  = tableItem.lastname;
     eMailField.value  = tableItem.email;
-    userTypeField.value  = tableItem.role.id;
+    userTypeField.value  = tableItem.role.frontendName;
 }
