@@ -80,6 +80,13 @@
                 <h3>Add Filter Option</h3>
             </div>
             <div class="label-with-input-horizontal">
+                <label>Gegenstand:</label>
+                <select th:name="itemName" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${ItemNameFilterOptions}" th:value="${item}" th:text="${item}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
                 <label>Abteilung:</label>
                 <select th:name="unit" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>

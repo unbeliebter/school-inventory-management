@@ -19,9 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping({"/inventory"})
@@ -65,6 +63,7 @@ public class InventoryPageController {
 
     @PostMapping("/filtered")
     public String filter(
+            @RequestParam(required = false) String itemName,
             @RequestParam(required = false) String state,
             @RequestParam(required = false) String unit,
             @RequestParam(required = false) String group,
@@ -72,6 +71,7 @@ public class InventoryPageController {
             @RequestParam(required = false) String responsibleUser,
             @RequestParam(required = false) String position) {
 
+        itemName = itemName.isEmpty() ? null : itemName;
         state = state.isEmpty() ? null : state;
         unit = unit.isEmpty() ? null : unit;
         group = group.isEmpty() ? null : group;
@@ -80,6 +80,7 @@ public class InventoryPageController {
         position = position.isEmpty() ? null : position;
 
         this.currentTableList = mainService.getFilteredEquipmentAsList(
+                Optional.ofNullable(itemName),
                 Optional.ofNullable(state),
                 Optional.ofNullable(unit),
                 Optional.ofNullable(group),
@@ -123,6 +124,14 @@ public class InventoryPageController {
         List<OrganizationalGroupEntity> groups = orgGroupService.getAll();
         List<UserEntity> users = userService.getAll();
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
+
+        List<EquipmentEntity> items = mainService.getAll();
+        Set<String> itemNameFilterOptions = new HashSet<>();
+        for (EquipmentEntity e : items) {
+            itemNameFilterOptions.add(e.getEquipmentName());
+        }
+        model.addAttribute("ItemNameFilterOptions", itemNameFilterOptions);
+
 
         model.addAttribute("Subjects", subjects);
         model.addAttribute("Positions", positions);
