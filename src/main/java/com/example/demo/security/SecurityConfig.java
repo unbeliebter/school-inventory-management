@@ -27,25 +27,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception
+                .exceptionHandling(exception -> exception.accessDeniedPage("/login")
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.getWriter().write("{\"error\": \"Unauthorized - Please log in.\"}");
                         })
                 )
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/login.css",
-                        "/css/common.css",
-                        "/icons/LogoTransparent.png",
-                        "/font/**")
-                        .permitAll())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/css/login.css",
+                                "/css/common.css",
+                                "/icons/LogoTransparent.png",
+                                "/font/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/inventory", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
+                        .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN","RESPONSIBLE")
+                        .anyRequest().hasAuthority("ADMIN")
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/inventory")
-                        .failureUrl("/login"));
+                        .failureUrl("/login?error"));
 
         return http.build();
     }
