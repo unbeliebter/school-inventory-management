@@ -1,6 +1,5 @@
 package com.example.demo.security;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,12 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.accessDeniedPage("/login")
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.getWriter().write("{\"error\": \"Unauthorized - Please log in.\"}");
-                        })
-                )
+                .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/login.css",
                                 "/css/common.css",
