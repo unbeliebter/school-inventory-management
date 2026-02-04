@@ -21,9 +21,24 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.*;
 
+
+
 @Controller
 @RequestMapping({"/inventory"})
 public class InventoryPageController {
+
+    class DTO {
+        public List<EquipmentEntity> list;
+
+        public List<EquipmentEntity> getList() {
+            return list;
+        }
+
+        public void setList(List<EquipmentEntity> list) {
+            this.list = list;
+        }
+    }
+
     final String PATH = "inventory";
     boolean filtered = false;
     List<EquipmentEntity> currentTableList;
@@ -55,6 +70,10 @@ public class InventoryPageController {
         this.filtered = false;
         model.addAttribute("TableItems", this.currentTableList);
         model.addAttribute("Path", PATH);
+
+        DTO dto = new DTO();
+        dto.list = this.currentTableList;
+        model.addAttribute("DTO", dto);
 
         addAdditionalServicesToModel(model);
 
@@ -107,13 +126,13 @@ public class InventoryPageController {
         return "redirect:/" + PATH;
     }
 
-    @GetMapping("/export")
-    public void exportTableToCsv(HttpServletResponse response) throws IOException {
+    @RequestMapping("/export")
+    public void exportTableToCsv(@ModelAttribute("DTO") DTO dto, HttpServletResponse response) throws IOException {
         String fileName = PATH + "-table.csv";
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
 
-        mainService.writeToCsv(this.currentTableList, response.getWriter());
+        mainService.writeToCsv(dto.list, response.getWriter());
     }
 
 
