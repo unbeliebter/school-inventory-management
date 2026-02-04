@@ -14,6 +14,19 @@ import java.util.List;
 // TODO Finish this abstraction after talking with coworker
 @Controller
 public abstract class APageController <T extends IHasId> {
+
+    class DTO {
+        public List<T> list;
+
+        public List<T> getList() {
+            return list;
+        }
+
+        public void setList(List<T> list) {
+            this.list = list;
+        }
+    }
+
     protected String PATH;
     protected IPageService<T> mainService;
     protected List<T> currentTableList;
@@ -26,6 +39,10 @@ public abstract class APageController <T extends IHasId> {
 
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
+
+        DTO dto = new DTO();
+        dto.list = currentTableList;
+        model.addAttribute("DTO", dto);
 
         addAdditionalServicesOrEntitiesToModel(model);
 
