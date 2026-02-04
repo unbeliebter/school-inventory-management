@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/password-changes")
+@RequestMapping("api/users/password-changes")
 public class UserPasswordChangeController {
 
     @Autowired
     private UserPasswordChangeService passwordChangeService;
 
     @GetMapping("getAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserPasswordChangeEntity> getAll(){
         return passwordChangeService.getAll();
     }
 
     @GetMapping("get/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public UserPasswordChangeEntity getById(@PathVariable String id){
         return passwordChangeService.getById(id);
     }
 
     @GetMapping("get-for-user/{user-id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserPasswordChangeEntity> getByUserId(@PathVariable("user-id") String id){
         return passwordChangeService.getByUserId(id);
     }

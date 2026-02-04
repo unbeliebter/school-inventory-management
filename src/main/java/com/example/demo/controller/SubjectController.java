@@ -10,32 +10,32 @@ import com.example.demo.service.subject.SubjectService;
 import java.util.List;
 
 @RestController
-@RequestMapping("subject/")
+@RequestMapping("api/subject/")
 public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
 
     @GetMapping("getAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<SubjectEntity> getAll(){
         return subjectService.getAll();
     }
 
     @GetMapping("get/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public SubjectEntity getById(@PathVariable String id){
         return subjectService.getById(id);
     }
 
     @PostMapping("save")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public SubjectEntity save(@RequestBody SubjectRequest request){
         return subjectService.create(request);
     }
 
     @DeleteMapping("delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(@PathVariable String id){
         subjectService.deleteById(id);
     }

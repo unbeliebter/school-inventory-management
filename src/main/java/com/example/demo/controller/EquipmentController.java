@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("equipment/")
+@RequestMapping("api/equipment/")
 public class EquipmentController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class EquipmentController {
 
     // api/equipment/getFiltered?state=DELIVERED&group=EDV
     @GetMapping("getFiltered")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public Page<EquipmentEntity> getFilteredEquipment(
             @RequestParam(required = false) String itemName,
             @RequestParam(required = false) String state,
@@ -47,31 +47,31 @@ public class EquipmentController {
     }
 
     @GetMapping("getAll")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public List<EquipmentEntity> getAll() {
         return equipmentService.getAll();
     }
 
     @GetMapping("get/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public EquipmentEntity getById(@PathVariable String id){
         return equipmentService.getById(id);
     }
 
     @PostMapping("save")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE')")
     public EquipmentEntity save(@RequestBody EquipmentRequest request){
         return equipmentService.create(request);
     }
 
     @DeleteMapping("delete/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE')")
     public void delete(@PathVariable String id){
         equipmentService.deleteById(id);
     }
 
     @GetMapping("export")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSIBLE', 'TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'TEACHER')")
     public void exportEquipmentToCsv(List<EquipmentEntity> toExport, HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=equipment.csv");

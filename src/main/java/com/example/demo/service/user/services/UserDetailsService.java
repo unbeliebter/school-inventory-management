@@ -20,7 +20,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         UserEntity user = userService.findByUsername(username);
 
         List<SimpleGrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(user.getRole().getName().toString())
+                new SimpleGrantedAuthority(user.getRole().getName())
         );
 
         return new org.springframework.security.core.userdetails.User(

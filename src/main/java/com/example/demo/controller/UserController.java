@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/")
+@RequestMapping("api/users/")
 public class UserController {
 
     @Autowired
@@ -26,19 +26,19 @@ public class UserController {
     private AuthenticationManager authManager;
 
     @GetMapping("getAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserEntity> getAll(){
         return userService.getAll();
     }
 
     @GetMapping("get/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public UserEntity getById(@PathVariable String id){
         return userService.getById(id);
     }
 
     @PostMapping("create")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public UserEntity save(@RequestBody UserRequest request){
         return userService.create(request);
     }
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @DeleteMapping("delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(@PathVariable String id){
         userService.deleteById(id);
     }

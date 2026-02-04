@@ -3,6 +3,7 @@ package com.example.demo.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,16 +27,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
+                .httpBasic(Customizer.withDefaults())
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                                    response.sendRedirect("/login");
+                                }
+                        )
+                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/login.css",
-                                "/css/common.css",
-                                "/icons/LogoTransparent.png",
-                                "/font/**").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/inventory", "/inventory/export", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
-                        .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN","RESPONSIBLE")
-                        .anyRequest().hasAuthority("ADMIN")
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login").permitAll()
+                        .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER")
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

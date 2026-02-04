@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("organizational-group/")
+@RequestMapping("api/organizational-group/")
 public class OrganizationalGroupController {
 
     @Autowired
     private OrganizationalGroupService organizationalGroupService;
 
     @GetMapping("getAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<OrganizationalGroupEntity> getAll(){
         return organizationalGroupService.getAll();
     }
 
     @GetMapping("get/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public OrganizationalGroupEntity getById(@PathVariable String id){
         return organizationalGroupService.getById(id);
     }
 
     @PostMapping("save")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public OrganizationalGroupEntity save(@RequestBody OrganizationalGroupRequest request){
         return organizationalGroupService.create(request);
     }
 
     @DeleteMapping("delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(@PathVariable String id){
         organizationalGroupService.deleteById(id);
     }
