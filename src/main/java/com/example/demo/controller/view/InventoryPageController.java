@@ -40,8 +40,6 @@ public class InventoryPageController {
     }
 
     final String PATH = "inventory";
-    boolean filtered = false;
-    List<EquipmentEntity> currentTableList;
     EquipmentService mainService;
 
     SubjectService subjectService;
@@ -63,16 +61,27 @@ public class InventoryPageController {
     }
 
     @RequestMapping({""})
-    public String showInventory(Model model) {
-        if (!filtered) {
-            this.currentTableList = mainService.getAll();
+    public String showInventory(@RequestParam(required = false) Boolean filter,
+                                @RequestParam(required = false) String itemName,
+                                @RequestParam(required = false) String state,
+                                @RequestParam(required = false) String unit,
+                                @RequestParam(required = false) String group,
+                                @RequestParam(required = false) String subject,
+                                @RequestParam(required = false) String responsibleUser,
+                                @RequestParam(required = false) String position,
+                                Model model) {
+
+        List<EquipmentEntity> currentTableList;
+        if (filter != null && filter) {
+            currentTableList = filter(itemName,state,unit,group,subject,responsibleUser,position);
+        } else {
+            currentTableList = mainService.getAll();
         }
-        this.filtered = false;
-        model.addAttribute("TableItems", this.currentTableList);
+        model.addAttribute("TableItems", currentTableList);
         model.addAttribute("Path", PATH);
 
         DTO dto = new DTO();
-        dto.list = this.currentTableList;
+        dto.list = currentTableList;
         model.addAttribute("DTO", dto);
 
         addAdditionalServicesToModel(model);
@@ -80,15 +89,13 @@ public class InventoryPageController {
         return PATH;
     }
 
-    @PostMapping("/filtered")
-    public String filter(
-            @RequestParam(required = false) String itemName,
-            @RequestParam(required = false) String state,
-            @RequestParam(required = false) String unit,
-            @RequestParam(required = false) String group,
-            @RequestParam(required = false) String subject,
-            @RequestParam(required = false) String responsibleUser,
-            @RequestParam(required = false) String position) {
+    public List<EquipmentEntity> filter(String itemName,
+                                        String state,
+                                        String unit,
+                                        String group,
+                                        String subject,
+                                        String responsibleUser,
+                                        String position) {
 
         itemName = itemName.isEmpty() ? null : itemName;
         state = state.isEmpty() ? null : state;
@@ -98,7 +105,8 @@ public class InventoryPageController {
         responsibleUser = responsibleUser.isEmpty() ? null : responsibleUser;
         position = position.isEmpty() ? null : position;
 
-        this.currentTableList = mainService.getFilteredEquipmentAsList(
+
+        return mainService.getFilteredEquipmentAsList(
                 Optional.ofNullable(itemName),
                 Optional.ofNullable(state),
                 Optional.ofNullable(unit),
@@ -106,11 +114,6 @@ public class InventoryPageController {
                 Optional.ofNullable(subject),
                 Optional.ofNullable(responsibleUser),
                 Optional.ofNullable(position));
-        this.filtered = true;
-
-
-
-        return "redirect:/" + PATH;
     }
 
     @PostMapping("/add")

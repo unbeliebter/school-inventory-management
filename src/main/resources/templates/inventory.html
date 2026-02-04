@@ -74,7 +74,8 @@
 </dialog>
 
 <dialog id="filterDialog" closedBy="any">
-    <form method="POST" th:action="${Path} + '/filtered'" th:object="${newTableItem}">
+    <form method="GET" th:action="${Path}">
+        <input type="hidden" th:name="filter" th:value="true"/>
         <div class="dialog-main-container">
             <div>
                 <h3>Add Filter Option</h3>
@@ -111,7 +112,7 @@
             </div>
             <div class="label-with-input-horizontal">
                 <label>Ort:</label>
-                <select th:field="*{position}" class="dialog-input">
+                <select th:name="position" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
                     <option th:each="position : ${Positions}" th:value="${position.id}"
                             th:text="${position.school} + ' ' + ${position.room}">
