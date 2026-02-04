@@ -1,6 +1,7 @@
 package com.example.demo.service.user.services;
 
 import com.example.demo.daos.UserDao;
+import com.example.demo.daos.UserPasswordChangeDao;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.IPageService;
 import com.example.demo.service.user.mapper.UserMapper;
@@ -20,6 +21,8 @@ public class UserService implements IPageService<UserEntity> {
     private UserDao dao;
     @Autowired
     private UserMapper mapper;
+    @Autowired
+    private UserPasswordChangeDao changeDao;
 
     public List<UserEntity> getAll() {
         return dao.findAll();
@@ -45,6 +48,7 @@ public class UserService implements IPageService<UserEntity> {
         var toDelete = dao.findById(id);
 
         if (toDelete.isPresent()) {
+            changeDao.deleteAllByUserId(toDelete.get());
             dao.deleteById(id);
         }
     }

@@ -60,7 +60,7 @@ public class UserController {
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void delete(@PathVariable String id){
+    public void delete(@PathVariable String id) {
         userService.deleteById(id);
     }
 

@@ -11,4 +11,6 @@ import java.util.List;
 public interface UserPasswordChangeDao  extends JpaRepository<UserPasswordChangeEntity, String> {
 
     List<UserPasswordChangeEntity> findByUserId(UserEntity user);
+
+    void deleteAllByUserId(UserEntity user);
 }
