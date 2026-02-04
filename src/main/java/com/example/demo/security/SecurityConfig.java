@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 "/icons/LogoTransparent.png",
                                 "/font/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/inventory", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
+                        .requestMatchers("/inventory", "/inventory/export", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN","RESPONSIBLE")
                         .anyRequest().hasAuthority("ADMIN")
                 )
