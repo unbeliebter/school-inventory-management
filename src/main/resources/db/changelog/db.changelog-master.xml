@@ -198,7 +198,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="1770150583470-1 add trigger for logging password changes" author="Sven Pradela">
+    <changeSet id="1770150583470-2 add trigger for logging password changes" author="Sven Pradela">
         <sqlFile path="password_changes_trigger_01.sql"
                  relativeToChangelogFile="true"
                  encoding="UTF-8"
