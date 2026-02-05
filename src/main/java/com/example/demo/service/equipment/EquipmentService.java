@@ -3,6 +3,7 @@ package com.example.demo.service.equipment;
 import com.example.demo.daos.EquipmentDao;
 import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
+import com.example.demo.service.equipment.equipmentrenter.EquipmentRenterService;
 import com.example.demo.service.equipment.exceptions.EquipmentCouldNotBeSavedException;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
@@ -24,6 +25,8 @@ public class EquipmentService {
     private EquipmentDao dao;
     @Autowired
     private EquipmentMapper mapper;
+    @Autowired
+    private EquipmentRenterService renterService;
 
     public List<EquipmentEntity> getAll() {
         return dao.findAll();
@@ -86,15 +89,31 @@ public class EquipmentService {
     }
 
     @Transactional
-    public EquipmentEntity create(EquipmentRequest request) {
+    public EquipmentEntity save(EquipmentRequest request) {
         var entity = mapper.mapToEntity(request, new EquipmentEntity());
         checkOnSave(entity);
+        handleEquipmentRenting(entity, request.getRenter());
         return dao.save(entity);
+    }
+
+    private void handleEquipmentRenting(EquipmentEntity equipment, String renter) {
+        var rentingProcess = renterService.getByEquipment(equipment);
+
+        if (equipment.getEquipmentState() == EquipmentState.ON_LOAN) {
+            renterService.create(equipment, renter);
+        } else {
+            if (rentingProcess.isEmpty()) {
+                return;
+            }
+
+            renterService.delete(equipment);
+        }
     }
 
     @Transactional
     public EquipmentEntity save(EquipmentEntity entity) {
         checkOnSave(entity);
+        //TODO: EquipmentRenter @Yves
         return dao.save(entity);
     }
 

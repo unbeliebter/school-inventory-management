@@ -22,5 +22,6 @@ public class EquipmentRequest {
     private PostionRequest position;
     private SubjectRequest subject;
     private UserRequest responsibleUser;
+    private String renter;
 
 }

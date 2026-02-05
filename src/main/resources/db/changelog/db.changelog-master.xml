@@ -218,6 +218,21 @@
         </sql>
     </changeSet>
 
+    <changeSet id="1770289901809-2 create table equipment_renter" author="Sven Pradela">
+        <createTable tableName="equipment_renter">
+            <column name="id" type="TEXT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="equipment_id" type="TEXT"/>
+            <column name="renter" type="TEXT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="equipment_renter" baseColumnNames="equipment_id"
+                                 constraintName="fk_equipment"
+                                 referencedTableName="equipment"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
 

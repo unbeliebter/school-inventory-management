@@ -63,7 +63,7 @@ public class EquipmentController {
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'SENIOR_RESPONSIBLE')")
     public EquipmentEntity save(@RequestBody EquipmentRequest request){
-        return equipmentService.create(request);
+        return equipmentService.save(request);
     }
 
     @DeleteMapping("delete/{id}")
