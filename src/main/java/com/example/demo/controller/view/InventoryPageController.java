@@ -123,7 +123,7 @@ public class InventoryPageController {
         return "redirect:/" + PATH;
     }
 
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId) {
         mainService.deleteById(equipmentEntryId);
         return "redirect:/" + PATH;

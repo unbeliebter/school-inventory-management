@@ -1,4 +1,4 @@
-console.log("WOW MUCH CONSOLE LOG")
+console.log("WOW MUCH CONSOLE LOG");
 const dialog = document.getElementById("itemDialog");
 const openDialogButton = document.getElementById("openEquipmentDialogButton");
 const closeDialogButton = document.getElementById("item-dialog-cancel-button");
@@ -73,4 +73,19 @@ function validateOnAdd() {
     }
 
     form.submit();
+}
+
+
+function deleteTableEntry(tableItemId) {
+    console.log(tableItemId);
+    if (confirm("Wirklich löschen?")) {
+         let xhr = new XMLHttpRequest();
+         xhr.open("DELETE", "./inventory/remove?tableItemId=" + tableItemId, false);
+         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+         xhr.send();
+         location.reload(true);
+
+    }
+
+
 }
