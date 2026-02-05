@@ -211,6 +211,13 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="1770289214572-1 add senior responsible role" author="Sven Pradela">
+        <sql>
+            INSERT INTO roles(id, name, fe_name)
+            VALUES ('senior_responisble', 'SENIOR_RESPONSIBLE', 'Ober-Verantwortlicher')
+        </sql>
+    </changeSet>
+
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
 
