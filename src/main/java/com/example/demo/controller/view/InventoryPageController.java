@@ -14,6 +14,7 @@ import com.example.demo.service.position.PositionService;
 import com.example.demo.service.subject.SubjectService;
 import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -61,7 +61,13 @@ public abstract class APageController <T extends IHasId> {
 
     @PostMapping("/remove")
     public String removeEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
-        mainService.deleteById(tableItemId);
+        try {
+            mainService.deleteById(tableItemId);
+        } catch (RuntimeException e) {
+            System.out.println("Wow It's catchable!");
+
+        }
+
         return "redirect:/" + PATH;
     }
 
