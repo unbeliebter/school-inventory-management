@@ -23,5 +23,7 @@ public class UserEntity implements IHasId {
     private RoleEntity role;
     @Column(name = "changed_password")
     private boolean changedPassword;
+    @Column(name = "requires_password_reset")
+    private boolean requiresPasswordReset;
 
 }

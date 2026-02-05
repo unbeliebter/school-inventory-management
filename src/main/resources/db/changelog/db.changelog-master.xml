@@ -205,6 +205,12 @@
                  splitStatements="false"/>
     </changeSet>
 
+    <changeSet id="1770282407390-1 add requires_password_reset to user table" author="Sven Pradela">
+        <addColumn tableName="users">
+            <column name="requires_password_reset" type="boolean" defaultValue="false"/>
+        </addColumn>
+    </changeSet>
+
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
 

@@ -33,6 +33,7 @@ public class UserMapper {
         entity.setUsername(request.getUsername());
         entity.setRole(roleMapper.mapToEntity(request.getRole()));
         entity.setChangedPassword(request.isChangedPassword());
+        entity.setRequiresPasswordReset(request.isRequiresPasswordReset());
 
         return entity;
     }
