@@ -29,13 +29,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                                    response.sendRedirect("/login");
-                                }
+                        .authenticationEntryPoint((request, response, authException) -> response.sendRedirect("/login")
                         )
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "login", "/api/users/change-password").permitAll()
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "login", "/api/users/change-password", "/api/users/request-password-change").permitAll()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER")
                         .anyRequest().authenticated()
                 )

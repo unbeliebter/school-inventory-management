@@ -79,6 +79,15 @@ public class UserController {
         return rawPassword;
     }
 
+    @PatchMapping("request-password-change")
+    public void requestPasswordChange(@RequestBody String username) {
+        var user = userService.findByUsername(username);
+        throwExceptionIfUserAbsent(user);
+
+        user.setRequiresPasswordReset(true);
+        userService.save(user);
+    }
+
     private static void throwExceptionIfUserAbsent(UserEntity user) {
         if (user == null) {
             throw new IllegalStateException("Benutzer nicht vorhanden für Passwort-Reset");
