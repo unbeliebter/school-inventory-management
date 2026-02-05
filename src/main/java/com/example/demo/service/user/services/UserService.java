@@ -62,4 +62,8 @@ public class UserService implements IPageService<UserEntity> {
         return dao.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("username can't be found"));
     }
+
+    public UserEntity save(UserEntity user) {
+        return dao.save(user);
+    }
 }

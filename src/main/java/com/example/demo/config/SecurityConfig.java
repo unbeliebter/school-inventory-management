@@ -35,7 +35,7 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login").permitAll()
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "login", "/api/users/change-password").permitAll()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER")
                         .anyRequest().authenticated()
                 )

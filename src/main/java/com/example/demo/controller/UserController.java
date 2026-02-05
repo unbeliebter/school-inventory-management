@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.UserRequest;
 import com.example.demo.service.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private AuthenticationManager authManager;
+    @Autowired
+    private PasswordHandler passwordHandler;
 
     @GetMapping("getAll")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -43,7 +46,7 @@ public class UserController {
         return userService.create(request);
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody Credentials loginRequest) {
 
         try {
@@ -64,6 +67,46 @@ public class UserController {
         userService.deleteById(id);
     }
 
+    @PatchMapping("reset-password/{user-id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String resetPassword(@PathVariable("user-id") String userId) {
+        String rawPassword = passwordHandler.generateOneTimePassword();
+
+        var user = userService.getById(userId);
+        throwExceptionIfUserAbsent(user);
+        setNewPassword(user, rawPassword, false);
+
+        return rawPassword;
+    }
+
+    private static void throwExceptionIfUserAbsent(UserEntity user) {
+        if (user == null) {
+            throw new IllegalStateException("Benutzer nicht vorhanden für Passwort-Reset");
+        }
+    }
+
+    @PatchMapping("change-password")
+    public void changePassword(@RequestBody ChangePassword credentials) {
+        var user = userService.findByUsername(credentials.username());
+        throwExceptionIfUserAbsent(user);
+
+        if (passwordHandler.encodePassword(credentials.passwordBefore(), user.getPassword())) {
+            setNewPassword(user, credentials.passwordNew(), true);
+        }
+    }
+
+    private void setNewPassword(UserEntity user, String credentials, boolean changedPassword) {
+        user.setPassword(passwordHandler.hashPassword(credentials));
+        user.setChangedPassword(changedPassword);
+        user.setRequiresPasswordReset(false);
+        userService.save(user);
+    }
+
+
     public record Credentials(String username, String password) {
+    }
+
+    public record ChangePassword(String username, String passwordBefore, String passwordNew) {
+
     }
 }

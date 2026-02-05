@@ -2,6 +2,7 @@ package com.example.demo.service.user.mapper;
 
 import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.UserRequest;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ public class UserMapper {
     private UserDao userDao;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private PasswordHandler passwordHandler;
 
     public UserEntity mapToEntityCreate(UserRequest request, UserEntity entity) {
         entity.setFirstname(request.getFirstName());
         entity.setLastname(request.getLastName());
         entity.setEmail(request.getEmail());
-        entity.setPassword(hashPassword(request.getPassword()));
+        entity.setPassword(passwordHandler.hashPassword(request.getPassword()));
         entity.setUsername(generateUsername(request.getFirstName(), request.getLastName()));
         entity.setRole(roleMapper.mapToEntity(request.getRole()));
 
@@ -43,10 +46,6 @@ public class UserMapper {
         entity.setId(request.getId());
 
         return mapToEntity(request, entity);
-    }
-
-    public static String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public String generateUsername(String firstName, String lastName) {
