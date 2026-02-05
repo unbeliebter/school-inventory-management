@@ -25,6 +25,7 @@ public class EquipmentController {
     @GetMapping("getFiltered")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'TEACHER', 'SENIOR_RESPONSIBLE')")
     public Page<EquipmentEntity> getFilteredEquipment(
+            @RequestParam(required = false) String inventoryNumber,
             @RequestParam(required = false) String itemName,
             @RequestParam(required = false) String state,
             @RequestParam(required = false) String unit,
@@ -35,6 +36,7 @@ public class EquipmentController {
             Pageable pageable) {
 
         return equipmentService.getFilteredEquipment(
+                Optional.ofNullable(inventoryNumber),
                 Optional.ofNullable(itemName),
                 Optional.ofNullable(state),
                 Optional.ofNullable(unit),

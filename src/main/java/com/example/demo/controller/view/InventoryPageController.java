@@ -62,6 +62,7 @@ public class InventoryPageController {
 
     @RequestMapping({""})
     public String showInventory(@RequestParam(required = false) Boolean filter,
+                                @RequestParam(required = false) String inventoryNumber,
                                 @RequestParam(required = false) String itemName,
                                 @RequestParam(required = false) String state,
                                 @RequestParam(required = false) String unit,
@@ -73,7 +74,7 @@ public class InventoryPageController {
 
         List<EquipmentEntity> currentTableList;
         if (filter != null && filter) {
-            currentTableList = filter(itemName,state,unit,group,subject,responsibleUser,position);
+            currentTableList = filter(inventoryNumber, itemName,state,unit,group,subject,responsibleUser,position);
         } else {
             currentTableList = mainService.getAll();
         }
@@ -89,7 +90,8 @@ public class InventoryPageController {
         return PATH;
     }
 
-    public List<EquipmentEntity> filter(String itemName,
+    public List<EquipmentEntity> filter(String inventoryNumber,
+                                        String itemName,
                                         String state,
                                         String unit,
                                         String group,
@@ -97,6 +99,7 @@ public class InventoryPageController {
                                         String responsibleUser,
                                         String position) {
 
+        inventoryNumber = inventoryNumber.isEmpty() ? null : inventoryNumber;
         itemName = itemName.isEmpty() ? null : itemName;
         state = state.isEmpty() ? null : state;
         unit = unit.isEmpty() ? null : unit;
@@ -107,6 +110,7 @@ public class InventoryPageController {
 
 
         return mainService.getFilteredEquipmentAsList(
+                Optional.ofNullable(inventoryNumber),
                 Optional.ofNullable(itemName),
                 Optional.ofNullable(state),
                 Optional.ofNullable(unit),

@@ -30,6 +30,7 @@ public class EquipmentService {
     }
 
     public Page<EquipmentEntity> getFilteredEquipment(
+            Optional<String> inventoryNumber,
             Optional<String> itemName,
             Optional<String> state,
             Optional<String> organizationalUnitName,
@@ -39,13 +40,14 @@ public class EquipmentService {
             Optional<String> position,
             Pageable pageable) {
 
-        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(itemName, state, organizationalUnitName,
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(inventoryNumber, itemName, state, organizationalUnitName,
                 organizationalGroupName, subject, responsibleUser, position);
 
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification, pageable)).orElseGet(() -> dao.findAll(pageable));
     }
 
     public List<EquipmentEntity> getFilteredEquipmentAsList(
+            Optional<String> inventoryNumber,
             Optional<String> itemName,
             Optional<String> state,
             Optional<String> organizationalUnitName,
@@ -54,13 +56,14 @@ public class EquipmentService {
             Optional<String> responsibleUser,
             Optional<String> position) {
 
-        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(itemName, state, organizationalUnitName,
+        Optional<Specification<EquipmentEntity>> finalSpec = calculateActiveSpec(inventoryNumber, itemName, state, organizationalUnitName,
                 organizationalGroupName, subject, responsibleUser, position);
 
         return finalSpec.map(equipmentEntitySpecification -> dao.findAll(equipmentEntitySpecification)).orElseGet(() -> dao.findAll());
     }
 
-    private Optional<Specification<EquipmentEntity>> calculateActiveSpec(Optional<String> itemName,
+    private Optional<Specification<EquipmentEntity>> calculateActiveSpec(Optional<String> inventoryNumber,
+                                                                         Optional<String> itemName,
                                                                          Optional<String> state,
                                                                          Optional<String> organizationalUnitName,
                                                                          Optional<String> organizationalGroupName,
@@ -68,6 +71,7 @@ public class EquipmentService {
                                                                          Optional<String> responsibleUser,
                                                                          Optional<String> position) {
         Stream<Specification<EquipmentEntity>> activeSpecs = Stream.of(
+                        inventoryNumber.map(EquipmentSpecification::hasInventoryNumber),
                         itemName.map(EquipmentSpecification::hasItemName),
                         state.map(EquipmentSpecification::hasState),
                         organizationalUnitName.map(EquipmentSpecification::hasOrganizationalUnitName),

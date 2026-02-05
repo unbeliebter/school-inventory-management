@@ -7,6 +7,13 @@ import jakarta.persistence.criteria.JoinType;
 
 public class EquipmentSpecification {
 
+    public static Specification<EquipmentEntity> hasInventoryNumber(String name) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
+                root.get("inventoryNumber"),
+                name
+        );
+    }
+
     public static Specification<EquipmentEntity> hasItemName(String name) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
                 root.get("equipmentName"),
