@@ -76,16 +76,24 @@ function validateOnAdd() {
 }
 
 
-function deleteTableEntry(tableItemId) {
-    console.log(tableItemId);
-    if (confirm("Wirklich löschen?")) {
-         let xhr = new XMLHttpRequest();
-         xhr.open("DELETE", "./inventory/remove?tableItemId=" + tableItemId, false);
-         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-         xhr.send();
-         location.reload(true);
-
+async function deleteTableEntry(tableItemId, deleteBtn) {
+    if (confirm("Wirklich löschen?")) {  
+        try {
+            const response = await fetch(PATH + "/remove?tableItemId=" + tableItemId, {method:"DELETE"});
+            if (response.status == 200) {
+                el = deleteBtn;
+                while (el && el.parentNode) {
+                    el = el.parentNode;
+                    if (el.tagName.toLowerCase() == "tr") {
+                        el.remove();
+                    }
+                }
+            }
+            else if (response.status == 423) {
+                alert("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
+            }
+        } catch (error) {
+            alert(error.message);
+        }
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.IHasId;
 import com.example.demo.service.IPageService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,16 +60,15 @@ public abstract class APageController <T extends IHasId> {
         return "redirect:/" + PATH;
     }
 
-    @PostMapping("/remove")
-    public String removeEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
+    @DeleteMapping("/remove")
+    @ResponseBody
+    public ResponseEntity<String> removeEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
         try {
             mainService.deleteById(tableItemId);
+            return ResponseEntity.status(200).body("Entry with id " + tableItemId + " has been deleted");
         } catch (RuntimeException e) {
-            System.out.println("Wow It's catchable!");
-
+            return ResponseEntity.status(423).body("The entry you are trying to delete is still in use");
         }
-
-        return "redirect:/" + PATH;
     }
 
     @GetMapping("/export")

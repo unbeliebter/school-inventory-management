@@ -69,8 +69,9 @@
 </div>
 
 <script th:fragment="table-script" th:inline="javascript">
-    var tableItems = [[${TableItems}]];
-    const newTableItemId = [[${newTableItemId}]]
+    let tableItems = [[${TableItems}]];
+    const newTableItemId = [[${newTableItemId}]];
+    const PATH = [[${Path}]];
 </script>
 
 
