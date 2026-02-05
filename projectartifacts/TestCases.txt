@@ -1,0 +1,40 @@
+Passwort handling testen
+SQL Injection
+Authentication/Auhthorization
+
+
+CREATE
+	Kann überall etwas hinzufügen 
+		-Mit allen Feldern ausgefüllt
+		-Versuche keine Felder auszufüllen
+		-Versuche nur Required Felder auszufüllen (hier darauf achten das Tabelle richtig dargestelt)
+	Equipment in der Ausleihe hat keinen Verantwortlichen
+	Equipment hat ansonsten immer Verantwortlichen 
+	
+READ
+	Tabelle hat alle einträge
+	Tabelle hat gefilterte einträge
+	Tabelle kann leere Felder darstellen falls nötig(wichtig)
+
+DELETE
+	Löschen Funktioniert (fragt vorher)
+	Weist auf Foreign Key Constraints hin
+	
+UPDATE
+	Dialog Eingabe felder sind vorausgefüllt
+	Updated korrekten eintrag mit neuen feldern
+	Führt die gleiche validierung durch wie beim Createn (z.B ON_LOAN Verantwortliche)
+
+Navigation
+	Alles Über Sidebar (auch tabelle richtig - ohne filter)
+	Alles Über Header Nav
+	
+Filter testen
+	Alles leer -> Alles Angezeigt
+	1 ausgewählt -> Darauf gefiltert
+	mehrere -> Darauf gefiltert
+	
+CSV Testen
+	Komplette Tabelle
+	Gefilterte Tabelle
+	Tabelle mit leeren Feldern einträgen
