@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change").permitAll()
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change", "/requestPasswordReset/**").permitAll()
                         .requestMatchers("/inventory", "/inventory/export", "/login_redirect", "/setInitialPassword", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER", "SENIOR_RESPONSIBLE")
                         .anyRequest().hasAuthority("ADMIN")

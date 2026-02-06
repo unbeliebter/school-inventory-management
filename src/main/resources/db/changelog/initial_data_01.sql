@@ -10,15 +10,15 @@ VALUES ('2', 'Lernfeld 1', 'LF1');
 --VALUES ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'admin', 'test');
 
 
---users with password password
+--users with password admin
 insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset )
-values ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'admin', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK', false, false);
+values ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'admin', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
 
 insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset )
-values ('2', 'responsible', 'Responsible', 'Account', 'tgbbz1@test.de', 'responsible', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK', false, false);
+values ('2', 'responsible', 'Responsible', 'Account', 'tgbbz1@test.de', 'responsible', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
 
 insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset)
-values ('3', 'teacher', 'Teacher', 'Account', 'tgbbz1@test.de', 'teacher', '{bcrypt}$2a$12$KWI9dgiX6keXKrVXSyfghed5gj/OErtl/c1QdOv8Pg0cpSHnmWeaK', false, false);
+values ('3', 'teacher', 'Teacher', 'Account', 'tgbbz1@test.de', 'teacher', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
 
 
 

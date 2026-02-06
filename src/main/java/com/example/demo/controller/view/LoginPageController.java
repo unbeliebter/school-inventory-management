@@ -3,12 +3,15 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
+import liquibase.license.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginPageController {
@@ -66,6 +69,25 @@ public class LoginPageController {
         userService.save(user);
 
         return "redirect:/inventory";
+    }
+
+    @RequestMapping({"/requestPasswordReset"})
+    public String requestPasswordReset() {
+        return "resetPassword";
+    }
+
+    @RequestMapping({"/requestPasswordReset/send"})
+    @ResponseBody
+    public ResponseEntity<String> sendResetRequest(@RequestParam("username") String username) {
+        UserEntity user = userService.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(404).body("User not found!");
+        }
+
+        user.setRequiresPasswordReset(true);
+        userService.save(user);
+
+        return ResponseEntity.accepted().body("Done!");
     }
 
     @GetMapping("/logout")
