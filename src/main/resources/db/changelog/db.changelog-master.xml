@@ -233,6 +233,11 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="1770363050834-1 add unique constraints" author="Sven Pradela">
+        <addUniqueConstraint tableName="users" columnNames="username"/>
+        <addUniqueConstraint tableName="equipment" columnNames="inventory_number"/>
+    </changeSet>
+
     <!--
     Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
 
