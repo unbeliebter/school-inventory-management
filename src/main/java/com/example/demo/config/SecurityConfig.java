@@ -28,14 +28,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> response.sendRedirect("/login")
-                        )
-                )
+                .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "login", "/api/users/change-password", "/api/users/request-password-change").permitAll()
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change").permitAll()
+                        .requestMatchers("/inventory", "/inventory/export", "/login_redirect", "/setInitialPassword", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER", "SENIOR_RESPONSIBLE")
-                        .anyRequest().authenticated()
+                        .anyRequest().hasAuthority("ADMIN")
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
