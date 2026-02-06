@@ -39,7 +39,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/inventory")
+                        .defaultSuccessUrl("/login_redirect")
                         .failureUrl("/login?error"));
 
         return http.build();
