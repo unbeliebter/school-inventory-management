@@ -54,7 +54,7 @@ public abstract class APageController <T extends IHasId> {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute T newTableItem, Model model) {
+    public String submitForm(@RequestParam("tableItemId") String tableItemId, @ModelAttribute T newTableItem) {
         newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
         mainService.create(newTableItem);
         return "redirect:/" + PATH;
@@ -62,7 +62,7 @@ public abstract class APageController <T extends IHasId> {
 
     @DeleteMapping("/remove")
     @ResponseBody
-    public ResponseEntity<String> removeEntry(@RequestParam("tableItemId") String tableItemId, Model model) {
+    public ResponseEntity<String> removeEntry(@RequestParam("tableItemId") String tableItemId) {
         try {
             mainService.deleteById(tableItemId);
             return ResponseEntity.status(200).body("Entry with id " + tableItemId + " has been deleted");

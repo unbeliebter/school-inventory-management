@@ -1,29 +1,25 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.daos.RoleDao;
-import com.example.demo.entities.user.RoleEntity;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
 
-    @Autowired
-    private RoleDao roleDao;
+    private final PasswordHandler pwHandler;
+    private final RoleDao roleDao;
 
-    public UsersPageController(UserService mainService) {
+    public UsersPageController(UserService mainService, PasswordHandler pwHandler, RoleDao roleDao) {
         this.mainService = mainService;
+        this.pwHandler = pwHandler;
+        this.roleDao = roleDao;
         PATH = "users";
     }
 
@@ -42,21 +38,40 @@ public class UsersPageController extends APageController<UserEntity> {
      * @return
      */
     @Override
-    public String submitForm(String tableItemId, UserEntity newTableItem, Model model) {
+    public String submitForm(String tableItemId, UserEntity newTableItem) {
         return "redirect:/" + PATH;
     }
 
     @PostMapping("/addWithRole")
-    public String submitFormWithRoleId(@RequestParam("tableItemId") String tableItemId,
-                             @RequestParam("roleId") String roleId,
-                             @ModelAttribute UserEntity newTableItem,
-                             Model model) {
+    @ResponseBody
+    public ResponseEntity<String> submitFormWithRoleId(@RequestParam("tableItemId") String tableItemId,
+                                                       @RequestParam("username") String username,
+                                                       @RequestParam("firstname") String firstname,
+                                                       @RequestParam("lastname") String lastname,
+                                                       @RequestParam("email") String email,
+                                                       @RequestParam("roleId") String roleId) {
 
-        var role = roleDao.findByFrontendName(roleId).orElseThrow();
-        newTableItem.setRole(role);
+        UserEntity newTableItem = new UserEntity();
+        fillEntityFields(newTableItem, tableItemId, username, firstname, lastname, email, roleId);
 
-        newTableItem.setId(tableItemId.equals("new") ? null : tableItemId);
+        String rawPw = pwHandler.generateOneTimePassword();
+        newTableItem.setPassword(pwHandler.hashPassword(rawPw));
         mainService.create(newTableItem);
-        return "redirect:/" + PATH;
+        return ResponseEntity.status(201).body(rawPw);
+    }
+
+
+    private void fillEntityFields(UserEntity e, String tableItemId, String username, String firstname, String lastname, String email, String roleId) {
+        e.setId(tableItemId.equals("new") ? null : tableItemId);
+        e.setUsername(username);
+        e.setFirstname(firstname);
+        e.setLastname(lastname);
+        e.setEmail(email);
+        var role = roleDao.findByFrontendName(roleId).orElseThrow();
+        e.setRole(role);
+        e.setChangedPassword(false);
+        e.setRequiresPasswordReset(false);
     }
 }
+// ,
+//                                                       @ModelAttribute UserEntity newTableItem

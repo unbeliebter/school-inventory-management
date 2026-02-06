@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="dialog-button-row">
-                <button class="submit" type="submit">Submit</button>
+                <button class="submit" onclick="createUser()" type="button">Submit</button>
                 <button class="cancel" id="item-dialog-cancel-button" type="reset">Cancel</button>
             </div>
 
@@ -91,5 +91,6 @@
 </body>
 <script th:replace="~{fragments.html :: table-script}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
+<script type="text/javascript" th:src="@{/js/users/users.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/userDialog.js}"></script>
 </html>
