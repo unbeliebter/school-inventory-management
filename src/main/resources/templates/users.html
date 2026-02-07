@@ -74,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr class="" th:each="item : ${TableItems}">
+                <tr th:attr="pw-reset-requested=${item.requiresPasswordReset}" class="" th:each="item : ${TableItems}">
                     <td><span th:text="${item.username}"></span></td>
                     <td><span th:text="${item.firstname}"></span></td>
                     <td><span th:text="${item.lastname}"></span></td>
