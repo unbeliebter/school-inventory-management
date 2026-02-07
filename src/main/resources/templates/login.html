@@ -23,6 +23,8 @@
                     Falsche eingabe!</div>
                 <div th:if="${param.logout}">
                     Sie wurden ausgeloggt!</div>
+                <div th:if="${expired}">
+                    Sitzung abgelaufen!</div>
                 <div class="login-card-input">
                     <label>Benutzername</label>
                     <input name="username" maxlength="40" type="text">

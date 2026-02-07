@@ -3,9 +3,9 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
-import liquibase.license.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,8 +79,10 @@ public class LoginPageController {
     @RequestMapping({"/requestPasswordReset/send"})
     @ResponseBody
     public ResponseEntity<String> sendResetRequest(@RequestParam("username") String username) {
-        UserEntity user = userService.findByUsername(username);
-        if (user == null) {
+        UserEntity user;
+        try {
+            user = userService.findByUsername(username);
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(404).body("User not found!");
         }
 
