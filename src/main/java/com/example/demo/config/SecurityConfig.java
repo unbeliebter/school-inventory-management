@@ -3,7 +3,6 @@ package com.example.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,10 +26,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(s -> s.maximumSessions(1).expiredUrl("/login?expired"))
                 .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change").permitAll()
+                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change", "/requestPasswordReset/**").permitAll()
                         .requestMatchers("/inventory", "/inventory/export", "/login_redirect", "/setInitialPassword", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER", "SENIOR_RESPONSIBLE")
                         .anyRequest().hasAuthority("ADMIN")
@@ -38,7 +37,9 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/login_redirect")
-                        .failureUrl("/login?error"));
+                        .failureUrl("/login?error")
+                )
+                .logout(logout -> logout.deleteCookies("JSESSIONID"));
 
         return http.build();
     }

@@ -3,15 +3,19 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginPageController {
+    private final int STATUS_NOT_FOUND = 404;
 
     private final int MIN_PASSWORD_LENGTH = 12;
     private final UserService userService;
@@ -66,6 +70,27 @@ public class LoginPageController {
         userService.save(user);
 
         return "redirect:/inventory";
+    }
+
+    @RequestMapping({"/requestPasswordReset"})
+    public String requestPasswordReset() {
+        return "resetPassword";
+    }
+
+    @RequestMapping({"/requestPasswordReset/send"})
+    @ResponseBody
+    public ResponseEntity<String> sendResetRequest(@RequestParam("username") String username) {
+        UserEntity user;
+        try {
+            user = userService.findByUsername(username);
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(STATUS_NOT_FOUND).body("User not found!");
+        }
+
+        user.setRequiresPasswordReset(true);
+        userService.save(user);
+
+        return ResponseEntity.accepted().body("Done!");
     }
 
     @GetMapping("/logout")

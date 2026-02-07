@@ -84,7 +84,7 @@ async function deleteTableEntry(tableItemId, deleteBtn) {
                 el = deleteBtn;
                 while (el && el.parentNode) {
                     el = el.parentNode;
-                    if (el.tagName.toLowerCase() == "tr") {
+                    if (el.tagName == "TR") {
                         el.remove();
                     }
                 }

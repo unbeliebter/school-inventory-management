@@ -2,6 +2,9 @@ Passwort handling testen
 SQL Injection
 Authentication/Auhthorization
 Datenbank braucht gehashte passwörter
+Passwort kann reseted werden
+    Muss neues einmal passwort zurückgeben -> Verlangt nach nutzung setzung eines neuen richtigen passworts
+InitialPasswort
 
 CREATE
 	Kann überall etwas hinzufügen 

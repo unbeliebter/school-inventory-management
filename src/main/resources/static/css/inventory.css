@@ -89,6 +89,9 @@ tr {
     text-align: center;
     box-shadow: 0 1px 3px 0 var(--primary-color);
 }
+tr[pw-reset-requested=true] {
+    background-color: rgba(255, 0, 0, 0.5)
+}
 
 tr:hover {
     background-color: lightskyblue;

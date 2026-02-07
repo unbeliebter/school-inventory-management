@@ -23,6 +23,8 @@
                     Falsche eingabe!</div>
                 <div th:if="${param.logout}">
                     Sie wurden ausgeloggt!</div>
+                <div th:if="${expired}">
+                    Sitzung abgelaufen!</div> <!-- TODO: Shit is not shown (because session logout does not send arg) -->
                 <div class="login-card-input">
                     <label>Benutzername</label>
                     <input name="username" maxlength="40" type="text">
@@ -30,7 +32,7 @@
                 <div class="login-card-input">
                     <label>Passwort</label>
                     <input name="password" maxlength="40" type="password">
-                    <button class="login-password-reset">Passwort vergessen?</button>
+                    <button class="login-password-reset"><a class="black" th:href="@{/requestPasswordReset}">Passwort vergessen?</a> </button>
                 </div>
                 <button type="submit" value="Log in" class="login-submit">Anmelden</button>
             </div>
