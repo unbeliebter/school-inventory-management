@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginPageController {
+    private final int STATUS_NOT_FOUND = 404;
 
     private final int MIN_PASSWORD_LENGTH = 12;
     private final UserService userService;
@@ -83,7 +84,7 @@ public class LoginPageController {
         try {
             user = userService.findByUsername(username);
         } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(404).body("User not found!");
+            return ResponseEntity.status(STATUS_NOT_FOUND).body("User not found!");
         }
 
         user.setRequiresPasswordReset(true);

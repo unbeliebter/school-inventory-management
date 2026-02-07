@@ -13,7 +13,6 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
                             htmlElement.setAttribute("pw-reset-requested", "false");
                         }
                     }
-                //location.reload();
             }
             
 
