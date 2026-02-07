@@ -15,6 +15,8 @@ public class UsersPageController extends APageController<UserEntity> {
 
     private final PasswordHandler pwHandler;
     private final RoleDao roleDao;
+    private final int STATUS_CREATED = 201;
+    private final int STATUS_OK = 200;
 
     public UsersPageController(UserService mainService, PasswordHandler pwHandler, RoleDao roleDao) {
         this.mainService = mainService;
@@ -57,7 +59,23 @@ public class UsersPageController extends APageController<UserEntity> {
         String rawPw = pwHandler.generateOneTimePassword();
         newTableItem.setPassword(pwHandler.hashPassword(rawPw));
         mainService.create(newTableItem);
-        return ResponseEntity.status(201).body(rawPw);
+        return ResponseEntity.status(STATUS_CREATED).body(rawPw);
+    }
+
+    @PostMapping("/resetPassword")
+    @ResponseBody
+    public ResponseEntity<String> resetUserPassword(@RequestParam("userId") String userId) {
+        UserEntity user = mainService.getById(userId);
+        String rawPw = pwHandler.generateOneTimePassword();
+        user.setPassword(pwHandler.hashPassword(rawPw));
+        user.setRequiresPasswordReset(false);
+        mainService.create(user);
+        // TODO Need two calls to Service.create because the database script sets automatically the changed_password flag to true
+        // This sucks
+        user.setChangedPassword(false);
+        mainService.create(user);
+
+        return ResponseEntity.status(STATUS_OK).body(rawPw);
     }
 
 

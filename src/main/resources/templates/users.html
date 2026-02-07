@@ -80,7 +80,13 @@
                     <td><span th:text="${item.lastname}"></span></td>
                     <td><span th:text="${item.email}"></span></td>
                     <td><span th:text="${item.role.frontendName}"></span></td>
-                    <td th:replace="~{fragments.html :: table-data-button-cell}"></td>
+                    <td th:fragment="table-data-button-cell" sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="btn-cell">
+                        <div class="container-table-buttons">
+                            <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
+                            <button type="button"  onclick="deleteTableEntry(this.getAttribute('data-id'), this)"  th:attr="data-id=${item.id}" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
+                            <button type="button" onclick="resetPasswordOfSelectedUser(this.getAttribute('data-id'), this.getAttribute('data-username'), this)" th:attr="data-id=${item.id},data-username=${item.username}">Passwort zurücksetzen</button>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
