@@ -78,6 +78,7 @@ label.error[shown="false"] {
     background: transparent;
     border: none;
 
+    margin: 0 12px 0 12px;
     transition: transform 1s;
 }
 .button-link:hover {

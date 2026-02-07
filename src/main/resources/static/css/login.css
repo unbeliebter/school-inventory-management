@@ -22,6 +22,8 @@ header {
     align-items: center;
     background-color: var(--secondary-color);
     font-size: 2rem;
+
+    box-shadow: 0 2px 2px 0 black;
 }
 
 main {
@@ -30,6 +32,17 @@ main {
     align-items: center;
 
     flex-grow: 1;
+}
+
+label {
+    color: white;
+    font-size: 1.2rem;
+}
+
+label.error {
+    color: red;
+    font-size: 1.4rem;
+    background-color: black;
 }
 
 label.login-header {
@@ -45,7 +58,8 @@ label.login-header {
 
     display: flex;
     flex-direction: column;
-    background-color: var(--background-color-secondary);
+    background-color: lightslategray;
+    box-shadow: rgb(0, 0, 64) 8px 16px 16px 0;
     border-radius: 16px;
 
     gap:32px;
@@ -71,10 +85,15 @@ img.logo {
 }
 .login-card-input > input {
     min-height: 4vh;
-    border-radius: 8px;
-    padding-inline-start: 8px;
+    border-radius: 2px;
+    border: none;
+    padding-inline: 8px;
     text-align: center;
     font-size: 2rem;
+    box-shadow: inset 1px 2px 2px 0 black;
+}
+.login-card-input > input:hover {
+    background-color: var(--secondary-color);
 }
 
 .login-password-reset {
@@ -87,10 +106,13 @@ img.logo {
     background-color: var(--secondary-color);
     border-radius: 32px;
     padding: 16px;
-    color: var(--text-body-color);
+    color: white;
     border: none;
     margin-top: auto;
     font-size: 2rem;
+    box-shadow: 1px 2px 2px 0 black, inset 1px 2px 2px 0 white;
+
+    transition: filter 0.5s, transform 0.5s, box-shadow 0.5s;
 }
 
 .login-password-reset:hover {
@@ -98,6 +120,8 @@ img.logo {
 }
 
 button:hover {
-    filter: brightness(75%);
+    filter: brightness(85%);
+    transform: scale(0.99);
+    box-shadow: inset 1px 2px 2px 0 black, 1px 2px 2px 0 white;
     cursor: pointer;
 }

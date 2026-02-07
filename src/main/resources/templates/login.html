@@ -19,12 +19,12 @@
                     <label class="login-header">Login</label>
                     <img class="logo" th:src="@{/icons/LogoTransparent.png}">
                 </div>
-                <div th:if="${param.error}">
-                    Falsche eingabe!</div>
-                <div th:if="${param.logout}">
-                    Sie wurden ausgeloggt!</div>
-                <div th:if="${expired}">
-                    Sitzung abgelaufen!</div> <!-- TODO: Shit is not shown (because session logout does not send arg) -->
+                <label class="error" th:if="${param.error}">
+                    Falsche eingabe!</label>
+                <label class="error" th:if="${param.logout}">
+                    Sie wurden ausgeloggt!</label>
+                <label class="error" th:if="${expired}">
+                    Sitzung abgelaufen!</label> <!-- TODO: Shit is not shown (because session logout does not send arg) -->
                 <div class="login-card-input">
                     <label>Benutzername</label>
                     <input name="username" maxlength="40" type="text">
@@ -32,7 +32,7 @@
                 <div class="login-card-input">
                     <label>Passwort</label>
                     <input name="password" maxlength="40" type="password">
-                    <button class="login-password-reset"><a class="black" th:href="@{/requestPasswordReset}">Passwort vergessen?</a> </button>
+                    <a  class="login-password-reset" th:href="@{/requestPasswordReset}">Passwort vergessen?</a>
                 </div>
                 <button type="submit" value="Log in" class="login-submit">Anmelden</button>
             </div>

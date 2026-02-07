@@ -105,6 +105,7 @@ td.btn-cell > .container-table-buttons {
     display: flex;
     justify-content: space-evenly;
     min-inline-size: 80px;
+    gap: 8px;
 }
 
 

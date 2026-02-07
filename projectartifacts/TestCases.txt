@@ -6,6 +6,8 @@ Passwort kann reseted werden
     Muss neues einmal passwort zurückgeben -> Verlangt nach nutzung setzung eines neuen richtigen passworts
 InitialPasswort
 
+Responsiveness auf allen seiten testen
+
 CREATE
 	Kann überall etwas hinzufügen 
 		-Mit allen Feldern ausgefüllt
