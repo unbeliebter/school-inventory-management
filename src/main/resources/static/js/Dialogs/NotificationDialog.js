@@ -33,12 +33,20 @@ class NotificationDialog {
         })
     }
 
-    showNotification(message) {
-        this.messageLabel.innerHTML = message;
-        this.dialog.removeChild(this.buttonRow);
-        this.buttonRow = new OkRow();
-        this.dialog.appendChild(this.buttonRow);
-        this.dialog.setAttribute("open","true");
+    showNotification = (message) => {
+        return new Promise((resolve) => {
+            this.messageLabel.innerHTML = message;
+            this.mainContainer.removeChild(this.buttonRow.div);
+            this.buttonRow = new OkRow();
+            this.mainContainer.appendChild(this.buttonRow.div);
+            this.dialog.setAttribute("open","true");
+
+            this.buttonRow.okButton.addEventListener("click", () => {
+                resolve(true);
+                this.close();
+            })
+        })
+        
     }
 
     close() {
@@ -88,3 +96,6 @@ class CancelButton {
         return this.button;
     }
 }
+
+
+const notificationDialog = new NotificationDialog();

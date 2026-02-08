@@ -44,7 +44,7 @@
             <button class="button-link"><a th:href="@{/subjects}">Fächer</a></button>
         </div>
         <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
-            <button class="button-link"><a th:href="@{/users}">Lehrer</a></button>
+            <button class="button-link"><a th:href="@{/users}">Nutzer</a></button>
         </div>
         <div sec:authorize="hasAuthority('ADMIN')" class="menu-item">
             <button class="button-link"><a th:href="@{/positions}">Orte</a></button>

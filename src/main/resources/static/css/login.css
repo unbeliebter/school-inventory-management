@@ -1,4 +1,5 @@
 @import url(common.css);
+@import url(dialog.css);
 
 @media screen and (max-width: 300px) {
   :root {

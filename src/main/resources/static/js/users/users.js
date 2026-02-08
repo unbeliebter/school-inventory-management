@@ -2,11 +2,11 @@ const STATUS_CREATED = 201;
 const STATUS_OK = 200;
 
 async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
-    if (confirm("Passwort von nutzer mit nutzernamen '" + username + "' zurücksetzen?")) {
+    if (await notificationDialog.showConfirm("Passwort von nutzer mit nutzernamen '" + username + "' zurücksetzen?")) {
         try {
             const response = await fetch("/users/resetPassword?userId=" + userId, {method:"POST"});
             if (response.status === STATUS_OK) {
-                await response.text().then(r => alert("Neues einmal passwort: " + r));
+                await response.text().then(r => notificationDialog.showNotification("Neues einmal passwort: " + r));
                 while (htmlElement && htmlElement.parentNode) {
                         htmlElement = htmlElement.parentNode;
                         if (htmlElement.tagName == "TR") {
@@ -35,7 +35,7 @@ async function createUser() {
     try {
         const response = await fetch("/users/addWithRole?" + requestString, {method:"POST"});
         if (response.status === STATUS_CREATED) {
-            await response.text().then(r => alert("Initial password: " + r));
+            await response.text().then(r => notificationDialog.showNotification("Initial password: " + r));
             location.reload();
         }
         
