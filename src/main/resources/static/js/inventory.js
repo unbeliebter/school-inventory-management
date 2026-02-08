@@ -1,4 +1,6 @@
 console.log("WOW MUCH CONSOLE LOG");
+const notificationDialog = new NotificationDialog();
+
 const dialog = document.getElementById("itemDialog");
 const openDialogButton = document.getElementById("openEquipmentDialogButton");
 const closeDialogButton = document.getElementById("item-dialog-cancel-button");
@@ -77,7 +79,7 @@ function validateOnAdd() {
 
 
 async function deleteTableEntry(tableItemId, deleteBtn) {
-    if (confirm("Wirklich löschen?")) {  
+    if (await notificationDialog.showConfirm("Wirklich löschen?")) {  
         try {
             const response = await fetch(PATH + "/remove?tableItemId=" + tableItemId, {method:"DELETE"});
             if (response.status == 200) {

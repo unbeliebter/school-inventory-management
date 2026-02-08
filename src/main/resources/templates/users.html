@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <link th:href="@{/css/main.css}" type="text/css" rel="stylesheet">
 
-
 <dialog id="itemDialog" closedBy="any">
     <form method="post" th:action="${Path} + '/addWithRole'" th:object="${newTableItem}">
         <input type="hidden" th:name="tableItemId" id="id-input" th:value="*{id}"/>
@@ -96,6 +95,7 @@
 
 </body>
 <script th:replace="~{fragments.html :: table-script}"></script>
+<script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 <script type="text/javascript" th:src="@{/js/users/users.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/userDialog.js}"></script>

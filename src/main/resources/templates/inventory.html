@@ -10,7 +10,7 @@
                 <h3>Add Equipment</h3>
             </div>
             <div class="label-with-input-horizontal">
-                <label>Inventar Nr.:</label>
+                <label>Inventar Nr:</label>
                 <input th:field="*{inventoryNumber}" id="inventoryNumber-input" class="dialog-input" type="text" min="1" minlength="1"
                        maxlength="16" required>
             </div>
@@ -216,6 +216,7 @@
 
 </body>
 <script th:replace="~{fragments.html :: table-script}"></script>
+<script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/equipmentDialog.js}"></script>
 </html>
