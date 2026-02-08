@@ -34,6 +34,9 @@
 a {
     color: white;
 }
+a:hover {
+    cursor: pointer;
+}
 a.black {
     color:black;
 }
@@ -84,6 +87,7 @@ label.error[shown="false"] {
 .button-link:hover {
     transform: scale(1.25);
     opacity: 0.5;
+    cursor: pointer;
 }
 
 

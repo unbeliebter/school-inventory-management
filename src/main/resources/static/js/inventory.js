@@ -1,5 +1,4 @@
 console.log("WOW MUCH CONSOLE LOG");
-const notificationDialog = new NotificationDialog();
 
 const dialog = document.getElementById("itemDialog");
 const openDialogButton = document.getElementById("openEquipmentDialogButton");
