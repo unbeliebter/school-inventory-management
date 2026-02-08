@@ -72,6 +72,10 @@ label.error[shown="false"] {
     display: none;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 .label-with-input-horizontal {
     display:flex;
     gap: 8px;

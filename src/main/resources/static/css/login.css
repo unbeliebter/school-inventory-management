@@ -60,7 +60,7 @@ label.login-header {
     display: flex;
     flex-direction: column;
     background-color: lightslategray;
-    box-shadow: rgb(0, 0, 64) 8px 16px 16px 0;
+    box-shadow: rgb(0, 0, 64) 8px 16px 16px 0, inset 4px 8px 8px 0 rgba(255, 255, 255, 0.60);
     border-radius: 16px;
 
     gap:32px;
