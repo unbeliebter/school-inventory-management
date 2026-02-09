@@ -36,6 +36,10 @@ async function createUser() {
         + "&roleId=" + roleId;
     try {
         const response = await fetch("/users/addWithRole?" + requestString, {method:"POST"});
+        if (response.status === STATUS_OK) {
+            location.reload();
+            return;
+        }
         if (response.status === STATUS_CREATED) {
             await response.text().then(r => notificationDialog.showNotification("Initial password: " + r));
             location.reload();

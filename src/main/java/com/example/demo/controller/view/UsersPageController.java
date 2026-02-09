@@ -65,8 +65,14 @@ public class UsersPageController extends APageController<UserEntity> {
                                                        @RequestParam("lastname") String lastname,
                                                        @RequestParam("email") String email,
                                                        @RequestParam("roleId") String roleId) {
+        UserEntity newTableItem = mainService.getById(tableItemId);
+        if (newTableItem != null) {
+            fillEntityFields(newTableItem, tableItemId, username, firstname, lastname, email, roleId);
+            mainService.create(newTableItem);
+            return ResponseEntity.ok().body("");
+        }
 
-        UserEntity newTableItem = new UserEntity();
+        newTableItem = new UserEntity();
         fillEntityFields(newTableItem, tableItemId, username, firstname, lastname, email, roleId);
 
         String rawPw = pwHandler.generateOneTimePassword();
