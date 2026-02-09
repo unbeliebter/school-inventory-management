@@ -2,10 +2,12 @@ package com.example.demo.controller.view;
 
 import com.example.demo.daos.RoleDao;
 import com.example.demo.entities.user.UserEntity;
+import com.example.demo.service.IPageService;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,9 +73,18 @@ public class UsersPageController extends APageController<UserEntity> {
         user.setRequiresPasswordReset(false);
         mainService.create(user);
         // TODO Need two calls to Service.create because the database script sets automatically the changed_password flag to true
+        // TODO Actually it's even fucking worse. It Creates a RaceCondition which i need to circumvent with the following fuckery
         // This sucks
-        user.setChangedPassword(false);
-        mainService.create(user);
+        Runnable runnable = () -> {
+            try {
+                Thread.sleep(2000);
+                user.setChangedPassword(false);
+                mainService.create(user);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        };
+        new Thread(runnable).start();
 
         return ResponseEntity.status(STATUS_OK).body(rawPw);
     }
