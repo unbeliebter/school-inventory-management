@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO Finish this abstraction after talking with coworker
 @Controller
 public abstract class APageController <T extends IHasId> {
 

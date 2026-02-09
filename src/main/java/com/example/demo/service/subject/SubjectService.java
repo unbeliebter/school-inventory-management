@@ -48,6 +48,13 @@ public class SubjectService implements IPageService<SubjectEntity> {
 
     @Override
     public void writeToCsv(List<SubjectEntity> entities, PrintWriter writer) {
-        // TODO
+        writer.println("Name,Abkürzung");
+
+        for (SubjectEntity e : entities) {
+            String sb = e.getName() + "," +
+                    e.getAbbreviation();
+
+            writer.println(sb);
+        }
     }
 }

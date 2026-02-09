@@ -4,8 +4,8 @@ import com.example.demo.daos.UserDao;
 import com.example.demo.daos.UserPasswordChangeDao;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.IPageService;
-import com.example.demo.service.user.mapper.UserMapper;
 import com.example.demo.service.user.UserRequest;
+import com.example.demo.service.user.mapper.UserMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,11 +55,10 @@ public class UserService implements IPageService<UserEntity> {
 
     @Override
     public void writeToCsv(List<UserEntity> entities, PrintWriter writer) {
-        writer.println("ID,username,PW-Hash,E-Mail,VorName,NachName,Rolle");
+        writer.println("Nutzername,PW-Hash,E-Mail,VorName,NachName,Rolle");
 
         for (UserEntity e : entities) {
-            String sb = e.getId() + "," +
-                    e.getUsername() + "," +
+            String sb = e.getUsername() + "," +
                     e.getPassword() + "," +
                     e.getEmail() + "," +
                     e.getFirstname() + "," +
