@@ -48,6 +48,12 @@ public class OrganizationalGroupService implements IPageService<OrganizationalGr
 
     @Override
     public void writeToCsv(List<OrganizationalGroupEntity> entities, PrintWriter writer) {
-        // TODO;
+        writer.println("Name");
+
+        for (OrganizationalGroupEntity e : entities) {
+            String sb = e.getName();
+
+            writer.println(sb);
+        }
     }
 }
