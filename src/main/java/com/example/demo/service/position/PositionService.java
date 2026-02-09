@@ -48,6 +48,14 @@ public class PositionService implements IPageService<PositionEntity> {
 
     @Override
     public void writeToCsv(List<PositionEntity> entities, PrintWriter writer) {
-        // TODO;
+        writer.println("Schule,Raum, Beschreibung");
+
+        for (PositionEntity e : entities) {
+            String sb = e.getSchool() + "," +
+                    e.getRoom() + "," +
+                    e.getDescription();
+
+            writer.println(sb);
+        }
     }
 }
