@@ -2,7 +2,7 @@ const STATUS_CREATED = 201;
 const STATUS_OK = 200;
 
 async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
-    if (await notificationDialog.showConfirm("Passwort von nutzer mit nutzernamen '" + username + "' zurücksetzen?")) {
+    if (await notificationDialog.showConfirm("Passwort von Nutzer mit Nutzernamen '" + username + "' zurücksetzen?")) {
         try {
             const response = await fetch("/users/resetPassword?userId=" + userId, {method:"POST"});
             if (response.status === STATUS_OK) {
