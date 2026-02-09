@@ -9,7 +9,7 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
                 await response.text().then(r => notificationDialog.showNotification("Neues einmal passwort: " + r));
                 while (htmlElement && htmlElement.parentNode) {
                         htmlElement = htmlElement.parentNode;
-                        if (htmlElement.tagName == "TR") {
+                        if (htmlElement.tagName === "TR") {
                             htmlElement.setAttribute("pw-reset-requested", "false");
                         }
                     }
@@ -23,6 +23,8 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
 }
 
 async function createUser() {
+    document.getElementById("itemDialog").close();
+
     let itemId = document.getElementById("id-input").value;
     let roleId = document.getElementById("userType-input").value;
     let newUser = gatherValues()
@@ -63,13 +65,13 @@ function gatherValues() {
         false);
 }
 
-function User(itemId, userName, firstName, lastName, email, role, changedPassword, requiresPasswordReset) {
+function User(itemId, userName, firstName, lastName, email, role) {
     this.id = itemId;
     this.username = userName;
     this.firstname = firstName;
     this.lastname = lastName;
     this.email = email;
     this.role = role;
-    this.changedPassword = changedPassword;
-    this.requiresPasswordReset = requiresPasswordReset;
+    // this.changedPassword = changedPassword;
+    // this.requiresPasswordReset = requiresPasswordReset;
 }

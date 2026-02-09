@@ -1,15 +1,14 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.daos.RoleDao;
-import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.user.UserEntity;
-import com.example.demo.service.IPageService;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,22 +19,14 @@ import java.util.List;
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
 
-    class DTO {
+    public static class DTO {
+        @Getter
+        @Setter
         public List<UserEntity> list;
-
-        public List<UserEntity> getList() {
-            return list;
-        }
-
-        public void setList(List<UserEntity> list) {
-            this.list = list;
-        }
     }
 
     private final PasswordHandler pwHandler;
     private final RoleDao roleDao;
-    private final int STATUS_CREATED = 201;
-    private final int STATUS_OK = 200;
 
     public UsersPageController(UserService mainService, PasswordHandler pwHandler, RoleDao roleDao) {
         this.mainService = mainService;
@@ -56,11 +47,10 @@ public class UsersPageController extends APageController<UserEntity> {
 
 
     /**
-     * Ensures this paths is not used
-     * @param tableItemId
-     * @param newTableItem
-     * @param model
-     * @return
+     * Ensures this path is not used
+     * @param tableItemId id of table item
+     * @param newTableItem The TableItem to add to db
+     * @return html page
      */
     @Override
     public String submitForm(String tableItemId, UserEntity newTableItem) {
@@ -82,6 +72,8 @@ public class UsersPageController extends APageController<UserEntity> {
         String rawPw = pwHandler.generateOneTimePassword();
         newTableItem.setPassword(pwHandler.hashPassword(rawPw));
         mainService.create(newTableItem);
+
+        final int STATUS_CREATED = 201;
         return ResponseEntity.status(STATUS_CREATED).body(rawPw);
     }
 
@@ -107,7 +99,7 @@ public class UsersPageController extends APageController<UserEntity> {
         };
         new Thread(runnable).start();
 
-        return ResponseEntity.status(STATUS_OK).body(rawPw);
+        return ResponseEntity.ok().body(rawPw);
     }
 
     @RequestMapping("/export")
@@ -118,7 +110,6 @@ public class UsersPageController extends APageController<UserEntity> {
 
         mainService.writeToCsv(dto.list, response.getWriter());
     }
-
 
     private void fillEntityFields(UserEntity e, String tableItemId, String username, String firstname, String lastname, String email, String roleId) {
         e.setId(tableItemId.equals("new") ? null : tableItemId);
@@ -132,5 +123,3 @@ public class UsersPageController extends APageController<UserEntity> {
         e.setRequiresPasswordReset(false);
     }
 }
-// ,
-//                                                       @ModelAttribute UserEntity newTableItem

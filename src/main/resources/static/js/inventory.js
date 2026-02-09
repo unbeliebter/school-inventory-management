@@ -81,16 +81,16 @@ async function deleteTableEntry(tableItemId, deleteBtn) {
     if (await notificationDialog.showConfirm("Wirklich löschen?")) {  
         try {
             const response = await fetch(PATH + "/remove?tableItemId=" + tableItemId, {method:"DELETE"});
-            if (response.status == 200) {
-                el = deleteBtn;
+            if (response.status === 200) {
+                let el = deleteBtn;
                 while (el && el.parentNode) {
                     el = el.parentNode;
-                    if (el.tagName == "TR") {
+                    if (el.tagName === "TR") {
                         el.remove();
                     }
                 }
             }
-            else if (response.status == 423) {
+            else if (response.status === 423) {
                 alert("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
             }
         } catch (error) {

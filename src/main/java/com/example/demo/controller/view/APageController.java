@@ -2,33 +2,19 @@ package com.example.demo.controller.view;
 
 import com.example.demo.entities.IHasId;
 import com.example.demo.service.IPageService;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 // TODO Finish this abstraction after talking with coworker
 @Controller
 public abstract class APageController <T extends IHasId> {
 
-    // Needs to be overwritten in pageController
-    class DTO {
-        public List<T> list;
-
-        public List<T> getList() {
-            return list;
-        }
-
-        public void setList(List<T> list) {
-            this.list = list;
-        }
-    }
-
+    // NOTE: Needs to create a DTO for csv export in each PageController
     protected String PATH;
     protected IPageService<T> mainService;
 
@@ -69,10 +55,9 @@ public abstract class APageController <T extends IHasId> {
 
     /**
      * Convenient method to insert more stuff
-     * @param model
+     * @param model ThymeleafModel
      */
     protected void addAdditionalServicesOrEntitiesToModel(Model model, List<T> tableList) {
-        return;
     }
 
 }

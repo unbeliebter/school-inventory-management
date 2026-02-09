@@ -14,7 +14,8 @@ import com.example.demo.service.position.PositionService;
 import com.example.demo.service.subject.SubjectService;
 import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,16 +29,10 @@ import java.util.*;
 @RequestMapping({"/inventory"})
 public class InventoryPageController {
 
-    class DTO {
+    public static class DTO {
+        @Getter
+        @Setter
         public List<EquipmentEntity> list;
-
-        public List<EquipmentEntity> getList() {
-            return list;
-        }
-
-        public void setList(List<EquipmentEntity> list) {
-            this.list = list;
-        }
     }
 
     final String PATH = "inventory";
