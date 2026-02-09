@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 public abstract class APageController <T extends IHasId> {
 
+    // Needs to be overwritten in pageController
     class DTO {
         public List<T> list;
 
@@ -30,7 +31,6 @@ public abstract class APageController <T extends IHasId> {
 
     protected String PATH;
     protected IPageService<T> mainService;
-    protected List<T> currentTableList;
 
 
     @RequestMapping({""})
@@ -41,11 +41,7 @@ public abstract class APageController <T extends IHasId> {
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
-        DTO dto = new DTO();
-        dto.list = currentTableList;
-        model.addAttribute("DTO", dto);
-
-        addAdditionalServicesOrEntitiesToModel(model);
+        addAdditionalServicesOrEntitiesToModel(model, mainEntities);
 
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
@@ -71,20 +67,11 @@ public abstract class APageController <T extends IHasId> {
         }
     }
 
-    @GetMapping("/export")
-    public void exportTableToCsv(HttpServletResponse response) throws IOException {
-        String fileName = PATH + "-table.csv";
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
-
-        mainService.writeToCsv(this.currentTableList, response.getWriter());
-    }
-
     /**
      * Convenient method to insert more stuff
      * @param model
      */
-    protected void addAdditionalServicesOrEntitiesToModel(Model model) {
+    protected void addAdditionalServicesOrEntitiesToModel(Model model, List<T> tableList) {
         return;
     }
 

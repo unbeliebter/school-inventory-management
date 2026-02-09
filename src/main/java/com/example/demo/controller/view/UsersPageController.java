@@ -1,19 +1,36 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.daos.RoleDao;
+import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.IPageService;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.services.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.List;
+
 @Controller
 @RequestMapping({"/users"})
 public class UsersPageController extends APageController<UserEntity> {
+
+    class DTO {
+        public List<UserEntity> list;
+
+        public List<UserEntity> getList() {
+            return list;
+        }
+
+        public void setList(List<UserEntity> list) {
+            this.list = list;
+        }
+    }
 
     private final PasswordHandler pwHandler;
     private final RoleDao roleDao;
@@ -28,9 +45,13 @@ public class UsersPageController extends APageController<UserEntity> {
     }
 
     @Override
-    protected void addAdditionalServicesOrEntitiesToModel(Model model) {
+    protected void addAdditionalServicesOrEntitiesToModel(Model model, List<UserEntity> tableList) {
         var roles = roleDao.findAll();
         model.addAttribute("Roles", roles);
+
+        DTO dto = new DTO();
+        dto.list = tableList;
+        model.addAttribute("DTO", dto);
     }
 
 
@@ -87,6 +108,15 @@ public class UsersPageController extends APageController<UserEntity> {
         new Thread(runnable).start();
 
         return ResponseEntity.status(STATUS_OK).body(rawPw);
+    }
+
+    @RequestMapping("/export")
+    public void exportTableToCsv(@ModelAttribute("DTO") DTO dto, HttpServletResponse response) throws IOException {
+        String fileName = PATH + "-table.csv";
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=%s".formatted(fileName));
+
+        mainService.writeToCsv(dto.list, response.getWriter());
     }
 
 

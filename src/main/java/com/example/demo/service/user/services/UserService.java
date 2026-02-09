@@ -55,7 +55,19 @@ public class UserService implements IPageService<UserEntity> {
 
     @Override
     public void writeToCsv(List<UserEntity> entities, PrintWriter writer) {
-        // TODO;
+        writer.println("ID,username,PW-Hash,E-Mail,VorName,NachName,Rolle");
+
+        for (UserEntity e : entities) {
+            String sb = e.getId() + "," +
+                    e.getUsername() + "," +
+                    e.getPassword() + "," +
+                    e.getEmail() + "," +
+                    e.getFirstname() + "," +
+                    e.getLastname() + "," +
+                    e.getRole().getFrontendName();
+
+            writer.println(sb);
+        }
     }
 
     public UserEntity findByUsername(String username) {
