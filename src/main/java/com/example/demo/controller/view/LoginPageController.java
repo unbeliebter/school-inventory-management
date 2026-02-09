@@ -37,8 +37,6 @@ public class LoginPageController {
         String id = userService.findByUsername(auth.getName()).getId();
         UserEntity user = userService.getById(id);
         if (!user.isChangedPassword()) {
-            System.out.println("Needs to set credentials");
-
             return "redirect:/setInitialPassword";
         }
 
