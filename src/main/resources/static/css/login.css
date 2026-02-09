@@ -3,7 +3,7 @@
 
 @media screen and (max-width: 360px) {
   :root {
-    font-size: 5px!important;
+    font-size: 8px!important;
   }
   .container-login-card {
     max-inline-size: 90vh!important;
