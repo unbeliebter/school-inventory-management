@@ -6,7 +6,8 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
         try {
             const response = await fetch("/users/resetPassword?userId=" + userId, {method:"POST"});
             if (response.status === STATUS_OK) {
-                await response.text().then(r => notificationDialog.showNotification("Neues einmal passwort: " + r));
+                let oneTimePw = await response.text();
+                await notificationDialog.showInitialPassword("Neues einmal passwort: " + oneTimePw, oneTimePw);
                 while (htmlElement && htmlElement.parentNode) {
                         htmlElement = htmlElement.parentNode;
                         if (htmlElement.tagName === "TR") {
@@ -41,7 +42,8 @@ async function createUser() {
             return;
         }
         if (response.status === STATUS_CREATED) {
-            await response.text().then(r => notificationDialog.showNotification("Initial password: " + r));
+            let initPw = await response.text();
+            await notificationDialog.showInitialPassword("Initial password: " + initPw, initPw);
             location.reload();
         }
         

@@ -46,7 +46,22 @@ class NotificationDialog {
                 this.close();
             })
         })
-        
+    }
+
+    showInitialPassword = (message, initPw) => {
+        return new Promise((resolve) => {
+            this.messageLabel.innerHTML = message;
+            this.mainContainer.removeChild(this.buttonRow.div);
+            this.buttonRow = new OkRow();
+            this.buttonRow.div.appendChild(new CopyButton(initPw));
+            this.mainContainer.appendChild(this.buttonRow.div);
+            this.dialog.setAttribute("open","true");
+
+            this.buttonRow.okButton.addEventListener("click", () => {
+                resolve(true);
+                this.close();
+            })
+        })
     }
 
     close() {
@@ -94,6 +109,18 @@ class CancelButton {
         this.button.classList.add("cancel");
         this.button.setAttribute("type", "reset");
         return this.button;
+    }
+}
+
+
+class CopyButton {
+    constructor(textToCopy) {
+        this.textToCopy = textToCopy;
+        this.img = document.createElement("img");
+        this.img.src = "../../icons/copy.svg";
+        this.img.classList.add("button-link");
+        this.img.addEventListener("click", () => navigator.clipboard.writeText(this.textToCopy));
+        return this.img;
     }
 }
 
