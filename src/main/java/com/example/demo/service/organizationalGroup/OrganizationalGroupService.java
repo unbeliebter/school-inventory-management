@@ -59,6 +59,12 @@ public class OrganizationalGroupService implements IPageService<OrganizationalGr
 
     @Override
     public List<OrganizationalGroupEntity> getFilteredAsList(OrganizationalGroupRequest request) {
-        return List.of();
+        List<OrganizationalGroupEntity> list = dao.findAll();
+
+        String name = request.getName().isEmpty() ? null : request.getName();
+        list = list.stream()
+                .filter(e -> name == null || e.getName().equals(name))
+                .toList();
+        return list;
     }
 }

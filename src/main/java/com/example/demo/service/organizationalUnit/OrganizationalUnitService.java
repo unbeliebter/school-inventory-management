@@ -59,6 +59,12 @@ public class OrganizationalUnitService implements IPageService<OrganizationalUni
 
     @Override
     public List<OrganizationalUnitEntity> getFilteredAsList(OrganizationalUnitRequest request) {
-        return List.of();
+        List<OrganizationalUnitEntity> list = dao.findAll();
+
+        String name = request.getName().isEmpty() ? null : request.getName();
+        list = list.stream()
+                .filter(e -> name == null || e.getName().equals(name))
+                .toList();
+        return list;
     }
 }

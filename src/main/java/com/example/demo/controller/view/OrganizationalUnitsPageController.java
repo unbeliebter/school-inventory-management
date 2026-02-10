@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,6 +26,23 @@ public class OrganizationalUnitsPageController extends APageController<Organizat
     public OrganizationalUnitsPageController(OrganizationalUnitService mainService) {
         this.mainService = mainService;
         PATH = "units";
+    }
+
+    @RequestMapping({""})
+    public String showTable(Model model, OrganizationalUnitEntity newTableItem, OrganizationalUnitRequest organizationalUnitRequest,
+                            @RequestParam(required = false) Boolean filter,
+                            @RequestParam(required = false) String name) {
+        List<OrganizationalUnitEntity> mainEntities;
+        if (filter != null && filter) {
+            organizationalUnitRequest.setName(name);
+            mainEntities = mainService.getFilteredAsList(organizationalUnitRequest);
+        } else {
+            mainEntities = mainService.getAll();
+        }
+
+        buildGeneralModel(model, newTableItem, mainEntities);
+
+        return PATH;
     }
 
     @Override
