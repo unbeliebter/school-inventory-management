@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class OrganizationalGroupService implements IPageService<OrganizationalGroupEntity> {
+public class OrganizationalGroupService implements IPageService<OrganizationalGroupEntity, OrganizationalGroupRequest> {
 
     @Autowired
     private OrganizationalGroupDao dao;
@@ -55,5 +55,10 @@ public class OrganizationalGroupService implements IPageService<OrganizationalGr
 
             writer.println(sb);
         }
+    }
+
+    @Override
+    public List<OrganizationalGroupEntity> getFilteredAsList(OrganizationalGroupRequest request) {
+        return List.of();
     }
 }

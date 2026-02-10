@@ -1,6 +1,7 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.PositionEntity;
+import com.example.demo.service.position.PositionRequest;
 import com.example.demo.service.position.PositionService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping({"/positions"})
-public class PositionsPageController extends APageController<PositionEntity> {
+public class PositionsPageController extends APageController<PositionEntity, PositionRequest> {
     public static class DTO {
         @Getter
         @Setter
@@ -25,6 +27,28 @@ public class PositionsPageController extends APageController<PositionEntity> {
         this.mainService = mainService;
         PATH = "positions";
     }
+
+    @RequestMapping({""})
+    public String showTable(Model model, PositionEntity newTableItem, PositionRequest positionRequest,
+                            @RequestParam(required = false) Boolean filter,
+                            @RequestParam(required = false) String school,
+                            @RequestParam(required = false) String room,
+                            @RequestParam(required = false) String description) {
+        List<PositionEntity> mainEntities;
+        if (filter != null && filter) {
+            positionRequest.setSchool(school);
+            positionRequest.setRoom(room);
+            positionRequest.setDescription(description);
+            mainEntities = mainService.getFilteredAsList(positionRequest);
+        } else {
+            mainEntities = mainService.getAll();
+        }
+
+        buildGeneralModel(model, newTableItem, mainEntities);
+
+        return PATH;
+    }
+
     @Override
     protected void addAdditionalServicesOrEntitiesToModel(Model model, List<PositionEntity> tableList) {
         DTO dto = new DTO();

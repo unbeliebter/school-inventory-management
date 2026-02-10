@@ -48,6 +48,67 @@
     </form>
 </dialog>
 
+<dialog id="filterDialog" closedBy="any">
+    <form id="filter-dialog-form" method="GET" th:action="${Path}">
+        <input type="hidden" th:name="filter" th:value="true"/>
+        <div class="dialog-main-container">
+            <div>
+                <h3>Add Filter Option</h3>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Nutzername:</label>
+                <select th:name="username" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.username}" th:text="${item.username}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Vorname:</label>
+                <select th:name="firstname" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.firstname}" th:text="${item.firstname}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Nachname:</label>
+                <select th:name="lastname" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.lastname}" th:text="${item.lastname}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>E-Mail:</label>
+                <select th:name="email" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.email}" th:text="${item.email}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Rolle:</label>
+                <select th:name="frontendName" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.role.frontendName}" th:text="${item.role.frontendName}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Passwort-Angefordert:</label>
+                <select th:name="pwResetRequested" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:value="false" th:text="Nein"></option>
+                    <option th:value="true" th:text="Ja"></option>
+                </select>
+            </div>
+
+            <div class="dialog-button-row">
+                <button  class="submit" type="submit">Submit</button>
+                <button class="cancel" id="filter-dialog-cancel-button" type="reset">Cancel</button>
+            </div>
+
+        </div>
+
+    </form>
+</dialog>
+
 
 <body>
 <header th:replace="~{fragments.html :: header}"> </header>

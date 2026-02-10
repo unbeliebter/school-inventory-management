@@ -1,6 +1,7 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.SubjectEntity;
+import com.example.demo.service.subject.SubjectRequest;
 import com.example.demo.service.subject.SubjectService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping({"/subjects"})
-public class SubjectsPageController extends APageController<SubjectEntity> {
+public class SubjectsPageController extends APageController<SubjectEntity, SubjectRequest> {
     public static class DTO {
         @Getter
         @Setter
@@ -24,6 +26,25 @@ public class SubjectsPageController extends APageController<SubjectEntity> {
     public SubjectsPageController(SubjectService mainService) {
         this.mainService = mainService;
         PATH = "subjects";
+    }
+
+    @RequestMapping({""})
+    public String showTable(Model model, SubjectEntity newTableItem, SubjectRequest subjectRequest,
+                            @RequestParam(required = false) Boolean filter,
+                            @RequestParam(required = false) String name,
+                            @RequestParam(required = false) String abbreviation) {
+        List<SubjectEntity> mainEntities;
+        if (filter != null && filter) {
+            subjectRequest.setName(name);
+            subjectRequest.setAbbreviation(abbreviation);
+            mainEntities = mainService.getFilteredAsList(subjectRequest);
+        } else {
+            mainEntities = mainService.getAll();
+        }
+
+        buildGeneralModel(model, newTableItem, mainEntities);
+
+        return PATH;
     }
 
     @Override

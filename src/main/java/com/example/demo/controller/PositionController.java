@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.PositionEntity;
+import com.example.demo.service.position.PositionRequest;
 import com.example.demo.service.position.PositionService;
-import com.example.demo.service.position.PostionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class PositionController {
 
     @PostMapping("save")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public PositionEntity save(@RequestBody PostionRequest request){
+    public PositionEntity save(@RequestBody PositionRequest request){
         return positionService.create(request);
     }
 

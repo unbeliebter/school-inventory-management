@@ -4,7 +4,6 @@ import com.example.demo.daos.UserDao;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
 import com.example.demo.service.user.UserRequest;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +35,11 @@ public class UserMapper {
         entity.setUsername(request.getUsername());
         entity.setRole(roleMapper.mapToEntity(request.getRole()));
         entity.setChangedPassword(request.isChangedPassword());
-        entity.setRequiresPasswordReset(request.isRequiresPasswordReset());
+        if (request.getRequiresPasswordReset() == null) {
+            entity.setRequiresPasswordReset(false);
+        } else {
+            entity.setRequiresPasswordReset(request.getRequiresPasswordReset());
+        }
 
         return entity;
     }

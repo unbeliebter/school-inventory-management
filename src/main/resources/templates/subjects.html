@@ -30,6 +30,38 @@
     </form>
 </dialog>
 
+<dialog id="filterDialog" closedBy="any">
+    <form id="filter-dialog-form" method="GET" th:action="${Path}">
+        <input type="hidden" th:name="filter" th:value="true"/>
+        <div class="dialog-main-container">
+            <div>
+                <h3>Add Filter Option</h3>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Name:</label>
+                <select th:name="name" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.name}" th:text="${item.name}"></option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
+                <label>Abkürzung:</label>
+                <select th:name="abbreviation" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="item : ${TableItems}" th:value="${item.abbreviation}" th:text="${item.abbreviation}"></option>
+                </select>
+            </div>
+
+            <div class="dialog-button-row">
+                <button  class="submit" type="submit">Submit</button>
+                <button class="cancel" id="filter-dialog-cancel-button" type="reset">Cancel</button>
+            </div>
+
+        </div>
+
+    </form>
+</dialog>
+
 
 <body>
 <header th:replace="~{fragments.html :: header}"> </header>
@@ -71,4 +103,5 @@
 <script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/subjectDialog.js}"></script>
+<script type="text/javascript" th:src="@{/js/subjects/subjects.js}"></script>
 </html>

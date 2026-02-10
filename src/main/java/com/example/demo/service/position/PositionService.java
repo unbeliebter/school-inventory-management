@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class PositionService implements IPageService<PositionEntity> {
+public class PositionService implements IPageService<PositionEntity, PositionRequest> {
 
     @Autowired
     private PositionDao dao;
@@ -23,7 +23,7 @@ public class PositionService implements IPageService<PositionEntity> {
     }
 
     @Transactional
-    public PositionEntity create(PostionRequest request) {
+    public PositionEntity create(PositionRequest request) {
         var entity = mapper.mapToEntity(request, new PositionEntity());
         return dao.save(entity);
     }
@@ -57,5 +57,20 @@ public class PositionService implements IPageService<PositionEntity> {
 
             writer.println(sb);
         }
+    }
+
+    @Override
+    public List<PositionEntity> getFilteredAsList(PositionRequest request) {
+        List<PositionEntity> list = dao.findAll();
+
+        String school = request.getSchool().isEmpty() ? null : request.getSchool();
+        String room = request.getRoom().isEmpty() ? null : request.getRoom();
+        String description = request.getDescription().isEmpty() ? null : request.getDescription();
+        list = list.stream()
+                .filter(e -> school == null || e.getSchool().equals(school))
+                .filter(e -> room == null || e.getRoom().equals(room))
+                .filter(e -> description == null || e.getDescription().equals(description))
+                .toList();
+        return list;
     }
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PostionRequest {
+public class PositionRequest {
 
     private String id;
     private String school;

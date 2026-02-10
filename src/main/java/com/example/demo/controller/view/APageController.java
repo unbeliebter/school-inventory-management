@@ -3,7 +3,6 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.IHasId;
 import com.example.demo.service.IPageService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,18 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public abstract class APageController <T extends IHasId> {
+public abstract class APageController <T extends IHasId, TR> {
 
     // NOTE: Needs to create a DTO for csv export in each PageController
     protected String PATH;
-    protected IPageService<T> mainService;
+    protected IPageService<T, TR> mainService;
 
-
-    @RequestMapping({""})
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String showTable(Model model, T newTableItem) {
-        List<T> mainEntities = mainService.getAll();
-
+    protected void buildGeneralModel(Model model, T newTableItem, List<T> mainEntities) {
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 
@@ -30,8 +24,6 @@ public abstract class APageController <T extends IHasId> {
 
         model.addAttribute("newTableItem", newTableItem);
         model.addAttribute("newTableItemId", newTableItem.getId());
-
-        return PATH;
     }
 
     @PostMapping("/add")

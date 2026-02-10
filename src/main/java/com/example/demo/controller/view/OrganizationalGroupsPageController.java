@@ -1,6 +1,7 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.OrganizationalGroupEntity;
+import com.example.demo.service.organizationalGroup.OrganizationalGroupRequest;
 import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping({"/groups"})
-public class OrganizationalGroupsPageController extends APageController<OrganizationalGroupEntity> {
+public class OrganizationalGroupsPageController extends APageController<OrganizationalGroupEntity, OrganizationalGroupRequest> {
     public static class DTO {
         @Getter
         @Setter

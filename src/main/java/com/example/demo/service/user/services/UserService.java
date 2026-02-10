@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class UserService implements IPageService<UserEntity> {
+public class UserService implements IPageService<UserEntity, UserRequest> {
 
     @Autowired
     private UserDao dao;
@@ -67,6 +67,27 @@ public class UserService implements IPageService<UserEntity> {
 
             writer.println(sb);
         }
+    }
+
+    @Override
+    public List<UserEntity> getFilteredAsList(UserRequest request) {
+        List<UserEntity> list = dao.findAll();
+
+        String userName = request.getUsername().isEmpty() ? null : request.getUsername();
+        String firstName = request.getFirstName().isEmpty() ? null : request.getFirstName();
+        String lastName = request.getLastName().isEmpty() ? null : request.getLastName();
+        String eMail = request.getEmail().isEmpty() ? null : request.getEmail();
+        String roleId = request.getRole() == null ? null : request.getRole().getId();
+        Boolean pwRequested = request.getRequiresPasswordReset();
+        list = list.stream()
+                .filter(e -> userName == null || e.getUsername().equals(userName))
+                .filter(e -> firstName == null || e.getFirstname().equals(firstName))
+                .filter(e -> lastName == null || e.getLastname().equals(lastName))
+                .filter(e -> eMail == null || e.getEmail().equals(eMail))
+                .filter(e -> roleId == null || e.getRole().getId().equals(roleId))
+                .filter(e -> pwRequested == null || e.isRequiresPasswordReset() == pwRequested)
+                .toList();
+        return list;
     }
 
     public UserEntity findByUsername(String username) {

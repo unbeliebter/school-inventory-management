@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @Service
-public class SubjectService implements IPageService<SubjectEntity> {
+public class SubjectService implements IPageService<SubjectEntity, SubjectRequest> {
 
     @Autowired
     private SubjectDao dao;
@@ -44,6 +44,18 @@ public class SubjectService implements IPageService<SubjectEntity> {
         if (toDelete.isPresent()) {
             dao.deleteById(id);
         }
+    }
+
+    public List<SubjectEntity> getFilteredAsList(SubjectRequest request) {
+        List<SubjectEntity> list = dao.findAll();
+
+        String name = request.getName().isEmpty() ? null : request.getName();
+        String abbreviation = request.getAbbreviation().isEmpty() ? null : request.getAbbreviation();
+        list = list.stream()
+                .filter(e -> name == null || e.getName().equals(name))
+                .filter(e -> abbreviation == null || e.getAbbreviation().equals(abbreviation))
+                .toList();
+        return list;
     }
 
     @Override

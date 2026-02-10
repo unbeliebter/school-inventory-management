@@ -1,6 +1,7 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.entities.OrganizationalUnitEntity;
+import com.example.demo.service.organizationalUnit.OrganizationalUnitRequest;
 import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping({"/units"})
-public class OrganizationalUnitsPageController extends APageController<OrganizationalUnitEntity> {
+public class OrganizationalUnitsPageController extends APageController<OrganizationalUnitEntity, OrganizationalUnitRequest> {
     public static class DTO {
         @Getter
         @Setter

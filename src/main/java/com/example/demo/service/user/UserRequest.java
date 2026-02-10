@@ -15,5 +15,5 @@ public class UserRequest {
     private String lastName;
     private RoleRequest role;
     private boolean changedPassword;
-    private boolean requiresPasswordReset;
+    private Boolean requiresPasswordReset;
 }

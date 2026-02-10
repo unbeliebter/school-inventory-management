@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PositionMapper {
 
-    public PositionEntity mapToEntity(PostionRequest request, PositionEntity entity) {
+    public PositionEntity mapToEntity(PositionRequest request, PositionEntity entity) {
         entity.setSchool(request.getSchool());
         entity.setRoom(request.getRoom());
         entity.setDescription(request.getDescription());
@@ -14,7 +14,7 @@ public class PositionMapper {
         return entity;
     }
 
-    public PositionEntity mapToEntityDetailed(PostionRequest request) {
+    public PositionEntity mapToEntityDetailed(PositionRequest request) {
         var entity = new PositionEntity();
         entity.setId(request.getId());
 

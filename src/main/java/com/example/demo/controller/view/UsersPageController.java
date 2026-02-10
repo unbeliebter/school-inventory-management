@@ -1,8 +1,11 @@
 package com.example.demo.controller.view;
 
 import com.example.demo.daos.RoleDao;
+import com.example.demo.entities.user.RoleEntity;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
+import com.example.demo.service.user.RoleRequest;
+import com.example.demo.service.user.UserRequest;
 import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -14,10 +17,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping({"/users"})
-public class UsersPageController extends APageController<UserEntity> {
+public class UsersPageController extends APageController<UserEntity, UserRequest> {
 
     public static class DTO {
         @Getter
@@ -25,6 +31,7 @@ public class UsersPageController extends APageController<UserEntity> {
         public List<UserEntity> list;
     }
 
+    private static final Logger LOGGER = Logger.getLogger(UsersPageController.class.getName());
     private final PasswordHandler pwHandler;
     private final RoleDao roleDao;
 
@@ -33,6 +40,49 @@ public class UsersPageController extends APageController<UserEntity> {
         this.pwHandler = pwHandler;
         this.roleDao = roleDao;
         PATH = "users";
+    }
+
+    @RequestMapping({""})
+    public String showTable(Model model, UserEntity newTableItem, UserRequest userRequest,
+                            @RequestParam(required = false) Boolean filter,
+                            @RequestParam(required = false) String username,
+                            @RequestParam(required = false) String firstname,
+                            @RequestParam(required = false) String lastname,
+                            @RequestParam(required = false) String email,
+                            @RequestParam(required = false) String frontendName,
+                            @RequestParam(required = false) Boolean pwResetRequested) {
+        // NOTE: It's for some reason important that the pwResetRequest param does not have the same name as the entity.
+        //       Otherwise it tries to map the request to a UserEntity ... and fails
+        List<UserEntity> mainEntities;
+        if (filter != null && filter) {
+            userRequest.setUsername(username);
+            userRequest.setFirstName(firstname);
+            userRequest.setLastName(lastname);
+            userRequest.setEmail(email);
+            userRequest.setRequiresPasswordReset(pwResetRequested);
+
+            // Well this is annoying
+            RoleRequest roleRequest;
+            try {
+                roleRequest = new RoleRequest();
+                RoleEntity role = roleDao.findByFrontendName(frontendName).orElseThrow();
+                roleRequest.setId(role.getId());
+                roleRequest.setName(role.getName());
+                roleRequest.setFrontendName(role.getFrontendName());
+            } catch (NoSuchElementException e) {
+                LOGGER.log(Level.INFO, "No role to filter");
+                roleRequest = null;
+            }
+            userRequest.setRole(roleRequest);
+
+            mainEntities = mainService.getFilteredAsList(userRequest);
+        } else {
+            mainEntities = mainService.getAll();
+        }
+
+        buildGeneralModel(model, newTableItem, mainEntities);
+
+        return PATH;
     }
 
     @Override
