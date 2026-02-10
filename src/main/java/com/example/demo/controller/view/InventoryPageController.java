@@ -16,6 +16,7 @@ import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public class InventoryPageController {
                                 @RequestParam(required = false) String subject,
                                 @RequestParam(required = false) String responsibleUser,
                                 @RequestParam(required = false) String position,
-                                Model model) {
+                                Model model, Authentication auth) {
 
         List<EquipmentEntity> currentTableList;
         if (filter != null && filter) {
@@ -80,6 +81,11 @@ public class InventoryPageController {
         DTO dto = new DTO();
         dto.list = currentTableList;
         model.addAttribute("DTO", dto);
+
+        String currentUserId = userService.findByUsername(auth.getName()).getId();
+        String currentUserRole = userService.getById(currentUserId).getRole().getName();
+        model.addAttribute("currentUserId", currentUserId);
+        model.addAttribute("currentUserRole", currentUserRole);
 
         addAdditionalServicesToModel(model);
 

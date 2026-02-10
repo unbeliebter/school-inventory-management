@@ -50,7 +50,7 @@
                     </option>
                 </select>
             </div>
-            <div class="label-with-input-horizontal">
+            <div th:if="${currentUserRole == 'ADMIN'}" class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
                 <select th:field="*{responsibleUser}" id="responsibleUser-input" class="dialog-input">
                     <option th:each="user : ${Users}" th:value="${user.id}"
@@ -58,6 +58,7 @@
                     </option>
                 </select>
             </div>
+            <input th:unless="${currentUserRole == 'ADMIN'}" type="hidden" th:name="responsibleUser" th:value="${currentUserId}">
             <div class="label-with-input-horizontal">
                 <label>Zustand:</label>
                 <select th:field="*{equipmentState}" id="equipmentState-input" class="dialog-input">
