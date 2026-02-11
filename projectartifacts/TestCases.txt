@@ -6,6 +6,8 @@ Passwort kann reseted werden
     Muss neues einmal passwort zurückgeben -> Verlangt nach nutzung setzung eines neuen richtigen passworts
 InitialPasswort
 
+Testen wie Dialoge sich verhalten wenn man sie schließt (wichtig sowohl cancel buttona als auch "weg klicken")
+
 Responsiveness auf allen seiten testen
 
 CREATE

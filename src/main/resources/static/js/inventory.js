@@ -72,16 +72,3 @@ async function deleteTableEntry(tableItemId, deleteBtn) {
     }
 }
 
-function dialogAddEquipmentStateChanged() {
-    let equipmentStateField = document.getElementById("equipmentState-input");
-    let positionInputDiv = document.getElementById("dialog-add-item-position");
-    let renterInputDiv = document.getElementById("dialog-add-item-renter");
-    if (equipmentStateField.value === 'ON_LOAN') {
-        positionInputDiv.style.display = 'none';
-        renterInputDiv.style.display = 'flex';
-    } else {
-        positionInputDiv.style.display = 'flex';
-        renterInputDiv.style.display = 'none';
-    }
-
-}
