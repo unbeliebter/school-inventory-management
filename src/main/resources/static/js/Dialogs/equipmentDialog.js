@@ -20,5 +20,30 @@ function fillDialog(tableItem) {
     if (responsibleUserField !== null) {
         responsibleUserField.value = tableItem.responsibleUser == null ?  "" : tableItem.responsibleUser.id;
     }
+}
 
+function validateOnAdd() {
+    let form = document.getElementById("newItemForm");
+    // let errorLabel = document.getElementById("add-Item-Error");
+    if (!form.reportValidity()) {
+        return;
+    }
+
+    let equipmentStateField = document.getElementById("equipmentState-input");
+    let positionField = document.getElementById("position-input");
+    if (equipmentStateField === null || positionField === null) {
+        return;
+    }
+
+    if (equipmentStateField.value === 'ON_LOAN') {
+        positionField.value = "";
+    } else {
+        document.getElementById("dialog-add-item-renter-input").value = "";
+        /*
+        errorLabel.textContent = "Bitte einen Lagerort wählen"
+        errorLabel.setAttribute("shown", "true");
+         */
+    }
+
+    form.submit();
 }

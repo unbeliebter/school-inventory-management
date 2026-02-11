@@ -50,33 +50,6 @@ function toggleMenu() {
     }
 }
 
-function validateOnAdd() {
-    let form = document.getElementById("newItemForm");
-    let errorLabel = document.getElementById("add-Item-Error");
-    if (!form.reportValidity()) {
-        return;
-    }
-
-    let equipmentStateField = document.getElementById("equipmentState-input");
-    let positionField = document.getElementById("position-input");
-    if (equipmentStateField === null || positionField === null) {
-        return;
-    }
-
-    if (equipmentStateField.value === 'ON_LOAN' && positionField.value !== "") {
-        errorLabel.textContent = "Ausgeliehene Objekte dürfen keinen Ort angegeben haben!"
-        errorLabel.setAttribute("shown", "true");
-        return;
-    } else if (equipmentStateField.value !== 'ON_LOAN' && positionField.value === "") {
-        errorLabel.textContent = "Bitte einen Lagerort wählen"
-        errorLabel.setAttribute("shown", "true");
-        return;
-    }
-
-    form.submit();
-}
-
-
 async function deleteTableEntry(tableItemId, deleteBtn) {
     if (await notificationDialog.showConfirm("Wirklich löschen?")) {  
         try {
@@ -97,4 +70,18 @@ async function deleteTableEntry(tableItemId, deleteBtn) {
             alert(error.message);
         }
     }
+}
+
+function dialogAddEquipmentStateChanged() {
+    let equipmentStateField = document.getElementById("equipmentState-input");
+    let positionInputDiv = document.getElementById("dialog-add-item-position");
+    let renterInputDiv = document.getElementById("dialog-add-item-renter");
+    if (equipmentStateField.value === 'ON_LOAN') {
+        positionInputDiv.style.display = 'none';
+        renterInputDiv.style.display = 'flex';
+    } else {
+        positionInputDiv.style.display = 'flex';
+        renterInputDiv.style.display = 'none';
+    }
+
 }

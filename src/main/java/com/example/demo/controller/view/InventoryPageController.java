@@ -8,6 +8,7 @@ import com.example.demo.entities.equipment.EquipmentEntity;
 import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.equipment.EquipmentService;
+import com.example.demo.service.equipment.equipmentrenter.EquipmentRenterService;
 import com.example.demo.service.organizationalGroup.OrganizationalGroupService;
 import com.example.demo.service.organizationalUnit.OrganizationalUnitService;
 import com.example.demo.service.position.PositionService;
@@ -44,17 +45,19 @@ public class InventoryPageController {
     OrganizationalUnitService orgUnitService;
     OrganizationalGroupService orgGroupService;
     UserService userService;
+    EquipmentRenterService equipmentRenterService;
 
 
     public InventoryPageController(EquipmentService equipmentService, SubjectService subjectService,
                                    PositionService positionService, OrganizationalUnitService orgUnitService,
-                                   OrganizationalGroupService orgGroupService, UserService userService) {
+                                   OrganizationalGroupService orgGroupService, UserService userService, EquipmentRenterService equipmentRenterService) {
         this.mainService = equipmentService;
         this.subjectService = subjectService;
         this.positionService = positionService;
         this.orgUnitService = orgUnitService;
         this.orgGroupService = orgGroupService;
         this.userService = userService;
+        this.equipmentRenterService = equipmentRenterService;
     }
 
     @RequestMapping({""})
@@ -123,14 +126,26 @@ public class InventoryPageController {
     }
 
     @PostMapping("/add")
-    public String submitForm(@RequestParam("tableItemId") String equipmentId, @ModelAttribute EquipmentEntity newEquipment) {
-        newEquipment.setId(equipmentId.equals("new") ? null : equipmentId);
+    public String submitForm(@RequestParam("tableItemId") String equipmentId, @RequestParam(name="renterName", required = false ) String renterName, @ModelAttribute EquipmentEntity newEquipment) {
+        if (!equipmentId.equals("new")) {
+            newEquipment.setId(equipmentId);
+            removeRenterIfEntityWasOnLoan(equipmentId);
+        } else {
+            newEquipment.setId(null);
+        }
+
         mainService.save(newEquipment);
+
+        if (!renterName.isEmpty()) {
+            equipmentRenterService.create(newEquipment, renterName);
+        }
+
         return "redirect:/" + PATH;
     }
 
     @DeleteMapping("/remove")
     public String removeEquipmentEntry(@RequestParam("tableItemId") String equipmentEntryId) {
+        removeRenterIfEntityWasOnLoan(equipmentEntryId);
         mainService.deleteById(equipmentEntryId);
         return "redirect:/" + PATH;
     }
@@ -144,6 +159,14 @@ public class InventoryPageController {
         mainService.writeToCsv(dto.list, response.getWriter());
     }
 
+    private void removeRenterIfEntityWasOnLoan(String equipmentId) {
+        EquipmentEntity oldEntity = mainService.getById(equipmentId);
+        if (oldEntity.getEquipmentState() != EquipmentState.ON_LOAN) {
+            return;
+        }
+        equipmentRenterService.delete(oldEntity);
+
+    }
 
     private void addAdditionalServicesToModel(Model model) {
         List<SubjectEntity> subjects = subjectService.getAll();
