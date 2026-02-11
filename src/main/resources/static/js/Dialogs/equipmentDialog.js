@@ -24,7 +24,6 @@ function fillDialog(tableItem) {
 
 function validateOnAdd() {
     let form = document.getElementById("newItemForm");
-    // let errorLabel = document.getElementById("add-Item-Error");
     if (!form.reportValidity()) {
         return;
     }
@@ -39,10 +38,6 @@ function validateOnAdd() {
         positionField.value = "";
     } else {
         document.getElementById("dialog-add-item-renter-input").value = "";
-        /*
-        errorLabel.textContent = "Bitte einen Lagerort wählen"
-        errorLabel.setAttribute("shown", "true");
-         */
     }
 
     form.submit();
