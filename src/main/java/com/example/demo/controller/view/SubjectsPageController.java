@@ -3,9 +3,11 @@ package com.example.demo.controller.view;
 import com.example.demo.entities.SubjectEntity;
 import com.example.demo.service.subject.SubjectRequest;
 import com.example.demo.service.subject.SubjectService;
+import com.example.demo.service.user.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,13 +25,14 @@ public class SubjectsPageController extends APageController<SubjectEntity, Subje
         @Setter
         public List<SubjectEntity> list;
     }
-    public SubjectsPageController(SubjectService mainService) {
+    public SubjectsPageController(SubjectService mainService, UserService userService) {
         this.mainService = mainService;
+        this.userService = userService;
         PATH = "subjects";
     }
 
     @RequestMapping({""})
-    public String showTable(Model model, SubjectEntity newTableItem, SubjectRequest subjectRequest,
+    public String showTable(Authentication auth, Model model, SubjectEntity newTableItem, SubjectRequest subjectRequest,
                             @RequestParam(required = false) Boolean filter,
                             @RequestParam(required = false) String name,
                             @RequestParam(required = false) String abbreviation) {
@@ -42,7 +45,7 @@ public class SubjectsPageController extends APageController<SubjectEntity, Subje
             mainEntities = mainService.getAll();
         }
 
-        buildGeneralModel(model, newTableItem, mainEntities);
+        buildGeneralModel(auth, model, newTableItem, mainEntities);
 
         return PATH;
     }

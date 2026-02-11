@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,13 +38,14 @@ public class UsersPageController extends APageController<UserEntity, UserRequest
 
     public UsersPageController(UserService mainService, PasswordHandler pwHandler, RoleDao roleDao) {
         this.mainService = mainService;
+        this.userService = mainService;
         this.pwHandler = pwHandler;
         this.roleDao = roleDao;
         PATH = "users";
     }
 
     @RequestMapping({""})
-    public String showTable(Model model, UserEntity newTableItem, UserRequest userRequest,
+    public String showTable(Authentication auth, Model model, UserEntity newTableItem, UserRequest userRequest,
                             @RequestParam(required = false) Boolean filter,
                             @RequestParam(required = false) String username,
                             @RequestParam(required = false) String firstname,
@@ -80,7 +82,7 @@ public class UsersPageController extends APageController<UserEntity, UserRequest
             mainEntities = mainService.getAll();
         }
 
-        buildGeneralModel(model, newTableItem, mainEntities);
+        buildGeneralModel(auth, model, newTableItem, mainEntities);
 
         return PATH;
     }
