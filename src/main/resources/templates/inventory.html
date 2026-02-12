@@ -203,7 +203,12 @@
                         <span th:text="${item.position.description}">Ort-Beschreibung</span>
                     </td>
                     <td th:if="!${item.position} AND ${renterMap.get(item.id)}">
-                        <span th:text="${renterMap.get(item.id).renter}"></span>
+                        <div>
+                            <span style="font-weight: bold">Ausgeliehen an</span>
+                            <br>
+                            <span th:text="${renterMap.get(item.id).renter}"></span>
+                        </div>
+
                     </td>
                     <td th:unless="${item.position} OR ${renterMap.get(item.id)}"></td>
 
