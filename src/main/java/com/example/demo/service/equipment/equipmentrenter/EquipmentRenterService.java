@@ -6,6 +6,7 @@ import com.example.demo.entities.equipment.EquipmentRenterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,12 +17,16 @@ public class EquipmentRenterService {
     @Autowired
     private EquipmentRenterMapper mapper;
 
+    public List<EquipmentRenterEntity> getAll() {
+        return equipmentRenterDao.findAll();
+    }
+
     public EquipmentRenterEntity create(EquipmentEntity equipment, String renter) {
         var toCreate = mapper.toEntity(new EquipmentRenterEntity(), equipment, renter);
         return equipmentRenterDao.save(toCreate);
     }
 
-    public void delete(EquipmentEntity equipment) {
+    public void delete(EquipmentEntity equipment) throws  IllegalStateException {
         var toDelete = equipmentRenterDao.findByEquipment(equipment);
         if (toDelete.isEmpty()) {
             throw new IllegalStateException("Es wurde kein Eintrag zum löschen gefunden.");

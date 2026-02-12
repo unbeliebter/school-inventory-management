@@ -5,6 +5,7 @@ import com.example.demo.entities.OrganizationalUnitEntity;
 import com.example.demo.entities.PositionEntity;
 import com.example.demo.entities.SubjectEntity;
 import com.example.demo.entities.equipment.EquipmentEntity;
+import com.example.demo.entities.equipment.EquipmentRenterEntity;
 import com.example.demo.entities.equipment.EquipmentState;
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.equipment.EquipmentService;
@@ -24,12 +25,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
-
+import java.util.logging.Logger;
 
 
 @Controller
 @RequestMapping({"/inventory"})
 public class InventoryPageController {
+
+    public final static Logger LOGGER = Logger.getLogger(InventoryPageController.class.getName());
 
     public static class DTO {
         @Getter
@@ -164,7 +167,13 @@ public class InventoryPageController {
         if (oldEntity.getEquipmentState() != EquipmentState.ON_LOAN) {
             return;
         }
-        equipmentRenterService.delete(oldEntity);
+        try {
+            equipmentRenterService.delete(oldEntity);
+        } catch (IllegalStateException e) {
+            LOGGER.warning("Beim versuch einen Inventargegenstand der sich im Zustand " +
+                    "ausgeliehen befindet zu löschen wurde kein passender Renter gefunden");
+        }
+
 
     }
 
@@ -177,11 +186,20 @@ public class InventoryPageController {
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
 
         List<EquipmentEntity> items = mainService.getAll();
+
         Set<String> itemNameFilterOptions = new HashSet<>();
         for (EquipmentEntity e : items) {
             itemNameFilterOptions.add(e.getEquipmentName());
         }
         model.addAttribute("ItemNameFilterOptions", itemNameFilterOptions);
+
+        Map<String, EquipmentRenterEntity> renterMap = new HashMap<>();
+        for (EquipmentRenterEntity e : equipmentRenterService.getAll()) {
+            renterMap.put(e.getEquipment().getId(), e);
+        }
+        model.addAttribute("renterMap", renterMap);
+
+
 
 
         model.addAttribute("Subjects", subjects);

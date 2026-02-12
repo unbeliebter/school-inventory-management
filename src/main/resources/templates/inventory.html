@@ -194,6 +194,7 @@
                     <td><span th:text="${item.organizationalUnit.name}">Unit</span></td>
                     <td><span th:text="${item.organizationalGroup.name}">Group</span></td>
                     <td><span th:text="${item.subject.name}">Fach</span></td>
+
                     <td th:if="${item.position}">
                         <span th:text="${item.position.school}">Ort-Schule</span>
                         <br>
@@ -201,12 +202,18 @@
                         <br>
                         <span th:text="${item.position.description}">Ort-Beschreibung</span>
                     </td>
-                    <td th:unless="${item.position}"></td>
+                    <td th:if="!${item.position} AND ${renterMap.get(item.id)}">
+                        <span th:text="${renterMap.get(item.id).renter}"></span>
+                    </td>
+                    <td th:unless="${item.position} OR ${renterMap.get(item.id)}"></td>
+
                     <td th:if="${item.responsibleUser}"><span
                             th:text="${item.responsibleUser.firstname} + ' ' + ${item.responsibleUser.lastname}">Zuständig</span>
                     </td>
                     <td th:unless="${item.responsibleUser}"></td>
+
                     <td><span th:text="${item.equipmentState}">Status</span></td>
+
                     <td th:replace="~{fragments.html :: table-data-button-cell}"></td>
                 </tr>
                 </tbody>
