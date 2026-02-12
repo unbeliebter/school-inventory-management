@@ -43,7 +43,7 @@
             <label id="add-Item-Error" class="error" shown="false"></label>
             <div id="dialog-add-item-position" class="label-with-input-horizontal">
                 <label>Ort:</label>
-                <select th:field="*{position}" id="position-input" class="dialog-input">
+                <select required th:field="*{position}" id="position-input" class="dialog-input">
                     <option th:each="position : ${Positions}" th:value="${position.id}"
                             th:text="${position.school} + ' ' + ${position.room}">
                     </option>
