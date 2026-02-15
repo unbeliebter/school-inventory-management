@@ -10,6 +10,8 @@ Testen wie Dialoge sich verhalten wenn man sie schließt (wichtig sowohl cancel 
 
 Responsiveness auf allen seiten testen
 
+Was passiert wenn Admin sich Rechte entfernt
+
 STATUS Ausgeliehen
     MaxChar limit und required
     Richtiger input wird angezeigt beim öffnen des Dialogs
