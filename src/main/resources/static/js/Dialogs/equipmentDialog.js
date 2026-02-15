@@ -1,3 +1,9 @@
+
+
+openDialogButton.addEventListener("click", () => {
+    dialogAddEquipmentStateChanged();
+});
+
 function dialogAddEquipmentStateChanged() {
     let equipmentStateField = document.getElementById("equipmentState-input");
     let positionInputDiv = document.getElementById("dialog-add-item-position");
@@ -41,21 +47,27 @@ function fillDialog(tableItem) {
 
 function validateOnAdd() {
     let form = document.getElementById("newItemForm");
-    if (!form.reportValidity()) {
-        return;
-    }
 
     let equipmentStateField = document.getElementById("equipmentState-input");
     let positionField = document.getElementById("position-input");
+    let renterField = document.getElementById("dialog-add-item-renter-input");
+
     if (equipmentStateField === null || positionField === null) {
         return;
     }
 
     if (equipmentStateField.value === 'ON_LOAN') {
         positionField.value = "";
+        renterField.setAttribute("required", "required");
+        positionField.removeAttribute("required");
     } else {
-        document.getElementById("dialog-add-item-renter-input").value = "";
+        renterField.value = "";
+        positionField.setAttribute("required", "required");
+        renterField.removeAttribute("required");
     }
 
+    if (!form.reportValidity()) {
+        return;
+    }
     form.submit();
 }
