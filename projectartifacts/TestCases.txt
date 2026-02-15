@@ -6,9 +6,20 @@ Passwort kann reseted werden
     Muss neues einmal passwort zurückgeben -> Verlangt nach nutzung setzung eines neuen richtigen passworts
 InitialPasswort
 
-Testen wie Dialoge sich verhalten wenn man sie schließt (wichtig sowohl cancel buttona als auch "weg klicken")
+Testen wie Dialoge sich verhalten wenn man sie schließt (wichtig sowohl cancel button als auch "weg klicken")
 
 Responsiveness auf allen seiten testen
+
+STATUS Ausgeliehen
+    MaxChar limit und required
+    Richtiger input wird angezeigt beim öffnen des Dialogs
+    Wenn im Dialog zustand gewechselt wird muss der Input sich anpassen.
+    Name von ausleiher Pflicht
+    Beim Editieren:
+        Der richtige input erscheint
+        Von ausgeliehen zu X: Muss Ort required sein
+        Das Feld vorausgefüllt
+        Der Alte Wert aus der DB raus.
 
 CREATE
 	Kann überall etwas hinzufügen 

@@ -43,7 +43,7 @@
             <label id="add-Item-Error" class="error" shown="false"></label>
             <div id="dialog-add-item-position" class="label-with-input-horizontal">
                 <label>Ort:</label>
-                <select required th:field="*{position}" id="position-input" class="dialog-input">
+                <select th:field="*{position}" id="position-input" class="dialog-input">
                     <option th:each="position : ${Positions}" th:value="${position.id}"
                             th:text="${position.school} + ' ' + ${position.room}">
                     </option>
@@ -51,7 +51,7 @@
             </div>
             <div style="display:none" id="dialog-add-item-renter" class="label-with-input-horizontal">
                 <label>Ausgeliehen an:</label>
-                <input id="dialog-add-item-renter-input" type="text" th:name="renterName" class="dialog-input">
+                <input id="dialog-add-item-renter-input" type="text" th:name="renterName" maxlength="30" class="dialog-input">
             </div>
             <div th:if="${currentUserRole == 'ADMIN'}" class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
