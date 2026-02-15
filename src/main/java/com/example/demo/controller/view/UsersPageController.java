@@ -169,7 +169,13 @@ public class UsersPageController extends APageController<UserEntity, UserRequest
         mainService.writeToCsv(dto.list, response.getWriter());
     }
 
-    private void fillEntityFields(UserEntity e, String tableItemId, String username, String firstname, String lastname, String email, String roleId) {
+    private void fillEntityFields(UserEntity e,
+                                  String tableItemId,
+                                  String username,
+                                  String firstname,
+                                  String lastname,
+                                  String email,
+                                  String roleId) {
         e.setId(tableItemId.equals("new") ? null : tableItemId);
         e.setUsername(username);
         e.setFirstname(firstname);
@@ -177,7 +183,5 @@ public class UsersPageController extends APageController<UserEntity, UserRequest
         e.setEmail(email);
         var role = roleDao.findByFrontendName(roleId).orElseThrow();
         e.setRole(role);
-        e.setChangedPassword(false);
-        e.setRequiresPasswordReset(false);
     }
 }
