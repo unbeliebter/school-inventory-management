@@ -3,6 +3,7 @@
 openDialogButton.addEventListener("click", () => {
     dialogAddEquipmentStateChanged();
 });
+renterMap = new Map(Object.entries(renterMap));
 
 function dialogAddEquipmentStateChanged() {
     let equipmentStateField = document.getElementById("equipmentState-input");
@@ -33,13 +34,18 @@ function fillDialog(tableItem) {
     equipmentNameField.value  = tableItem.equipmentName;
     inventoryNumberField.value = tableItem.inventoryNumber;
     equipmentStateField.value = tableItem.equipmentState;
+    dialogAddEquipmentStateChanged();
+
     organizationalUnitField.value = tableItem.organizationalUnit.id;
     organizationalGroupField.value = tableItem.organizationalGroup.id;
     subjectField.value = tableItem.subject.id;
-    if (renterField.value !== null) {
-        dialogAddEquipmentStateChanged();
-    }
     positionField.value = tableItem.position == null ? "" : tableItem.position.id;
+
+    let renter = renterMap.get(tableItem.id);
+    if (renter) {
+        renterField.value = renter.renter;
+    }
+
     if (responsibleUserField !== null) {
         responsibleUserField.value = tableItem.responsibleUser == null ?  "" : tableItem.responsibleUser.id;
     }

@@ -232,7 +232,11 @@
 
 </body>
 <script th:replace="~{fragments.html :: table-script}"></script>
+<script th:fragment="table-script" th:inline="javascript">
+    let renterMap = [[${renterMap}]];
+</script>
 <script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
 <script type="text/javascript" th:src="@{/js/inventory.js}"></script>
 <script type="text/javascript" th:src="@{/js/Dialogs/equipmentDialog.js}"></script>
+
 </html>
