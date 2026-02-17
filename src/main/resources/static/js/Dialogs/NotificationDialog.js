@@ -5,13 +5,29 @@ class NotificationDialog {
         this.mainContainer = document.createElement("div");
         this.mainContainer.classList.add("dialog-main-container");
         this.messageLabel = document.createElement("label");
-        this.buttonRow = new ConfirmRow();
+        this.buttonRow = new ButtonRow();
 
         this.dialog.appendChild(this.messageLabel);
         this.dialog.appendChild(this.mainContainer);
         this.mainContainer.appendChild(this.buttonRow.div);
         document.body.appendChild(this.dialog);
         this.dialog.setAttribute("open", "false");
+    }
+
+    showError = (message) => {
+        return new Promise((resolve) => {
+            this.dialog.setAttribute("error", "");
+            this.messageLabel.textContent = message;
+            let okButton = new ConfirmButton();
+            okButton.addEventListener("click", () => {
+                resolve(true);
+                this.dialog.removeAttribute("error");
+                this.close();
+            })
+            this.buttonRow.replaceChildren(okButton);
+
+            this.dialog.setAttribute("open","true");
+        });
     }
     
     showConfirm = (message) => {
@@ -66,6 +82,21 @@ class NotificationDialog {
 
     close() {
         this.dialog.setAttribute("open", "false");
+    }
+}
+
+class ButtonRow {
+    constructor() {
+        this.div = document.createElement("div");
+        this.div.classList.add("dialog-button-row");
+    }
+
+    addButton(button) {
+        this.div.appendChild(button);
+    }
+
+    replaceChildren(newChildrenList) {
+        this.div.replaceChildren(newChildrenList);
     }
 }
 

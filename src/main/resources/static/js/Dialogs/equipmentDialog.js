@@ -1,11 +1,17 @@
 
+renterMap = new Map(Object.entries(renterMap));
+inventoryNumberSet = new Set();
+tableItems.forEach(i => inventoryNumberSet.add(i.inventoryNumber));
+let inventoryNumberError = document.getElementById("add-Item-Inventory-Number-Error");
+
 if (openDialogButton !== null) {
     openDialogButton.addEventListener("click", () => {
+        resetErrors();
         dialogAddEquipmentStateChanged();
     });
 }
 
-renterMap = new Map(Object.entries(renterMap));
+
 
 function dialogAddEquipmentStateChanged() {
     let equipmentStateField = document.getElementById("equipmentState-input");
@@ -54,7 +60,15 @@ function fillDialog(tableItem) {
 }
 
 function validateOnAdd() {
+    resetErrors();
     let form = document.getElementById("newItemForm");
+
+    let inventoryNumberField = document.getElementById("inventoryNumber-input");
+    if (inventoryNumberSet.has(inventoryNumberField.value)) {
+        inventoryNumberError.setAttribute("shown", "true");
+        inventoryNumberError.textContent = "Inventar Nummer existiert bereits!";
+        return;
+    }
 
     let equipmentStateField = document.getElementById("equipmentState-input");
     let positionField = document.getElementById("position-input");
@@ -78,4 +92,8 @@ function validateOnAdd() {
         return;
     }
     form.submit();
+}
+
+function resetErrors() {
+    inventoryNumberError.setAttribute("shown", "false");
 }

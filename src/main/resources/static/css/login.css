@@ -60,9 +60,7 @@ button:hover {
 }
 
 label.error {
-    color: red;
     font-size: 1.4rem;
-    background-color: black;
 }
 
 label.login-header {

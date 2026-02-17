@@ -61,9 +61,13 @@ h3 {
 
 label.error {
     color: red;
-    background-color: var(--secondary-color);
+    background-color: black;
     text-align: center;
     font-weight: bold;
+    font-size: 1.4rem;
+    padding: 2px 4px 2px 4px;
+    box-shadow: inset gray -1px -1px 4px,
+                inset gray 1px 2px 4px, white 1px 1px 2px;
 }
 label.error[shown="true"] {
     display: inline-block;
