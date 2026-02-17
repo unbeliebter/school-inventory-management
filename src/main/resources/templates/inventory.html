@@ -65,7 +65,7 @@
             <div class="label-with-input-horizontal">
                 <label>Zustand:</label>
                 <select onchange="dialogAddEquipmentStateChanged()" th:field="*{equipmentState}" id="equipmentState-input" class="dialog-input">
-                    <option th:each="state : ${States}" th:value="${state.name}" th:text="${state.displayName}">
+                    <option th:if="${state.name != 'RETIRED'} OR ${currentUserRole == 'ADMIN'} OR ${currentUserRole == 'SENIOR_RESPONSIBLE'}" th:each="state : ${States}" th:value="${state.name}" th:text="${state.displayName}">
                     </option>
                 </select>
             </div>
@@ -184,7 +184,7 @@
                     <th scope="col">Ort</th>
                     <th scope="col">Verantwortlicher</th>
                     <th scope="col">Zustand</th>
-                    <th sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="table-head-buttons" scope="col"></th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE', 'SENIOR_RESPONSIBLE')" class="table-head-buttons" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>

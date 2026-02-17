@@ -1,8 +1,10 @@
 
+if (openDialogButton !== null) {
+    openDialogButton.addEventListener("click", () => {
+        dialogAddEquipmentStateChanged();
+    });
+}
 
-openDialogButton.addEventListener("click", () => {
-    dialogAddEquipmentStateChanged();
-});
 renterMap = new Map(Object.entries(renterMap));
 
 function dialogAddEquipmentStateChanged() {

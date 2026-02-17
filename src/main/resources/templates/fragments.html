@@ -59,7 +59,7 @@
 
 <div th:fragment="table-control-header" class="container-inventory-form">
     <button class="img-btn" id="openFilterDialogButton"><img th:src="@{/icons/filter.svg}" title="Filter" alt="filter"></button>
-    <button sec:authorize="hasAnyAuthority('ADMIN', 'RESPONSIBLE')" class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
+    <button sec:authorize="hasAnyAuthority('ADMIN', 'SENIOR_RESPONSIBLE')" class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
                                                                 title="Hinzufügen" alt="add">
     </button>
     <div class="right">
@@ -70,7 +70,7 @@
     </div>
 </div>
 
-<td th:fragment="table-data-button-cell" th:if="${currentUserRole == 'ADMIN'} OR ${currentUserId} == ${item.responsibleUser.id}" class="btn-cell">
+<td th:fragment="table-data-button-cell" th:if="${currentUserRole == 'ADMIN'} OR ${currentUserRole == 'SENIOR_RESPONSIBLE'} OR ${currentUserId} == ${item.responsibleUser.id}" class="btn-cell">
     <div class="container-table-buttons">
         <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
         <button th:if="${currentUserRole == 'ADMIN'}" type="button"  onclick="deleteTableEntry(this.getAttribute('data-id'), this)"  th:attr="data-id=${item.id}" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
