@@ -71,13 +71,14 @@ public class InventoryPageController {
                                 @RequestParam(required = false) String unit,
                                 @RequestParam(required = false) String group,
                                 @RequestParam(required = false) String subject,
+                                @RequestParam(required = false) String renter,
                                 @RequestParam(required = false) String responsibleUser,
                                 @RequestParam(required = false) String position,
                                 Model model, Authentication auth) {
 
         List<EquipmentEntity> currentTableList;
         if (filter != null && filter) {
-            currentTableList = filter(inventoryNumber, itemName,state,unit,group,subject,responsibleUser,position);
+            currentTableList = filter(inventoryNumber, itemName,state,unit,group,subject,renter,responsibleUser,position);
         } else {
             currentTableList = mainService.getAll();
         }
@@ -104,8 +105,19 @@ public class InventoryPageController {
                                         String unit,
                                         String group,
                                         String subject,
+                                        String renter,
                                         String responsibleUser,
                                         String position) {
+
+        // NOTE: Right now this should work since a renter is always unique.
+        //       If at some point we implement a way to recognize that a Renter has rented multiple items
+        //       This will need to change
+        if (!renter.isEmpty()) {
+            EquipmentRenterEntity renterEntity = equipmentRenterService.getById(renter);
+            if (renterEntity != null) {
+                return List.of(renterEntity.getEquipment());
+            }
+        }
 
         inventoryNumber = inventoryNumber.isEmpty() ? null : inventoryNumber;
         itemName = itemName.isEmpty() ? null : itemName;
@@ -115,7 +127,6 @@ public class InventoryPageController {
         subject = subject.isEmpty() ? null : subject;
         responsibleUser = responsibleUser.isEmpty() ? null : responsibleUser;
         position = position.isEmpty() ? null : position;
-
 
         return mainService.getFilteredEquipmentAsList(
                 Optional.ofNullable(inventoryNumber),

@@ -132,6 +132,15 @@
                 </select>
             </div>
             <div class="label-with-input-horizontal">
+                <label>Ausgeliehen an:</label>
+                <select th:name="renter" class="dialog-input">
+                    <option selected="selected" th:value="null" th:text="null"></option>
+                    <option th:each="renter : ${renterMap.values()}" th:value="${renter.id}"
+                            th:text="${renter.renter}">
+                    </option>
+                </select>
+            </div>
+            <div class="label-with-input-horizontal">
                 <label>Verantwortlicher:</label>
                 <select th:name="responsibleUser" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>

@@ -26,6 +26,10 @@ public class EquipmentRenterService {
         return equipmentRenterDao.save(toCreate);
     }
 
+    public EquipmentRenterEntity getById(String id) {
+        return equipmentRenterDao.findById(id).orElse(null);
+    }
+
     public void delete(EquipmentEntity equipment) throws  IllegalStateException {
         var toDelete = equipmentRenterDao.findByEquipment(equipment);
         if (toDelete.isEmpty()) {
