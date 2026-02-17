@@ -98,5 +98,25 @@ button:hover {
     cursor: pointer;
 }
 
+.confirmation-text-floating[show="false"] {
+    position: absolute;
+
+    bottom: 40px;
+    font-size: 1.2rem;
+    opacity: 1;
+
+    transition: opacity 0s linear, bottom 0s linear;
+
+}
+.confirmation-text-floating[show="true"] {
+    position: absolute;
+    bottom: 60px;
+    opacity: 0;
+    font-size: 1.2rem;
+
+    transition: opacity 1s linear, bottom 1s linear;
+}
+
+
 
 

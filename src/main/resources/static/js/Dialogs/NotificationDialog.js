@@ -146,12 +146,37 @@ class CancelButton {
 
 class CopyButton {
     constructor(textToCopy) {
+        this.div = document.createElement("div");
+
         this.textToCopy = textToCopy;
+        this.labelCopyConfirmation = document.createElement("label");
+        this.labelCopyConfirmation.textContent="Kopiert!"
+        this.labelCopyConfirmation.classList.add("confirmation-text-floating");
+        this.#turnConfirmationOff();
+
         this.img = document.createElement("img");
         this.img.src = "../../icons/copy.svg";
         this.img.classList.add("button-link");
-        this.img.addEventListener("click", () => navigator.clipboard.writeText(this.textToCopy));
-        return this.img;
+        this.img.addEventListener("click", () => {
+            navigator.clipboard.writeText(this.textToCopy)
+            this.#showCopyConfirmation();
+        });
+
+        this.div.appendChild(this.labelCopyConfirmation);
+        this.div.appendChild(this.img);
+        return this.div;
+    }
+
+    #showCopyConfirmation = () => {
+        this.labelCopyConfirmation.style.visibility = "visible";
+        this.labelCopyConfirmation.setAttribute("show", "true");
+        let confirmationDisplayTimeMs = 1000;
+        setTimeout(this.#turnConfirmationOff, confirmationDisplayTimeMs);
+    }
+
+    #turnConfirmationOff = () => {
+        this.labelCopyConfirmation.setAttribute("show", "false");
+        this.labelCopyConfirmation.style.visibility = "hidden";
     }
 }
 
