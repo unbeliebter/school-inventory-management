@@ -29,8 +29,8 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.maximumSessions(1).expiredUrl("/login?expired"))
                 .exceptionHandling(exception -> exception.accessDeniedPage("/login"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/icons/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change", "/requestPasswordReset/**", "/error").permitAll()
-                        .requestMatchers("/inventory", "/inventory/export", "/login_redirect", "/setInitialPassword", "/css/**", "/icons/**", "/font/**", "/js/**").authenticated()
+                        .requestMatchers("/css/**", "/icons/**","/images/**", "/font/**", "/js/**", "/login", "/api/users/change-password", "/api/users/request-password-change", "/requestPasswordReset/**", "/error").permitAll()
+                        .requestMatchers("/inventory", "/inventory/export", "/login_redirect", "/setInitialPassword").authenticated()
                         .requestMatchers("/inventory/**").hasAnyAuthority("ADMIN", "RESPONSIBLE", "TEACHER", "SENIOR_RESPONSIBLE")
                         .anyRequest().hasAuthority("ADMIN")
                 )
