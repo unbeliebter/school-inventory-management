@@ -160,6 +160,16 @@ public class UsersPageController extends APageController<UserEntity, UserRequest
         return ResponseEntity.ok().body(rawPw);
     }
 
+    @PatchMapping("/removePwResetFlag")
+    @ResponseStatus
+    public ResponseEntity<String> removePwResetFlag(@RequestParam("userId") String userId) {
+        UserEntity user = mainService.getById(userId);
+        user.setRequiresPasswordReset(false);
+        mainService.create(user);
+
+        return ResponseEntity.ok().body("");
+    }
+
     @RequestMapping("/export")
     public void exportTableToCsv(@ModelAttribute("DTO") DTO dto, HttpServletResponse response) throws IOException {
         String fileName = PATH + "-table.csv";

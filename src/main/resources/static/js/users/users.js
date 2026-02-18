@@ -1,6 +1,26 @@
 const STATUS_CREATED = 201;
 const STATUS_OK = 200;
 
+async function removePwResetFlag(userId, htmlElement) {
+    if (await notificationDialog.showConfirm("Markierung entfernen?")) {
+        try {
+            const response = await fetch("/users/removePwResetFlag?userId=" + userId, {method:"PATCH"});
+            if (response.status === STATUS_OK) {
+                let bellOffButton = htmlElement;
+                while (htmlElement && htmlElement.parentNode) {
+                    htmlElement = htmlElement.parentNode;
+                    if (htmlElement.tagName === "TR") {
+                        htmlElement.setAttribute("pw-reset-requested", "false");
+                    }
+                }
+                bellOffButton.parentNode.removeChild(bellOffButton);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
+
 async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
     if (await notificationDialog.showConfirm("Passwort von Nutzer mit Nutzernamen '" + username + "' zurücksetzen?")) {
         try {
@@ -15,8 +35,6 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
                         }
                     }
             }
-            
-
         } catch (error) {
             alert(error.message);
         }
