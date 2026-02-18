@@ -59,6 +59,7 @@
 
 <div th:fragment="table-control-header" class="container-inventory-form">
     <button class="img-btn" id="openFilterDialogButton"><img th:src="@{/icons/filter.svg}" title="Filter" alt="filter"></button>
+    <button class="img-btn" id="openColumnFilter"><img th:src="@{/icons/eye.svg}" title="Spalten filtern" alt="column filter"></button>
     <button sec:authorize="hasAnyAuthority('ADMIN', 'SENIOR_RESPONSIBLE')" class="img-btn" id="openEquipmentDialogButton"><img th:src="@{/icons/plus-circle.svg}"
                                                                 title="Hinzufügen" alt="add">
     </button>

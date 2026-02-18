@@ -1,3 +1,4 @@
+import("./tableColumnManager.js");
 console.log("WOW MUCH CONSOLE LOG");
 
 const dialog = document.getElementById("itemDialog");
