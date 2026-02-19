@@ -9,7 +9,7 @@
             <div>
                 <h3>Add Equipment</h3>
             </div>
-            <label id="add-Item-Inventory-Number-Error" class="error" shown="false"></label>
+            <label id="add-Item-Error" class="error" shown="false"></label>
             <div class="label-with-input-horizontal">
                 <label>Inventar Nr:</label>
                 <input th:field="*{inventoryNumber}" id="inventoryNumber-input" class="dialog-input" type="text" min="1" minlength="1"
@@ -229,7 +229,12 @@
 
                     <td><span th:text="${item.equipmentState}">Status</span></td>
 
-                    <td th:replace="~{fragments.html :: table-data-button-cell}"></td>
+                    <td th:if="${currentUserRole == 'ADMIN'} OR ${currentUserRole == 'SENIOR_RESPONSIBLE'} OR ${currentUserId} == ${item.responsibleUser.id}" class="btn-cell">
+                        <div class="container-table-buttons">
+                            <button th:value="${item.id}" onclick="editTableItem(this.getAttribute('value'))" class="img-btn"><img th:src="@{/icons/edit.svg}" title="Edit Entry" alt="edit"></button>
+                            <button th:if="${currentUserRole == 'ADMIN'}" type="button"  onclick="deleteTableEntry_CST(this.getAttribute('data-id'), this)"  th:attr="data-id=${item.id}" class="img-btn"><img th:src="@{/icons/trash-2.svg}" title="Delete Entry" alt="delete"></button>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

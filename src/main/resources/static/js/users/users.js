@@ -1,5 +1,45 @@
 const STATUS_CREATED = 201;
 const STATUS_OK = 200;
+const STATUS_CLIENT_ERROR = 400;
+let addItemErrorLabel = document.getElementById("add-Item-Error");
+
+tableItemMap = new Map();
+tableItems.forEach(i => tableItemMap.set(i.id, i));
+
+userNameSet = new Set();
+tableItems.forEach(i => userNameSet.add(i.username));
+
+if (openDialogButton !== null) {
+    openDialogButton.addEventListener("click", () => {
+        resetErrors();
+    });
+}
+function resetErrors() {
+    addItemErrorLabel.setAttribute("shown", "false");
+}
+
+async function deleteTableEntry_CST(tableItemId, deleteBtn) {
+    if (await notificationDialog.showConfirm("Wirklich löschen?")) {
+        try {
+            const response = await fetch(PATH + "/remove?tableItemId=" + tableItemId, {method:"DELETE"});
+            if (response.status === 200) {
+                let el = deleteBtn;
+                while (el && el.parentNode) {
+                    el = el.parentNode;
+                    if (el.tagName === "TR") {
+                        el.remove();
+                    }
+                }
+                userNameSet.delete(tableItemMap.get(tableItemId).username);
+            }
+            else if (response.status === 423) {
+                alert("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
 
 async function removePwResetFlag(userId, htmlElement) {
     if (await notificationDialog.showConfirm("Markierung entfernen?")) {
@@ -42,11 +82,16 @@ async function resetPasswordOfSelectedUser(userId, username, htmlElement) {
 }
 
 async function createUser() {
-    document.getElementById("itemDialog").close();
-
     let itemId = document.getElementById("id-input").value;
     let roleId = document.getElementById("userType-input").value;
     let newUser = gatherValues()
+
+    if (userNameSet.has(newUser.username)) {
+        addItemErrorLabel.textContent = "Nutzername existiert bereits";
+        addItemErrorLabel.setAttribute("shown","true");
+        return;
+    }
+
     let requestString = "tableItemId=" + itemId
         + "&username=" + newUser.username 
         + "&firstname=" + newUser.firstname 
@@ -64,11 +109,11 @@ async function createUser() {
             await notificationDialog.showInitialPassword("Initial password: " + initPw, initPw);
             location.reload();
         }
-        
-
     } catch (error) {
         alert(error.message);
     }
+
+    document.getElementById("itemDialog").close();
 }
 
 function gatherValues() {

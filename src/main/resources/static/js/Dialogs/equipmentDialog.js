@@ -1,8 +1,13 @@
 
 renterMap = new Map(Object.entries(renterMap));
+
+tableItemMap = new Map();
+tableItems.forEach(i => tableItemMap.set(i.id, i));
+
 inventoryNumberSet = new Set();
 tableItems.forEach(i => inventoryNumberSet.add(i.inventoryNumber));
-let inventoryNumberError = document.getElementById("add-Item-Inventory-Number-Error");
+
+let addItemErrorLabel = document.getElementById("add-Item-Error");
 
 if (openDialogButton !== null) {
     openDialogButton.addEventListener("click", () => {
@@ -65,8 +70,8 @@ function validateOnAdd() {
 
     let inventoryNumberField = document.getElementById("inventoryNumber-input");
     if (inventoryNumberSet.has(inventoryNumberField.value)) {
-        inventoryNumberError.setAttribute("shown", "true");
-        inventoryNumberError.textContent = "Inventar Nummer existiert bereits!";
+        addItemErrorLabel.setAttribute("shown", "true");
+        addItemErrorLabel.textContent = "Inventar Nummer existiert bereits!";
         return;
     }
 
@@ -95,5 +100,28 @@ function validateOnAdd() {
 }
 
 function resetErrors() {
-    inventoryNumberError.setAttribute("shown", "false");
+    addItemErrorLabel.setAttribute("shown", "false");
+}
+
+async function deleteTableEntry_CST(tableItemId, deleteBtn) {
+    if (await notificationDialog.showConfirm("Wirklich löschen?")) {
+        try {
+            const response = await fetch(PATH + "/remove?tableItemId=" + tableItemId, {method:"DELETE"});
+            if (response.status === 200) {
+                let el = deleteBtn;
+                while (el && el.parentNode) {
+                    el = el.parentNode;
+                    if (el.tagName === "TR") {
+                        el.remove();
+                    }
+                }
+                inventoryNumberSet.delete(tableItemMap.get(tableItemId).inventoryNumber);
+            }
+            else if (response.status === 423) {
+                alert("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 }
