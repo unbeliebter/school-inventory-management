@@ -1,5 +1,5 @@
 import {BasicDialog} from "./Dialogs/BasicDialog.js";
-import {ConfirmButton} from "./Dialogs/NotificationDialog.js";
+// import {ConfirmButton} from "./Dialogs/NotificationDialog.js";
 
 const ICON_PATH = "../../icons/";
 

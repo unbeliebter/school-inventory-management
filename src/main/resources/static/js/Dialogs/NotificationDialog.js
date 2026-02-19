@@ -123,7 +123,7 @@ class ConfirmRow {
     }
 }
 
-export class ConfirmButton {
+class ConfirmButton {
     constructor() {
         this.button = document.createElement("button");
         this.button.innerHTML = "OK";
