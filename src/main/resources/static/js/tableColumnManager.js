@@ -50,6 +50,8 @@ class TableColumnManager {
     #tableRows = document.getElementsByTagName("tr");
 
     constructor() {
+        this.#dialog.setBackgroundColor("cornflowerblue");
+
         let openColumnFilterButton = document.getElementById("openColumnFilter");
         if (openColumnFilterButton === null) {
             return;
@@ -57,6 +59,12 @@ class TableColumnManager {
         openColumnFilterButton.addEventListener("click", () => {
             this.#dialog.show();
         });
+
+        let dialogTitle = document.createElement("h3");
+        dialogTitle.textContent = "Spalten Filtern"
+        let titleDiv = document.createElement("div");
+        titleDiv.append(dialogTitle);
+        this.#dialog.append(titleDiv);
 
         let table = document.getElementsByTagName("table")[0];
         let tableHeader = table.getElementsByTagName("thead")[0];

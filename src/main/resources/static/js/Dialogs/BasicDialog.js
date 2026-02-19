@@ -21,4 +21,8 @@ export class BasicDialog {
     append(element) {
         this.dialog.appendChild(element);
     }
+
+    setBackgroundColor(color) {
+        this.dialog.style.backgroundColor = color;
+    }
 }
