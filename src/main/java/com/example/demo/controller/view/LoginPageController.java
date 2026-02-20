@@ -2,6 +2,7 @@ package com.example.demo.controller.view;
 
 import com.example.demo.entities.user.UserEntity;
 import com.example.demo.service.user.PasswordHandler;
+import com.example.demo.service.user.PasswordState;
 import com.example.demo.service.user.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginPageController {
     private final int STATUS_NOT_FOUND = 404;
 
-    private final int MIN_PASSWORD_LENGTH = 12;
     private final UserService userService;
     private final PasswordHandler pwHandler;
 
@@ -47,15 +47,17 @@ public class LoginPageController {
     public String forcePasswordChange(@RequestParam(required = false) String pw,
                                       @RequestParam(required = false) String pwCheck,
                                       Authentication auth, Model model) {
-        model.addAttribute("minLength", MIN_PASSWORD_LENGTH);
-        if (pw == null || pwCheck == null) {
+        model.addAttribute("minLength", pwHandler.MIN_PASSWORD_LENGTH);
+
+        PasswordState pwState = pwHandler.isPasswordValid(pw, pwCheck);
+        if (pwState == PasswordState.EMPTY) {
             return "setInitialPassword";
         }
-        if (pw.length() < 12) {
+        if (pwState == PasswordState.TO_SHORT) {
             model.addAttribute("errorLength", true);
             return "setInitialPassword";
         }
-        if (!pw.equals(pwCheck)) {
+        if (pwState == PasswordState.UNEQUAL) {
             model.addAttribute("errorPwDifferent", true);
             return "setInitialPassword";
         }

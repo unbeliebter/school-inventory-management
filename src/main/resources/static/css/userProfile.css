@@ -1,0 +1,14 @@
+@import url(login.css);
+
+.profile-value {
+    display: flex;
+    justify-content: space-between;
+}
+.profile-value span {
+    color: white;
+}
+
+div.right {
+    display: flex;
+    align-items: flex-start;
+}

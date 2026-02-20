@@ -17,7 +17,7 @@
 
         <h2 class="mid">Inventarübersicht</h2>
         <div class="right">
-            <button class="img-btn"><img th:src="@{/icons/user.svg}" title="Profil" alt="profile"></button>
+            <a th:href="@{/userProfile}" class="img-btn"><img th:src="@{/icons/user.svg}" title="Profil" alt="profile"></a>
             <a th:href="@{/logout}"  ><img class="img-btn" th:src="@{/icons/log-out.svg}" title="Log out" alt="log-out"></a>
         </div>
     </nav>

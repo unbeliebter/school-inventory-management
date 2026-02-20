@@ -18,6 +18,8 @@ class NotificationDialog {
         return new Promise((resolve) => {
             this.dialog.setAttribute("error", "");
             this.messageLabel.textContent = message;
+            this.mainContainer.replaceChildren();
+
             let okButton = new ConfirmButton();
             okButton.addEventListener("click", () => {
                 resolve(true);
@@ -33,7 +35,7 @@ class NotificationDialog {
     showConfirm = (message) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.removeChild(this.buttonRow.div);
+            this.mainContainer.replaceChildren();
             this.buttonRow = new ConfirmRow();
             this.mainContainer.appendChild(this.buttonRow.div);
             this.dialog.setAttribute("open","true");
@@ -52,7 +54,7 @@ class NotificationDialog {
     showNotification = (message) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.removeChild(this.buttonRow.div);
+            this.mainContainer.replaceChildren();
             this.buttonRow = new OkRow();
             this.mainContainer.appendChild(this.buttonRow.div);
             this.dialog.setAttribute("open","true");
@@ -67,7 +69,7 @@ class NotificationDialog {
     showInitialPassword = (message, initPw) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.removeChild(this.buttonRow.div);
+            this.mainContainer.replaceChildren();
             this.buttonRow = new OkRow();
             this.buttonRow.div.appendChild(new CopyButton(initPw));
             this.mainContainer.appendChild(this.buttonRow.div);
@@ -78,6 +80,30 @@ class NotificationDialog {
                 this.close();
             })
         })
+    }
+
+    showSingleInput = (message, prefilledText) => {
+        return new Promise((resolve) => {
+            this.messageLabel.textContent = message;
+
+            let input = new TextInput(prefilledText);
+            this.buttonRow = new ButtonRow();
+            this.mainContainer.replaceChildren(input, this.buttonRow.div);
+
+            let okButton = new ConfirmButton();
+            okButton.addEventListener("click", () => {
+                resolve(input.value);
+                this.close();
+            })
+            let cancelButton = new CancelButton();
+            cancelButton.addEventListener("click", () => {
+                resolve(false);
+                this.close();
+            })
+            this.buttonRow.replaceChildren([okButton, cancelButton]);
+
+            this.dialog.setAttribute("open","true");
+        });
     }
 
     close() {
@@ -96,7 +122,10 @@ class ButtonRow {
     }
 
     replaceChildren(newChildrenList) {
-        this.div.replaceChildren(newChildrenList);
+        this.div.replaceChildren();
+        for (let child of newChildrenList) {
+            this.addButton(child);
+        }
     }
 }
 
@@ -177,6 +206,16 @@ class CopyButton {
     #turnConfirmationOff = () => {
         this.labelCopyConfirmation.setAttribute("show", "false");
         this.labelCopyConfirmation.style.visibility = "hidden";
+    }
+}
+
+class TextInput {
+    constructor(prefilledText) {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.value = prefilledText;
+        input.style.textAlign = "center";
+        return input;
     }
 }
 

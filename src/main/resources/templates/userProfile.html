@@ -1,0 +1,82 @@
+ <!DOCTYPE html>
+ <html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/userProfile.css}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventarverwaltung</title>
+</head>
+
+<body>
+    <header>
+        <h2>Inventarübersicht</h2>
+    </header>
+
+    <dialog class="dialog-notification" open="false">
+
+    </dialog>
+
+    <main>
+        <form th:action="@{/login}" method="post">
+            <div class="container-login-card">
+                <div class="container-back-button">
+                    <a id="back-arrow-link" th:href="@{/inventory}" title="Zurück" class="button-link back-arrow"><img class="back-arrow" th:src="@{/icons/arrow-left-circle.svg}"><span>Zurück</span></a>
+                </div>
+
+                <div class="login-card-top">
+                    <label class="login-header">Profil</label>
+                    <img class="logo" th:src="@{/icons/LogoTransparent.png}">
+                </div>
+
+                <div class="profile-value">
+                    <span>Benuztername:</span>
+                    <div class="right">
+                        <span th:text="${user.username}"></span>
+                    </div>
+                </div>
+
+                <div class="profile-value">
+                    <span>Vorname:</span>
+                    <div class="right">
+                        <span th:text="${user.firstname}"></span>
+                        <img onclick="changeValue('firstname','Vorname', this.getAttribute('data-value'))" th:attr="data-value=${user.firstname}" class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
+                    </div>
+                </div>
+
+                <div class="profile-value">
+                    <span>Nachname:</span>
+                    <div class="right">
+                        <span th:text="${user.lastname}"></span>
+                        <img onclick="changeValue('lastname','Nachname', this.getAttribute('data-value'))" th:attr="data-value=${user.lastname}" class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
+                    </div>
+                </div>
+
+                <div class="profile-value">
+                    <span>E-Mail:</span>
+                    <div class="right">
+                        <span th:text="${user.email}"></span>
+                        <img onclick="changeValue('email','E-Mail', this.getAttribute('data-value'))" th:attr="data-value=${user.email}" class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
+                    </div>
+                </div>
+
+                <div class="profile-value">
+                    <span>Password:</span>
+                    <div class="right">
+                        <span>********</span>
+                        <img class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </main>
+    
+</body>
+
+<script th:inline="javascript">
+    const USER_ID = [[${USER_ID}]];
+</script>
+<script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
+<script type="text/javascript" th:src="@{js/userProfile.js}"></script>
+
+</html> 
