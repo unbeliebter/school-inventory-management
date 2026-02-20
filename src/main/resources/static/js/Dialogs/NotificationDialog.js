@@ -26,7 +26,7 @@ class NotificationDialog {
                 this.dialog.removeAttribute("error");
                 this.close();
             })
-            this.buttonRow.replaceChildren(okButton);
+            this.buttonRow.replaceChildren([okButton]);
 
             this.dialog.setAttribute("open","true");
         });
@@ -35,50 +35,54 @@ class NotificationDialog {
     showConfirm = (message) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.replaceChildren();
-            this.buttonRow = new ConfirmRow();
-            this.mainContainer.appendChild(this.buttonRow.div);
+            this.mainContainer.replaceChildren(this.buttonRow.div);
             this.dialog.setAttribute("open","true");
 
-            this.buttonRow.okButton.addEventListener("click", () => {
+            let okButton = new ConfirmButton();
+            okButton.addEventListener("click", () => {
                 resolve(true);
                 this.close();
             })
-            this.buttonRow.cancelButton.addEventListener("click", () => {
+
+            let cancelButton = new CancelButton();
+            cancelButton.addEventListener("click", () => {
                 resolve(false);
                 this.close();
             })
+
+            this.buttonRow.replaceChildren([okButton, cancelButton]);
         })
     }
 
     showNotification = (message) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.replaceChildren();
-            this.buttonRow = new OkRow();
-            this.mainContainer.appendChild(this.buttonRow.div);
+            this.mainContainer.replaceChildren(this.buttonRow.div);
             this.dialog.setAttribute("open","true");
 
-            this.buttonRow.okButton.addEventListener("click", () => {
+            let okButton = new ConfirmButton();
+            okButton.addEventListener("click", () => {
                 resolve(true);
                 this.close();
-            })
+            });
+
+            this.buttonRow.replaceChildren([okButton]);
         })
     }
 
     showInitialPassword = (message, initPw) => {
         return new Promise((resolve) => {
             this.messageLabel.innerHTML = message;
-            this.mainContainer.replaceChildren();
-            this.buttonRow = new OkRow();
-            this.buttonRow.div.appendChild(new CopyButton(initPw));
-            this.mainContainer.appendChild(this.buttonRow.div);
-            this.dialog.setAttribute("open","true");
+            this.mainContainer.replaceChildren(this.buttonRow.div);
 
-            this.buttonRow.okButton.addEventListener("click", () => {
+            let okButton = new ConfirmButton();
+            okButton.addEventListener("click", () => {
                 resolve(true);
                 this.close();
             })
+
+            this.buttonRow.replaceChildren([okButton,new CopyButton(initPw)]);
+            this.dialog.setAttribute("open","true");
         })
     }
 
@@ -126,29 +130,6 @@ class ButtonRow {
         for (let child of newChildrenList) {
             this.addButton(child);
         }
-    }
-}
-
-class OkRow {
-    constructor() {
-        this.div = document.createElement("div");
-        this.div.classList.add("dialog-button-row");
-        this.okButton = new ConfirmButton();
-
-        this.div.appendChild(this.okButton);
-    }
-}
-
-class ConfirmRow {
-    constructor() {
-        this.div = document.createElement("div");
-        this.div.classList.add("dialog-button-row");
-        this.okButton = new ConfirmButton();
-        this.cancelButton = new CancelButton();
-
-        this.div.appendChild(this.okButton);
-        this.div.appendChild(this.cancelButton);
-
     }
 }
 
