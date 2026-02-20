@@ -19,13 +19,14 @@
             <input id="dialog-new-password-input-old-pw" maxlength="40" type="password">
 
             <label for="dialog-new-password-input-new-pw">Neues Passwort</label>
+            <span th:text="'Mindestens ' +  ${pwMinLength} + ' Zeichen'"></span>
             <input id="dialog-new-password-input-new-pw" maxlength="40" type="password">
 
             <label for="dialog-new-password-input-new-pwCheck">Neues Passwort Wiederholen</label>
             <input id="dialog-new-password-input-new-pwCheck" maxlength="40" type="password">
 
             <div class="dialog-button-row">
-                <button class="submit" type="submit">OK</button>
+                <button onclick="sendPwChangeRequest()" class="submit" type="submit">OK</button>
                 <button onclick="closePwDialog()" class="cancel" type="reset">Abbrechen</button>
             </div>
         </div>
@@ -90,6 +91,7 @@
 
 <script th:inline="javascript">
     const USER_ID = [[${USER_ID}]];
+    const PW_MIN_LENGTH = [[${pwMinLength}]];
 </script>
 <script type="text/javascript" th:src="@{/js/Dialogs/NotificationDialog.js}"></script>
 <script type="text/javascript" th:src="@{js/userProfile.js}"></script>

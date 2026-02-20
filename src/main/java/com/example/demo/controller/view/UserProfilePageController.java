@@ -6,13 +6,17 @@ import com.example.demo.service.user.PasswordState;
 import com.example.demo.service.user.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @Controller
 @RequestMapping({"/userProfile"})
 public class UserProfilePageController {
+    private static final Logger LOGGER = Logger.getLogger(UserProfilePageController.class.getName());
     private final int STATUS_NOT_FOUND = 404;
 
     private final int MIN_PASSWORD_LENGTH = 12;
@@ -31,6 +35,7 @@ public class UserProfilePageController {
 
         model.addAttribute("user",user);
         model.addAttribute("USER_ID", user.getId());
+        model.addAttribute("pwMinLength", MIN_PASSWORD_LENGTH);
 
         return "userProfile";
     }
@@ -57,31 +62,38 @@ public class UserProfilePageController {
         return ResponseEntity.ok().body("Value should be changed");
     }
 
-    @RequestMapping({"/changePassword"})
-    public String changePassword(@RequestParam(required = false) String pw,
-                                      @RequestParam(required = false) String pwCheck,
-                                      Authentication auth, Model model) {
-        model.addAttribute("minLength", MIN_PASSWORD_LENGTH);
+    @PatchMapping({"/changePassword"})
+    @ResponseBody
+    public ResponseEntity<String> changePassword(@RequestParam String oldPw,
+                                                 @RequestParam String pw,
+                                                 @RequestParam String pwCheck,
+                                                 Authentication auth, BCryptPasswordEncoder bcrypt) {
+        LOGGER.info("User requests Password change");
         PasswordState pwState = pwHandler.isPasswordValid(pw, pwCheck);
         if (pwState == PasswordState.EMPTY) {
-            return "userProfile";
+            LOGGER.warning("Password state empty");
+            return ResponseEntity.status(400).body("Eingabe fehlt!");
         }
         if (pwState == PasswordState.TO_SHORT) {
-            model.addAttribute("errorLength", true);
-            return "userProfile";
+            LOGGER.warning("Password was to short");
+            return ResponseEntity.status(400).body("Passwort zu kurz!");
         }
         if (pwState == PasswordState.UNEQUAL) {
-            model.addAttribute("errorPwDifferent", true);
-            return "userProfile";
+            LOGGER.warning("Password was not equal to CheckPW");
+            return ResponseEntity.status(400).body("Fehler bei Wiederholung!");
         }
 
         String id = userService.findByUsername(auth.getName()).getId();
         UserEntity user = userService.getById(id);
+        if (!bcrypt.matches(oldPw, user.getPassword())) {
+            LOGGER.warning("Old password was wrong");
+            return ResponseEntity.status(400).body("Altes Passwort falsch!");
+        }
 
         user.setPassword(pwHandler.hashPassword(pw));
         user.setChangedPassword(true);
         userService.save(user);
 
-        return "userProfile";
+        return ResponseEntity.ok().body("Erfolg!");
     }
 }
