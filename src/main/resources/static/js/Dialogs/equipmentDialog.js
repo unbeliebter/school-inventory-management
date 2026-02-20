@@ -119,10 +119,10 @@ async function deleteTableEntry_CST(tableItemId, deleteBtn) {
                 inventoryNumberSet.delete(tableItemMap.get(tableItemId).inventoryNumber);
             }
             else if (response.status === 423) {
-                alert("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
+                await notificationDialog.showError("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
             }
         } catch (error) {
-            alert(error.message);
+            await notificationDialog.showError(error.message);
         }
     }
 }

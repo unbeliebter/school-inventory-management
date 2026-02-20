@@ -18,7 +18,7 @@ class NotificationDialog {
         return new Promise((resolve) => {
             this.dialog.setAttribute("error", "");
             this.messageLabel.textContent = message;
-            this.mainContainer.replaceChildren();
+            this.mainContainer.replaceChildren(this.buttonRow.div);
 
             let okButton = new ConfirmButton();
             okButton.addEventListener("click", () => {
