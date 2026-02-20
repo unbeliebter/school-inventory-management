@@ -12,22 +12,22 @@
             <label id="add-Item-Error" class="error" shown="false"></label>
             <div class="label-with-input-horizontal">
                 <label>Username:</label>
-                <input th:field="*{username}" id="username-input" class="dialog-input" type="text" min="1" minlength="1"
+                <input th:field="*{username}" maxLength="40" id="username-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Vorname:</label>
-                <input th:field="*{firstname}" id="firstname-input" class="dialog-input" type="text" min="1" minlength="1"
+                <input th:field="*{firstname}" maxLength="32" id="firstname-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Nachname:</label>
-                <input th:field="*{lastname}" id="lastname-input" class="dialog-input" type="text" min="1" minlength="1"
+                <input th:field="*{lastname}" maxLength="32" id="lastname-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
             <div class="label-with-input-horizontal">
                 <label>E-Mail:</label>
-                <input th:field="*{email}" id="email-input" class="dialog-input" type="text" min="1" minlength="1"
+                <input th:field="*{email}" maxlength="32" id="email-input" class="dialog-input" type="text" min="1" minlength="1"
                        required>
             </div>
             <div class="label-with-input-horizontal">

@@ -215,6 +215,7 @@ class TextInput {
         input.type = "text";
         input.value = prefilledText;
         input.style.textAlign = "center";
+        input.maxLength = 32;
         return input;
     }
 }
