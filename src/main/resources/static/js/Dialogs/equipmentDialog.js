@@ -69,7 +69,8 @@ function validateOnAdd() {
     let form = document.getElementById("newItemForm");
 
     let inventoryNumberField = document.getElementById("inventoryNumber-input");
-    if (inventoryNumberSet.has(inventoryNumberField.value)) {
+    let itemId = document.getElementById("id-input").value
+    if (inventoryNumberSet.has(inventoryNumberField.value) && itemId === "new") {
         addItemErrorLabel.setAttribute("shown", "true");
         addItemErrorLabel.textContent = "Inventar Nummer existiert bereits!";
         return;
