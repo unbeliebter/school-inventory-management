@@ -12,8 +12,23 @@
         <h2>Inventarübersicht</h2>
     </header>
 
-    <dialog class="dialog-notification" open="false">
+    <dialog id="dialog-new-password" class="dialog-notification" open="false">
+        <div class="dialog-main-container">
+            <label class="error" shown="false" id="dialog-new-password-error-label"></label>
+            <label for="dialog-new-password-input-old-pw">Altes Passwort</label>
+            <input id="dialog-new-password-input-old-pw" maxlength="40" type="password">
 
+            <label for="dialog-new-password-input-new-pw">Neues Passwort</label>
+            <input id="dialog-new-password-input-new-pw" maxlength="40" type="password">
+
+            <label for="dialog-new-password-input-new-pwCheck">Neues Passwort Wiederholen</label>
+            <input id="dialog-new-password-input-new-pwCheck" maxlength="40" type="password">
+
+            <div class="dialog-button-row">
+                <button class="submit" type="submit">OK</button>
+                <button onclick="closePwDialog()" class="cancel" type="reset">Abbrechen</button>
+            </div>
+        </div>
     </dialog>
 
     <main>
@@ -63,7 +78,7 @@
                     <span>Password:</span>
                     <div class="right">
                         <span>********</span>
-                        <img class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
+                        <img onclick="showChangePasswordDialog()" class="button-link" th:src="@{/icons/edit.svg}" title="Ändern" alt="edit">
                     </div>
                 </div>
 
