@@ -23,7 +23,7 @@
                     Falsche eingabe!</label>
                 <label class="error" th:if="${param.logout}">
                     Sie wurden ausgeloggt!</label>
-                <label class="error" th:if="${expired}">
+                <label class="error" th:if="${param.expired}">
                     Sitzung abgelaufen!</label> <!-- TODO: Shit is not shown (because session logout does not send arg) -->
                 <div  class="login-card-input">
                     <label for="input-username">Benutzername</label>
