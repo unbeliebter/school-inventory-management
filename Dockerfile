@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
-# PostgreSQL 18 Repository & Installation
+# 1. PostgreSQL 18 Repository & Installation
 RUN apt-get update && apt-get install -y wget gnupg2 lsb-release && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
@@ -18,17 +18,25 @@ RUN apt-get update && apt-get install -y wget gnupg2 lsb-release && \
     apt-get install -y postgresql-18 && \
     rm -rf /var/lib/apt/lists/*
 
-# App kopieren
+# 2. App kopieren
 COPY --from=build /app/target/*.jar app.jar
 
-# Skript kopieren und ausführbar machen
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+# 3. Entrypoint-Skript direkt im Dockerfile erstellen (Keine externe Datei nötig!)
+RUN set -e; echo '#!/bin/bash \n\
+pg_ctlcluster 18 main start \n\
+until pg_isready; do echo "Warte auf Postgres..."; sleep 1; done \n\
+# Prüfen ob DB existiert, falls nicht erstellen \n\
+exists=$(su - postgres -c "psql -tAc \"SELECT 1 FROM pg_database WHERE datname='\''schoolInventoryDS'\''\"") \n\
+if [ "$exists" != "1" ]; then \n\
+  su - postgres -c "psql -c \"CREATE DATABASE \\\"schoolInventoryDS\\\";\"" \n\
+  su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD '\''postgres'\'';\"" \n\
+fi \n\
+exec java -jar /app/app.jar' > /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
-# WICHTIG: Postgres braucht Rechte auf seine Verzeichnisse,
-# wenn es im Container gestartet wird
+# 4. Berechtigungen für Postgres setzen
 RUN chown -R postgres:postgres /var/lib/postgresql /var/run/postgresql
 
+# 5. Umgebungsvariablen für Spring Boot
 ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/schoolInventoryDS
 ENV SPRING_DATASOURCE_USERNAME=postgres
 ENV SPRING_DATASOURCE_PASSWORD=postgres
