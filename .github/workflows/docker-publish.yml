@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/school-inventory-test
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/school-inventory-management
           tags: |
             type=raw,value=latest
             type=semver,pattern={{version}}
