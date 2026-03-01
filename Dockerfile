@@ -21,17 +21,9 @@ RUN apt-get update && apt-get install -y wget gnupg2 lsb-release && \
 # 2. App kopieren
 COPY --from=build /app/target/*.jar app.jar
 
-# 3. Entrypoint-Skript direkt im Dockerfile erstellen (Keine externe Datei nötig!)
-RUN set -e; echo '#!/bin/bash \n\
-pg_ctlcluster 18 main start \n\
-until pg_isready; do echo "Warte auf Postgres..."; sleep 1; done \n\
-# Prüfen ob DB existiert, falls nicht erstellen \n\
-exists=$(su - postgres -c "psql -tAc \"SELECT 1 FROM pg_database WHERE datname='\''schoolInventoryDS'\''\"") \n\
-if [ "$exists" != "1" ]; then \n\
-  su - postgres -c "psql -c \"CREATE DATABASE \\\"schoolInventoryDS\\\";\"" \n\
-  su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD '\''postgres'\'';\"" \n\
-fi \n\
-exec java -jar /app/app.jar' > /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+# 3. Entrypoint-Skript kopieren
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # 4. Berechtigungen für Postgres setzen
 RUN chown -R postgres:postgres /var/lib/postgresql /var/run/postgresql
