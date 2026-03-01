@@ -32,6 +32,7 @@ RUN chown -R postgres:postgres /var/lib/postgresql /var/run/postgresql
 ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/schoolinventoryds
 ENV SPRING_DATASOURCE_USERNAME=postgres
 ENV SPRING_DATASOURCE_PASSWORD=postgres
+ENV SPRING_LIQUIBASE_CHANGE_LOG=classpath:/db/changelog/db.changelog-master.xml
 
 EXPOSE 8080
 ENTRYPOINT ["/app/entrypoint.sh"]
