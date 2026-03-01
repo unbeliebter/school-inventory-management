@@ -18,6 +18,9 @@ values ('2', 'responsible', 'Responsible', 'Account', 'tgbbz1@test.de', 'respons
 insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset)
 values ('3', 'teacher', 'Teacher', 'Account', 'tgbbz1@test.de', 'teacher', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
 
+insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset )
+values ('2', 'senior_responsible', 'Senior Responsible', 'Account', 'tgbbz1@test.de', 'senior_responsible', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
+
 INSERT INTO equipment(id, inventory_number, equipment_name, state, organizational_unit_id, organizational_group_id,
                       subject_id, position_id, responsible_user_id)
 VALUES ('1', '1', 'Notebook', 'IN_USE', '1', '1', '2', '1', '1');
