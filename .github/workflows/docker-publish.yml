@@ -19,7 +19,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/school-inventory-magagement
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/school-inventory-management
           tags: |
             type=semver,pattern={{version}}
             type=raw,value=latest
