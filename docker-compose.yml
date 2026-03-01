@@ -13,9 +13,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Wichtig: Daten bleiben erhalten
 
   app:
-    build: .
+    # Hier muss DEIN Docker Hub Image stehen!
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/school-inventory-management:latest
     container_name: spring_app
     ports:
       - "8080:8080"
@@ -28,3 +31,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_LIQUIBASE_ENABLED: "true"
       SPRING_SQL_INIT_MODE: always
+
+volumes:
+  postgres_data:
