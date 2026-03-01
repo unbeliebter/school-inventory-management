@@ -237,14 +237,4 @@
         <addUniqueConstraint tableName="users" columnNames="username"/>
         <addUniqueConstraint tableName="equipment" columnNames="inventory_number"/>
     </changeSet>
-
-    <!--
-    Muss immer am Ende sein, damit es gewähleistt ist, dass Standard-Daten gepflegt sind.
-
-    <changeSet id="init data for user tests" author="Sven Pradela" runOnChange="true">
-        <sqlFile path="initial_data_01.sql"
-                  relativeToChangelogFile="true"
-                  encoding="UTF-8"/>
-    </changeSet>
-    -->
 </databaseChangeLog>

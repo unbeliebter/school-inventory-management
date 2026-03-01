@@ -6,8 +6,6 @@ INSERT INTO position(id, school, room, description)
 VALUES ('1', 'TG BBZ 1 Saarbrücken', 'A404', 'Im Schrank');
 INSERT INTO subject(id, name, abbreviation)
 VALUES ('2', 'Lernfeld 1', 'LF1');
--- INSERT INTO users(id, username, firstname, lastname, e_mail, role_id, password)
---VALUES ('1', 'admin', 'Admin', 'Account', 'tgbbz1@test.de', 'admin', 'test');
 
 
 --users with password admin
@@ -19,8 +17,6 @@ values ('2', 'responsible', 'Responsible', 'Account', 'tgbbz1@test.de', 'respons
 
 insert into users(id, username, firstname, lastname, e_mail, role_id, password, changed_password, requires_password_reset)
 values ('3', 'teacher', 'Teacher', 'Account', 'tgbbz1@test.de', 'teacher', '{bcrypt}$2a$12$xkvnumwOUW8B0pNZLAlrseFCNUEF6IX44ZEqm8y08jxnkTEwdxXza', true, false);
-
-
 
 INSERT INTO equipment(id, inventory_number, equipment_name, state, organizational_unit_id, organizational_group_id,
                       subject_id, position_id, responsible_user_id)
