@@ -1,0 +1,16 @@
+package de.schoolinventorymanagement.entities;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "subject")
+@Data
+public class SubjectEntity implements IHasId {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String name;
+    private String abbreviation;
+}

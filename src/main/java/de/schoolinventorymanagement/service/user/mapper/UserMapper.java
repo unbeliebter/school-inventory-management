@@ -1,0 +1,76 @@
+package de.schoolinventorymanagement.service.user.mapper;
+
+import de.schoolinventorymanagement.daos.UserDao;
+import de.schoolinventorymanagement.entities.user.UserEntity;
+import de.schoolinventorymanagement.service.user.PasswordHandler;
+import de.schoolinventorymanagement.service.user.UserRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserMapper {
+
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private PasswordHandler passwordHandler;
+
+    public UserEntity mapToEntityCreate(UserRequest request, UserEntity entity) {
+        entity.setFirstname(request.getFirstName());
+        entity.setLastname(request.getLastName());
+        entity.setEmail(request.getEmail());
+        entity.setPassword(passwordHandler.hashPassword(request.getPassword()));
+        entity.setUsername(generateUsername(request.getFirstName(), request.getLastName()));
+        entity.setRole(roleMapper.mapToEntity(request.getRole()));
+
+        return entity;
+    }
+
+    public UserEntity mapToEntity(UserRequest request, UserEntity entity) {
+        entity.setFirstname(request.getFirstName());
+        entity.setLastname(request.getLastName());
+        entity.setEmail(request.getEmail());
+        entity.setUsername(request.getUsername());
+        entity.setRole(roleMapper.mapToEntity(request.getRole()));
+        entity.setChangedPassword(request.isChangedPassword());
+        if (request.getRequiresPasswordReset() == null) {
+            entity.setRequiresPasswordReset(false);
+        } else {
+            entity.setRequiresPasswordReset(request.getRequiresPasswordReset());
+        }
+
+        return entity;
+    }
+
+    public UserEntity mapToEntityDetailed(UserRequest request) {
+        var entity = new UserEntity();
+        entity.setId(request.getId());
+
+        return mapToEntity(request, entity);
+    }
+
+    public String generateUsername(String firstName, String lastName) {
+        var count = 1;
+        var checkUsername = "";
+        var validUsername = false;
+
+        var baseUsername = firstName.toLowerCase() + "." + lastName.toLowerCase();
+        checkUsername = baseUsername;
+
+        while (!validUsername) {
+            var user = userDao.findByUsername(checkUsername);
+
+            if (user.isPresent()) {
+                checkUsername = baseUsername + "_" + count;
+                count++;
+
+            } else {
+                validUsername = true;
+            }
+        }
+
+        return checkUsername;
+    }
+}

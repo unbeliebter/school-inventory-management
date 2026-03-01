@@ -1,0 +1,38 @@
+package de.schoolinventorymanagement.controller;
+
+import de.schoolinventorymanagement.entities.UserPasswordChangeEntity;
+import de.schoolinventorymanagement.service.user.services.UserPasswordChangeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/users/password-changes")
+public class UserPasswordChangeController {
+
+    @Autowired
+    private UserPasswordChangeService passwordChangeService;
+
+    @GetMapping("getAll")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<UserPasswordChangeEntity> getAll(){
+        return passwordChangeService.getAll();
+    }
+
+    @GetMapping("get/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public UserPasswordChangeEntity getById(@PathVariable String id){
+        return passwordChangeService.getById(id);
+    }
+
+    @GetMapping("get-for-user/{user-id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<UserPasswordChangeEntity> getByUserId(@PathVariable("user-id") String id){
+        return passwordChangeService.getByUserId(id);
+    }
+}

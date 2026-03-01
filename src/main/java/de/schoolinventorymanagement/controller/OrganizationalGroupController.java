@@ -1,0 +1,42 @@
+package de.schoolinventorymanagement.controller;
+
+import de.schoolinventorymanagement.entities.OrganizationalGroupEntity;
+import de.schoolinventorymanagement.service.organizationalGroup.OrganizationalGroupRequest;
+import de.schoolinventorymanagement.service.organizationalGroup.OrganizationalGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/organizational-group/")
+public class OrganizationalGroupController {
+
+    @Autowired
+    private OrganizationalGroupService organizationalGroupService;
+
+    @GetMapping("getAll")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<OrganizationalGroupEntity> getAll(){
+        return organizationalGroupService.getAll();
+    }
+
+    @GetMapping("get/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public OrganizationalGroupEntity getById(@PathVariable String id){
+        return organizationalGroupService.getById(id);
+    }
+
+    @PostMapping("save")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public OrganizationalGroupEntity save(@RequestBody OrganizationalGroupRequest request){
+        return organizationalGroupService.create(request);
+    }
+
+    @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void delete(@PathVariable String id){
+        organizationalGroupService.deleteById(id);
+    }
+}
