@@ -8,10 +8,10 @@ until pg_isready; do
   sleep 1
 done
 
-exists=$(su - postgres -c "psql -tAc \"SELECT 1 FROM pg_database WHERE datname='schoolInventoryDS'\"")
+exists=$(su - postgres -c "psql -tAc \"SELECT 1 FROM pg_database WHERE datname='schoolinventoryds'\"")
 
 if [ "$exists" != "1" ]; then
-  su - postgres -c "psql -c \"CREATE DATABASE \\\"schoolInventoryDS\\\";\""
+  su - postgres -c "psql -c \"CREATE DATABASE schoolinventoryds;\""
   su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'postgres';\""
 fi
 

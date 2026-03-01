@@ -29,7 +29,7 @@ RUN chmod +x /app/entrypoint.sh
 RUN chown -R postgres:postgres /var/lib/postgresql /var/run/postgresql
 
 # 5. Umgebungsvariablen für Spring Boot
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/schoolInventoryDS
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/schoolinventoryds
 ENV SPRING_DATASOURCE_USERNAME=postgres
 ENV SPRING_DATASOURCE_PASSWORD=postgres
 
