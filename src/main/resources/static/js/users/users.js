@@ -6,8 +6,8 @@ let addItemErrorLabel = document.getElementById("add-Item-Error");
 tableItemMap = new Map();
 tableItems.forEach(i => tableItemMap.set(i.id, i));
 
-userNameSet = new Set();
-tableItems.forEach(i => userNameSet.add(i.username));
+userNameMap = new Map();
+tableItems.forEach(i => userNameMap.set(i.username, i));
 
 if (openDialogButton !== null) {
     openDialogButton.addEventListener("click", () => {
@@ -30,7 +30,7 @@ async function deleteTableEntry_CST(tableItemId, deleteBtn) {
                         el.remove();
                     }
                 }
-                userNameSet.delete(tableItemMap.get(tableItemId).username);
+                userNameMap.delete(tableItemMap.get(tableItemId).username);
             }
             else if (response.status === 423) {
                 await notificationDialog.showError("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")
@@ -86,7 +86,8 @@ async function createUser() {
     let roleId = document.getElementById("userType-input").value;
     let newUser = gatherValues()
 
-    if (userNameSet.has(newUser.username)) {
+    if (userNameMap.has(newUser.username) && itemId === "new"
+        || (userNameMap.get(newUser.username).id !== itemId)) {
         addItemErrorLabel.textContent = "Nutzername existiert bereits";
         addItemErrorLabel.setAttribute("shown","true");
         return;
