@@ -87,7 +87,7 @@ async function createUser() {
     let newUser = gatherValues()
 
     if (userNameMap.has(newUser.username) && itemId === "new"
-        || (userNameMap.get(newUser.username).id !== itemId)) {
+        || (itemId !== "new" && userNameMap.get(newUser.username).id !== itemId)) {
         addItemErrorLabel.textContent = "Nutzername existiert bereits";
         addItemErrorLabel.setAttribute("shown","true");
         return;
