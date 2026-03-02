@@ -237,4 +237,12 @@
         <addUniqueConstraint tableName="users" columnNames="username"/>
         <addUniqueConstraint tableName="equipment" columnNames="inventory_number"/>
     </changeSet>
+
+    <changeSet id="1772449814298-1" author="Sven Pradela">
+        <sql>
+            UPDATE roles
+            SET id = 'senior_responsible', fe_name = 'Inventarverantwortlicher'
+            WHERE name = 'SENIOR_RESPONSIBLE';
+        </sql>
+    </changeSet>
 </databaseChangeLog>
