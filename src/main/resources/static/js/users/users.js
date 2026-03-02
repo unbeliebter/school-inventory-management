@@ -101,6 +101,7 @@ async function createUser() {
         + "&roleId=" + roleId;
     try {
         const response = await fetch("/users/addWithRole?" + requestString, {method:"POST"});
+        document.getElementById("itemDialog").close();
         if (response.status === STATUS_OK) {
             location.reload();
             return;
@@ -111,10 +112,10 @@ async function createUser() {
             location.reload();
         }
     } catch (error) {
-        alert(error.message);
+        await notificationDialog.showError(error.message);
     }
 
-    document.getElementById("itemDialog").close();
+
 }
 
 function gatherValues() {
