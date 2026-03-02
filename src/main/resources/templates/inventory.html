@@ -41,7 +41,6 @@
                     </option>
                 </select>
             </div>
-            <label id="add-Item-Error" class="error" shown="false"></label>
             <div id="dialog-add-item-position" class="label-with-input-horizontal">
                 <label>Ort:</label>
                 <select th:field="*{position}" id="position-input" class="dialog-input">
@@ -71,8 +70,8 @@
                 </select>
             </div>
             <div class="dialog-button-row">
-                <button class="submit" type="button" onclick="validateOnAdd()">Submit</button>
-                <button class="cancel" id="item-dialog-cancel-button" type="reset">Cancel</button>
+                <button class="submit" type="button" onclick="validateOnAdd()">Speichern</button>
+                <button class="cancel" id="item-dialog-cancel-button" type="reset">Abbrechen</button>
             </div>
         </div>
     </form>
@@ -158,8 +157,8 @@
                 </select>
             </div>
             <div class="dialog-button-row">
-                <button class="submit" type="submit">Submit</button>
-                <button class="cancel" id="filter-dialog-cancel-button" type="reset">Cancel</button>
+                <button class="submit" type="submit">Speichern</button>
+                <button class="cancel" id="filter-dialog-cancel-button" type="reset">Abbrechen</button>
             </div>
 
         </div>
