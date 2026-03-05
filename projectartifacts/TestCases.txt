@@ -12,6 +12,12 @@ Responsiveness auf allen seiten testen
 
 Was passiert wenn Admin sich Rechte entfernt
 
+
+UNIQUE values testen (InventarNr und Username)
+    Kann kein neues duplikat einfügen
+    Kann kein bestehendes zu einem duplikat machen
+    Kann ein bestehendes trotzdem ändern
+
 STATUS Ausgeliehen
     MaxChar limit und required
     Richtiger input wird angezeigt beim öffnen des Dialogs

@@ -4,8 +4,8 @@ renterMap = new Map(Object.entries(renterMap));
 tableItemMap = new Map();
 tableItems.forEach(i => tableItemMap.set(i.id, i));
 
-inventoryNumberSet = new Set();
-tableItems.forEach(i => inventoryNumberSet.add(i.inventoryNumber));
+inventoryNumberMap = new Map();
+tableItems.forEach(i => inventoryNumberMap.set(i.inventoryNumber, i));
 
 let addItemErrorLabel = document.getElementById("add-Item-Error");
 
@@ -70,7 +70,8 @@ function validateOnAdd() {
 
     let inventoryNumberField = document.getElementById("inventoryNumber-input");
     let itemId = document.getElementById("id-input").value
-    if (inventoryNumberSet.has(inventoryNumberField.value) && itemId === "new") {
+    if (inventoryNumberMap.has(inventoryNumberField.value) && itemId === "new"
+        || (itemId !== "new" && inventoryNumberMap.get(inventoryNumberField.value).id !== itemId)) {
         addItemErrorLabel.setAttribute("shown", "true");
         addItemErrorLabel.textContent = "Inventar Nummer existiert bereits!";
         return;
@@ -116,7 +117,7 @@ async function deleteTableEntry_CST(tableItemId, deleteBtn) {
                         el.remove();
                     }
                 }
-                inventoryNumberSet.delete(tableItemMap.get(tableItemId).inventoryNumber);
+                inventoryNumberMap.delete(tableItemMap.get(tableItemId).inventoryNumber);
             }
             else if (response.status === 423) {
                 await notificationDialog.showError("Der zu löschende Eintrag wird noch in einer anderen Tabelle referenziert")

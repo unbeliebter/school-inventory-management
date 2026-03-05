@@ -6,7 +6,9 @@ const PW_DIALOG_INPUT_NEW = document.getElementById("dialog-new-password-input-n
 const PW_DIALOG_INPUT_NEW_CHECK = document.getElementById("dialog-new-password-input-new-pwCheck");
 
 async function changeValue(field,fieldFrontendName, firstName) {
-    let userInput = await notificationDialog.showSingleInput("Neuer " + fieldFrontendName + ":", firstName);
+    let prompt = fieldFrontendName === "E-Mail" ? "Neue " : "Neuer ";
+    prompt += fieldFrontendName + ":";
+    let userInput = await notificationDialog.showSingleInput(prompt, firstName);
     if (!userInput) {
         return;
     }
