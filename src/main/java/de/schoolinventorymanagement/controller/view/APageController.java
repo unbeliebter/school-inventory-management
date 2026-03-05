@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public abstract class APageController <T extends IHasId, TR> {
@@ -20,6 +22,9 @@ public abstract class APageController <T extends IHasId, TR> {
     protected UserService userService;
 
     protected void buildGeneralModel(Authentication auth, Model model, T newTableItem, List<T> mainEntities) {
+        Set<T> allItems = new HashSet<>(mainService.getAll());
+        model.addAttribute("allItems", allItems);
+
         model.addAttribute("Path", PATH);
         model.addAttribute("TableItems", mainEntities);
 

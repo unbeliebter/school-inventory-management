@@ -66,10 +66,10 @@ public class InventoryPageController {
     @RequestMapping({""})
     public String showInventory(@RequestParam(required = false) Boolean filter,
                                 @RequestParam(required = false) String inventoryNumber,
-                                @RequestParam(required = false) String itemName,
-                                @RequestParam(required = false) String state,
-                                @RequestParam(required = false) String unit,
-                                @RequestParam(required = false) String group,
+                                @RequestParam(required = false) String equipmentName,
+                                @RequestParam(required = false) String equipmentState,
+                                @RequestParam(required = false) String organizationalUnit,
+                                @RequestParam(required = false) String organizationalGroup,
                                 @RequestParam(required = false) String subject,
                                 @RequestParam(required = false) String renter,
                                 @RequestParam(required = false) String responsibleUser,
@@ -78,10 +78,12 @@ public class InventoryPageController {
 
         List<EquipmentEntity> currentTableList;
         if (filter != null && filter) {
-            currentTableList = filter(inventoryNumber, itemName,state,unit,group,subject,renter,responsibleUser,position);
+            currentTableList = filter(inventoryNumber, equipmentName, equipmentState, organizationalUnit, organizationalGroup,subject,renter,responsibleUser,position);
         } else {
             currentTableList = mainService.getAll();
         }
+        Set<EquipmentEntity> allItems = new HashSet<>(mainService.getAll());
+        model.addAttribute("allItems", allItems);
         model.addAttribute("TableItems", currentTableList);
         model.addAttribute("Path", PATH);
 
@@ -100,7 +102,7 @@ public class InventoryPageController {
     }
 
     public List<EquipmentEntity> filter(String inventoryNumber,
-                                        String itemName,
+                                        String equipmentName,
                                         String state,
                                         String unit,
                                         String group,
@@ -119,18 +121,18 @@ public class InventoryPageController {
             }
         }
 
-        inventoryNumber = inventoryNumber.isEmpty() ? null : inventoryNumber;
-        itemName = itemName.isEmpty() ? null : itemName;
-        state = state.isEmpty() ? null : state;
-        unit = unit.isEmpty() ? null : unit;
-        group = group.isEmpty() ? null : group;
-        subject = subject.isEmpty() ? null : subject;
-        responsibleUser = responsibleUser.isEmpty() ? null : responsibleUser;
-        position = position.isEmpty() ? null : position;
+        inventoryNumber = inventoryNumber == null || inventoryNumber.isEmpty() ? null : inventoryNumber;
+        equipmentName = equipmentName == null || equipmentName.isEmpty() ? null : equipmentName;
+        state = state == null || state.isEmpty() ? null : state;
+        unit = unit == null || unit.isEmpty() ? null : unit;
+        group = group == null || group.isEmpty() ? null : group;
+        subject = subject == null || subject.isEmpty() ? null : subject;
+        responsibleUser = responsibleUser == null || responsibleUser.isEmpty() ? null : responsibleUser;
+        position = position == null || position.isEmpty() ? null : position;
 
         return mainService.getFilteredEquipmentAsList(
                 Optional.ofNullable(inventoryNumber),
-                Optional.ofNullable(itemName),
+                Optional.ofNullable(equipmentName),
                 Optional.ofNullable(state),
                 Optional.ofNullable(unit),
                 Optional.ofNullable(group),
@@ -195,14 +197,6 @@ public class InventoryPageController {
         List<OrganizationalGroupEntity> groups = orgGroupService.getAll();
         List<UserEntity> users = userService.getAll();
         List<EquipmentState> states = Arrays.asList(EquipmentState.values());
-
-        List<EquipmentEntity> items = mainService.getAll();
-
-        Set<String> itemNameFilterOptions = new HashSet<>();
-        for (EquipmentEntity e : items) {
-            itemNameFilterOptions.add(e.getEquipmentName());
-        }
-        model.addAttribute("ItemNameFilterOptions", itemNameFilterOptions);
 
         Map<String, EquipmentRenterEntity> renterMap = new HashMap<>();
         for (EquipmentRenterEntity e : equipmentRenterService.getAll()) {

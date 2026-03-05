@@ -86,16 +86,14 @@
             </div>
             <div class="label-with-input-horizontal">
                 <label>Inventar Nr:</label>
-                <select th:name="inventoryNumber" class="dialog-input">
+                <select id="filter-select-inventoryNumber" th:name="inventoryNumber" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.inventoryNumber}" th:text="${item.inventoryNumber}"></option>
                 </select>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Gegenstand:</label>
-                <select th:name="itemName" class="dialog-input">
+                <select id="filter-select-equipmentName" th:name="equipmentName" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${ItemNameFilterOptions}" th:value="${item}" th:text="${item}"></option>
                 </select>
             </div>
             <div class="label-with-input-horizontal">

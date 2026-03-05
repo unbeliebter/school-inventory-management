@@ -16,7 +16,27 @@ if (openDialogButton !== null) {
     });
 }
 
+function setFilterOptions() {
+    let nonDBFilterList = ["inventoryNumber", "equipmentName"]
+    allItems.sort((i1, i2) => i1.inventoryNumber > i2.inventoryNumber);
+    for (let selectName of nonDBFilterList) {
+        let set = new Set();
+        allItems.forEach(i => set.add(i[selectName]));
+        let selectElement = document.querySelector("#filterDialog select[name="+ selectName +"]");
 
+        set.forEach(i => {
+            let option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            selectElement.appendChild(option);
+        })
+        let options = Array.from(selectElement.childNodes);
+        options
+            .sort((i1,i2) => i1.value > i2.value)
+            .forEach(i => selectElement.appendChild(i));
+    }
+}
+setFilterOptions();
 
 function dialogAddEquipmentStateChanged() {
     let equipmentStateField = document.getElementById("equipmentState-input");
