@@ -45,21 +45,18 @@
                 <label>Schule:</label>
                 <select th:name="school" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.school}" th:text="${item.school}"></option>
                 </select>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Raum:</label>
                 <select th:name="room" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.room}" th:text="${item.room}"></option>
                 </select>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Beschreibung:</label>
                 <select th:name="description" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.description}" th:text="${item.description}"></option>
                 </select>
             </div>
 

@@ -41,14 +41,12 @@
                 <label>Name:</label>
                 <select th:name="name" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.name}" th:text="${item.name}"></option>
                 </select>
             </div>
             <div class="label-with-input-horizontal">
                 <label>Abkürzung:</label>
                 <select th:name="abbreviation" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.abbreviation}" th:text="${item.abbreviation}"></option>
                 </select>
             </div>
 

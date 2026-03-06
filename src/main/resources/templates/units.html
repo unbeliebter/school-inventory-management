@@ -36,7 +36,6 @@
                 <label>Name:</label>
                 <select th:name="name" class="dialog-input">
                     <option selected="selected" th:value="null" th:text="null"></option>
-                    <option th:each="item : ${TableItems}" th:value="${item.name}" th:text="${item.name}"></option>
                 </select>
             </div>
 
